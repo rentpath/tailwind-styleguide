@@ -3,6 +3,7 @@ import cssTree from "css-tree";
 import { RuleCollector } from "./types";
 
 export class GenericCollector implements RuleCollector {
+	private rules: cssTree.Rule[];
 	private classNames: string[];
 
 	constructor(
@@ -10,6 +11,7 @@ export class GenericCollector implements RuleCollector {
 		protected readonly regex: RegExp,
 		protected readonly declarations: string[]
 	) {
+		this.rules = [];
 		this.classNames = [];
 	}
 
@@ -38,10 +40,16 @@ export class GenericCollector implements RuleCollector {
 			return;
 		}
 
+		this.rules.push(rule);
 		this.classNames.push(classSelector.name);
 	}
 
 	public collect() {
-		return this.classNames;
+		return {
+			css: this.rules.map(r => cssTree.generate(r)),
+			meta: {
+				classNames: this.classNames
+			}
+		};
 	}
 }
