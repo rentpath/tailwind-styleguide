@@ -1,10 +1,4 @@
-import {
-	find,
-	ClassSelector,
-	findAll,
-	Declaration,
-	Rule,
-} from "css-tree";
+import cssTree from "css-tree";
 
 import { RuleCollector } from "./types";
 
@@ -19,11 +13,11 @@ export class GenericCollector implements RuleCollector {
 		this.classNames = [];
 	}
 
-	public walk(rule: Rule) {
-		const classSelector = find(
+	public walk(rule: cssTree.Rule) {
+		const classSelector = cssTree.find(
 			rule,
 			(node) => node.type === "ClassSelector"
-		) as ClassSelector | null;
+		) as cssTree.ClassSelector | null;
 
 		if (!classSelector) {
 			return;
@@ -33,10 +27,10 @@ export class GenericCollector implements RuleCollector {
 			return;
 		}
 
-		const declarations = (findAll(
+		const declarations = (cssTree.findAll(
 			rule,
 			(node) => node.type === "Declaration"
-		) ?? []) as Declaration[];
+		) ?? []) as cssTree.Declaration[];
 
 		const properties = declarations.map((d) => d.property);
 

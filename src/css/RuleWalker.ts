@@ -1,18 +1,18 @@
-import { walk, CssNode, Rule } from "css-tree";
+import cssTree from "css-tree";
 
 import { RuleCollector } from "./types";
 
 export class RuleWalker {
 	constructor(private readonly collectors: RuleCollector[]) {}
 
-	public collect(ast: CssNode) {
-		walk(ast, (node) => {
+	public collect(ast: cssTree.CssNode) {
+		cssTree.walk(ast, (node) => {
 			if (node.type !== "Rule") {
 				return;
 			}
 
 			this.collectors.forEach((collector) =>
-				collector.walk(node as Rule)
+				collector.walk(node as cssTree.Rule)
 			);
 		});
 

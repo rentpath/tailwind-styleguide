@@ -1,9 +1,23 @@
+import cssTree from "css-tree";
+
 // @ts-ignore
 import App from "./App.svelte";
 
-var app = new App({
+import { tailwind } from "./temp";
+import { RuleWalker } from "./css/RuleWalker";
+import { BackgroundColorCollector } from "./sections/backgroundColor/Collector";
+
+const app = new App({
 	target: document.body,
 });
+
+const walker = new RuleWalker([
+	new BackgroundColorCollector()
+])
+
+const rules = walker.collect(cssTree.parse(tailwind));
+
+console.log(rules);
 
 export default app;
 
