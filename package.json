@@ -5,13 +5,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "css-tree": "^1.0.0-alpha.39",
     "svelte": "^3.21.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
-    "jest": "^25.4.0",
+    "@types/css-tree": "^1.0.3",
     "snowpack": "^2.6.4"
   }
 }
