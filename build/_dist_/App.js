@@ -330,8 +330,8 @@ function instance($$self, $$props, $$invalidate) {
 
 	const sections = Object.keys(rules).map(sectionName => {
 		$$invalidate(0, displayCSS += rules[sectionName].css.join("\n"));
-		console.log(`./_dist_/sections/${sectionName}/Renderer.js`);
-		const module = import(`./_dist_/sections/${sectionName}/Renderer.js`);
+		console.log(`./sections/${sectionName}/Renderer.js`);
+		const module = import(`./sections/${sectionName}/Renderer.js`);
 		console.log(module);
 
 		return {
