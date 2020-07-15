@@ -34,6 +34,24 @@
 		color: #999;
 	}
 
+	.variants {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 10px;
+	}
+
+	.variants li {
+		padding: 4px 12px;
+		font-size: 0.8rem;
+		margin-right: 8px;
+		background-color: #2a62f5;
+		color: #FFF;
+		font-weight: 600;
+		border-radius: 12px;
+		border-top-left-radius: 0;
+		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	}
+
 	@media (max-width: 768px) {
 		.styleguide-section {
 			flex-direction: column;
@@ -52,6 +70,13 @@
 		<div class="sticky">
 			<h2>{name}</h2>
 			<em>{description}</em>
+			<ul class="variants">
+				<li>:sm</li>
+				<li>:md</li>
+				<li>:lg</li>
+				<li>:active</li>
+				<li>:hover</li>
+			</ul>
 		</div>
 	</div>
 	<div class="right">
