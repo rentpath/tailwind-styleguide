@@ -46,12 +46,12 @@ function create_fragment(ctx) {
 			t3 = space();
 			div2 = element("div");
 			if (default_slot) default_slot.c();
-			attr(h2, "class", "svelte-ia9yfb");
-			attr(em, "class", "svelte-ia9yfb");
-			attr(div0, "class", "sticky svelte-ia9yfb");
-			attr(div1, "class", "left svelte-ia9yfb");
-			attr(div2, "class", "right svelte-ia9yfb");
-			attr(section, "class", "styleguide-section svelte-ia9yfb");
+			attr(h2, "class", "svelte-4qtfyd");
+			attr(em, "class", "svelte-4qtfyd");
+			attr(div0, "class", "sticky svelte-4qtfyd");
+			attr(div1, "class", "left svelte-4qtfyd");
+			attr(div2, "class", "right svelte-4qtfyd");
+			attr(section, "class", "styleguide-section svelte-4qtfyd");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);
