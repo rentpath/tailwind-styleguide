@@ -16,3 +16,24 @@ You will also see any lint errors in the console.
 
 Builds a static copy of your site to the `build/` folder.
 Your app is ready to be deployed!
+
+## Rules to Extract:
+
+- Colors
+- - Background Colors
+- - Text Colors
+- Spacings
+- - Margins
+- - Paddings
+- Borders
+- - Widths
+- - Colors
+- - Radiuses
+- Box Shadows
+- Fonts
+- - Sizes
+- - Weights
+- - Line Heights
+- Sizes
+- - Widths
+- - Heights

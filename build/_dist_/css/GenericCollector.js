@@ -1,4 +1,4 @@
-import cssTree from "/web_modules/css-tree.js";
+import cssTree from "/tailwind-styleguide/web_modules/css-tree.js";
 export class GenericCollector {
   constructor(name, regex, declarations) {
     this.name = name;
@@ -8,6 +8,13 @@ export class GenericCollector {
     this.classNames = [];
   }
   walk(rule) {
+    const meta = this.extractMeta(rule);
+    if (meta?.rule && meta?.name) {
+      this.rules.push(meta.rule);
+      this.classNames.push(meta.name);
+    }
+  }
+  extractMeta(rule) {
     const classSelector = cssTree.find(rule, (node) => node.type === "ClassSelector");
     if (!classSelector) {
       return;
@@ -20,8 +27,10 @@ export class GenericCollector {
     if (!properties.some((p) => this.declarations.includes(p))) {
       return;
     }
-    this.rules.push(rule);
-    this.classNames.push(classSelector.name);
+    return {
+      rule,
+      name: classSelector.name
+    };
   }
   collect() {
     return {

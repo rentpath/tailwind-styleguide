@@ -16,7 +16,7 @@ import {
 	transition_in,
 	transition_out,
 	update_slot
-} from "/web_modules/svelte/internal.js";
+} from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 function create_fragment(ctx) {
 	let section;
@@ -46,12 +46,12 @@ function create_fragment(ctx) {
 			t3 = space();
 			div2 = element("div");
 			if (default_slot) default_slot.c();
-			attr(h2, "class", "svelte-pm61xa");
-			attr(em, "class", "svelte-pm61xa");
-			attr(div0, "class", "sticky svelte-pm61xa");
-			attr(div1, "class", "left svelte-pm61xa");
-			attr(div2, "class", "right svelte-pm61xa");
-			attr(section, "class", "styleguide-section svelte-pm61xa");
+			attr(h2, "class", "svelte-ia9yfb");
+			attr(em, "class", "svelte-ia9yfb");
+			attr(div0, "class", "sticky svelte-ia9yfb");
+			attr(div1, "class", "left svelte-ia9yfb");
+			attr(div2, "class", "right svelte-ia9yfb");
+			attr(section, "class", "styleguide-section svelte-ia9yfb");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);

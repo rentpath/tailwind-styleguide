@@ -1,4 +1,4 @@
-import cssTree from "/web_modules/css-tree.js";
+import cssTree from "/tailwind-styleguide/web_modules/css-tree.js";
 export class RuleWalker {
   constructor(collectors) {
     this.collectors = collectors;

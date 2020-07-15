@@ -29,6 +29,7 @@
 	:global(:root) {
 		--common-gutter: 32px;
 		--left-column-width: 320px;
+		--section-margin: 64px;
 	}
 </style>
 

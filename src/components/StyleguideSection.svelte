@@ -6,6 +6,7 @@
 <style>
 	.styleguide-section {
 		display: flex;
+		margin-bottom: var(--section-margin);
 	}
 
 	.left {

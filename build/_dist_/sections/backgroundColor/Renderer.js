@@ -19,7 +19,7 @@ import {
 	text,
 	transition_in,
 	transition_out
-} from "/web_modules/svelte/internal.js";
+} from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import StyleguideSection from "../../components/StyleguideSection.js";
 
