@@ -1,1 +1,1 @@
-export default {"MODE":"production","NODE_ENV":"production"};
+export default {"SNOWPACK_PUBLIC_BASE_URL":"/tailwind-styleguide","MODE":"production","NODE_ENV":"production"};

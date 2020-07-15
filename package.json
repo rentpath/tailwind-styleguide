@@ -2,7 +2,7 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-	"deploy": "git subtree push --prefix build origin gh-pages"
+    "deploy": "git subtree push --prefix build origin gh-pages"
   },
   "dependencies": {
     "css-tree": "^1.0.0-alpha.39",
@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",
+    "@snowpack/plugin-dotenv": "^1.6.0-alpha.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
     "@types/css-tree": "^1.0.3",
