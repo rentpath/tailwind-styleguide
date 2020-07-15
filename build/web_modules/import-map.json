@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "css-tree": "./css-tree.js",
+    "svelte/internal": "./svelte/internal.js"
+  }
+}
