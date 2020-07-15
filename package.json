@@ -2,7 +2,7 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "jest"
+	"deploy": "git subtree push --prefix build origin gh-pages"
   },
   "dependencies": {
     "css-tree": "^1.0.0-alpha.39",
