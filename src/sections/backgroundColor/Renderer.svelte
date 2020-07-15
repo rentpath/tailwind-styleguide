@@ -1,39 +1,46 @@
 <script>
+	import StyleguideSection from "../../components/StyleguideSection.svelte";
+
 	export let meta;
 </script>
 
 <style>
 	.swatches {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+		gap: 24px 24px;
 	}
 
 	.swatch-wrapper {
-		margin: 8px;
+		display: flex;
+		flex-direction: column;
+		place-items: center;
 	}
 
 	.swatch {
-		border-radius: 24px;
-		border-top-left-radius: 0;
-		width: 128px;
-		height: 42px;
-		box-shadow: 2px 2px 3px rgba(51, 51, 51, 0.1);
+		border-radius: 100%;
+		width: 96px;
+		height: 96px;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		margin-bottom: 8px;
 	}
 
-	.swatch-name {
-		font-family: "Raleway", sans-serif;
+	em {
 		font-style: normal;
-		font-size: 14px;
 		font-weight: normal;
-		color: #333;
+		font-weight: 600;
+		font-size: 0.8rem;
+		color: #999;
 	}
 </style>
 
-<div class="swatches">
-	{#each meta.classNames as className}
-		<div class="swatch-wrapper">
-			<div class={`swatch ${className}`}></div>
-			<em class="swatch-name">.{className}</em>
-		</div>
-	{/each}
-</div>
+<StyleguideSection name="Background Colors" description="Utilities for controlling an element's background color.">
+	<div class="swatches">
+		{#each meta.classNames as className}
+			<div class="swatch-wrapper">
+				<div class={`swatch ${className}`}></div>
+				<em>.{className}</em>
+			</div>
+		{/each}
+	</div>
+</StyleguideSection>
