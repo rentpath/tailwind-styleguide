@@ -9,7 +9,6 @@
 		return {
 			...rules[sectionName],
 			sectionName,
-			// TODO: Configure _dist_ so it doesn't break in non-dev
 			module: import(`/_dist_/sections/${sectionName}/Renderer.js`)
 		};
 	});
