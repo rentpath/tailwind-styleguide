@@ -9,7 +9,7 @@
 		return {
 			...rules[sectionName],
 			sectionName,
-			module: import(`${import.meta.env.SNOWPACK_PUBLIC_API_URL}/_dist_/sections/${sectionName}/Renderer.js`)
+			module: import(`_dist_/sections/${sectionName}/Renderer.js`)
 		};
 	});
 </script>
