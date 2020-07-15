@@ -33,6 +33,18 @@
 		font-style: normal;
 		color: #999;
 	}
+
+	@media (max-width: 768px) {
+		.styleguide-section {
+			flex-direction: column;
+		}
+
+		.left {
+			flex: 1;
+			width: auto;
+			margin: 0 0 var(--common-gutter) 0;
+		}
+	}
 </style>
 
 <section class="styleguide-section">

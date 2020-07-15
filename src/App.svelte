@@ -5,10 +5,8 @@
 
 	const sections = Object.keys(rules).map(sectionName => {
 		displayCSS += rules[sectionName].css.join("\n");
-		console.log(`./sections/${sectionName}/Renderer.js`);
 		
-		const module = import(`./sections/${sectionName}/Renderer.js`);
-		console.log(module);
+		const module = import(`./sections/${sectionName}/Renderer.js`)
 
 		return {
 			...rules[sectionName],
@@ -34,6 +32,7 @@
 		--common-gutter: 32px;
 		--left-column-width: 320px;
 		--section-margin: 64px;
+		--stacking-breakpoint: 768px;
 	}
 </style>
 
