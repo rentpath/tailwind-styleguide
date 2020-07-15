@@ -1,6 +1,5 @@
 {
   "extends": "@snowpack/app-scripts-svelte",
-  "plugins": ["@snowpack/plugin-dotenv"],
   "buildOptions": {
 	"baseUrl": "/tailwind-styleguide/"
   }

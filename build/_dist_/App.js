@@ -32,7 +32,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (39:1) {:catch error}
+// (43:1) {:catch error}
 function create_catch_block(ctx) {
 	let div;
 	let t0;
@@ -81,7 +81,7 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (37:43)    <svelte:component this={sectionModule.default}
+// (41:43)    <svelte:component this={sectionModule.default}
 function create_then_block(ctx) {
 	let switch_instance;
 	let t;
@@ -162,7 +162,7 @@ function create_pending_block(ctx) {
 	};
 }
 
-// (36:0) {#each sections as section}
+// (40:0) {#each sections as section}
 function create_each_block(ctx) {
 	let await_block_anchor;
 	let promise;
@@ -330,11 +330,14 @@ function instance($$self, $$props, $$invalidate) {
 
 	const sections = Object.keys(rules).map(sectionName => {
 		$$invalidate(0, displayCSS += rules[sectionName].css.join("\n"));
+		console.log(`_dist_/sections/${sectionName}/Renderer.js`);
+		const module = import(`_dist_/sections/${sectionName}/Renderer.js`);
+		console.log(module);
 
 		return {
 			...rules[sectionName],
 			sectionName,
-			module: import(`_dist_/sections/${sectionName}/Renderer.js`)
+			module
 		};
 	});
 

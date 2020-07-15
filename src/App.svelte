@@ -5,11 +5,15 @@
 
 	const sections = Object.keys(rules).map(sectionName => {
 		displayCSS += rules[sectionName].css.join("\n");
+		console.log(`_dist_/sections/${sectionName}/Renderer.js`);
+		
+		const module = import(`_dist_/sections/${sectionName}/Renderer.js`);
+		console.log(module);
 
 		return {
 			...rules[sectionName],
 			sectionName,
-			module: import(`_dist_/sections/${sectionName}/Renderer.js`)
+			module
 		};
 	});
 </script>

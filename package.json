@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",
-    "@snowpack/plugin-dotenv": "^1.6.0-alpha.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
     "@types/css-tree": "^1.0.3",
