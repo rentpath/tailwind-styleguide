@@ -36,7 +36,8 @@
 {#each sections as section}
 	{#await section.module then sectionModule}
 		<svelte:component this={sectionModule.default} meta={section.meta}></svelte:component>
-	{:catch}
+	{:catch error}
 		<div>Uh oh! Section {section.sectionName} not found.</div>
+		<code><pre>{JSON.stringify(error, 4, null)}</pre></code>
 	{/await}
 {/each}

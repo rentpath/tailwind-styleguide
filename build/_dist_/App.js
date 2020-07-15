@@ -35,7 +35,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (39:1) {:catch}
+// (39:1) {:catch error}
 function create_catch_block(ctx) {
 	let div;
 	let t0;
@@ -43,6 +43,11 @@ function create_catch_block(ctx) {
 	let t1;
 	let t2;
 	let t3;
+	let code;
+	let pre;
+	let t4_value = JSON.stringify(/*error*/ ctx[6], 4, null) + "";
+	let t4;
+	let t5;
 
 	return {
 		c() {
@@ -51,6 +56,10 @@ function create_catch_block(ctx) {
 			t1 = text(t1_value);
 			t2 = text(" not found.");
 			t3 = space();
+			code = element("code");
+			pre = element("pre");
+			t4 = text(t4_value);
+			t5 = space();
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -58,6 +67,10 @@ function create_catch_block(ctx) {
 			append(div, t1);
 			append(div, t2);
 			insert(target, t3, anchor);
+			insert(target, code, anchor);
+			append(code, pre);
+			append(pre, t4);
+			insert(target, t5, anchor);
 		},
 		p: noop,
 		i: noop,
@@ -65,6 +78,8 @@ function create_catch_block(ctx) {
 		d(detaching) {
 			if (detaching) detach(div);
 			if (detaching) detach(t3);
+			if (detaching) detach(code);
+			if (detaching) detach(t5);
 		}
 	};
 }
@@ -164,6 +179,7 @@ function create_each_block(ctx) {
 		then: create_then_block,
 		catch: create_catch_block,
 		value: 5,
+		error: 6,
 		blocks: [,,,]
 	};
 
@@ -257,7 +273,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			if ((!current || dirty & /*displayCSS*/ 1) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "")) html_tag.p(raw_value);
 
-			if (dirty & /*sections*/ 2) {
+			if (dirty & /*sections, JSON*/ 2) {
 				each_value = /*sections*/ ctx[1];
 				let i;
 
