@@ -5,8 +5,10 @@
     "deploy": "git subtree push --prefix build origin gh-pages"
   },
   "dependencies": {
+    "@xstate/fsm": "^1.4.0",
     "css-tree": "^1.0.0-alpha.39",
-    "svelte": "^3.21.0"
+    "svelte": "^3.21.0",
+    "xstate": "^4.11.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",
