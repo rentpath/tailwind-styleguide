@@ -5,6 +5,7 @@ import {
 	append,
 	attr,
 	create_slot,
+	destroy_each,
 	detach,
 	element,
 	init,
@@ -18,6 +19,98 @@ import {
 	update_slot
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
+function get_each_context(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[5] = list[i];
+	return child_ctx;
+}
+
+// (75:3) {#if variants.length}
+function create_if_block(ctx) {
+	let ul;
+	let each_value = /*variants*/ ctx[2];
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+	}
+
+	return {
+		c() {
+			ul = element("ul");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			attr(ul, "class", "variants svelte-11ym23w");
+		},
+		m(target, anchor) {
+			insert(target, ul, anchor);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(ul, null);
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*variants*/ 4) {
+				each_value = /*variants*/ ctx[2];
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+					} else {
+						each_blocks[i] = create_each_block(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(ul, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+
+				each_blocks.length = each_value.length;
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(ul);
+			destroy_each(each_blocks, detaching);
+		}
+	};
+}
+
+// (77:5) {#each variants as variant}
+function create_each_block(ctx) {
+	let li;
+	let t0_value = /*variant*/ ctx[5] + "";
+	let t0;
+	let t1;
+
+	return {
+		c() {
+			li = element("li");
+			t0 = text(t0_value);
+			t1 = text(":");
+			attr(li, "class", "svelte-11ym23w");
+		},
+		m(target, anchor) {
+			insert(target, li, anchor);
+			append(li, t0);
+			append(li, t1);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*variants*/ 4 && t0_value !== (t0_value = /*variant*/ ctx[5] + "")) set_data(t0, t0_value);
+		},
+		d(detaching) {
+			if (detaching) detach(li);
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let section;
 	let div1;
@@ -28,10 +121,12 @@ function create_fragment(ctx) {
 	let em;
 	let t2;
 	let t3;
+	let t4;
 	let div2;
 	let current;
-	const default_slot_template = /*$$slots*/ ctx[3].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[2], null);
+	let if_block = /*variants*/ ctx[2].length && create_if_block(ctx);
+	const default_slot_template = /*$$slots*/ ctx[4].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
 
 	return {
 		c() {
@@ -44,14 +139,16 @@ function create_fragment(ctx) {
 			em = element("em");
 			t2 = text(/*description*/ ctx[1]);
 			t3 = space();
+			if (if_block) if_block.c();
+			t4 = space();
 			div2 = element("div");
 			if (default_slot) default_slot.c();
-			attr(h2, "class", "svelte-4qtfyd");
-			attr(em, "class", "svelte-4qtfyd");
-			attr(div0, "class", "sticky svelte-4qtfyd");
-			attr(div1, "class", "left svelte-4qtfyd");
-			attr(div2, "class", "right svelte-4qtfyd");
-			attr(section, "class", "styleguide-section svelte-4qtfyd");
+			attr(h2, "class", "svelte-11ym23w");
+			attr(em, "class", "svelte-11ym23w");
+			attr(div0, "class", "sticky svelte-11ym23w");
+			attr(div1, "class", "left svelte-11ym23w");
+			attr(div2, "class", "right svelte-11ym23w");
+			attr(section, "class", "styleguide-section svelte-11ym23w");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);
@@ -62,7 +159,9 @@ function create_fragment(ctx) {
 			append(div0, t1);
 			append(div0, em);
 			append(em, t2);
-			append(section, t3);
+			append(div0, t3);
+			if (if_block) if_block.m(div0, null);
+			append(section, t4);
 			append(section, div2);
 
 			if (default_slot) {
@@ -75,9 +174,22 @@ function create_fragment(ctx) {
 			if (!current || dirty & /*name*/ 1) set_data(t0, /*name*/ ctx[0]);
 			if (!current || dirty & /*description*/ 2) set_data(t2, /*description*/ ctx[1]);
 
+			if (/*variants*/ ctx[2].length) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(div0, null);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 4) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[2], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 8) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[3], dirty, null, null);
 				}
 			}
 		},
@@ -92,6 +204,7 @@ function create_fragment(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(section);
+			if (if_block) if_block.d();
 			if (default_slot) default_slot.d(detaching);
 		}
 	};
@@ -100,21 +213,23 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let { name } = $$props;
 	let { description = "" } = $$props;
+	let { variants = [] } = $$props;
 	let { $$slots = {}, $$scope } = $$props;
 
 	$$self.$set = $$props => {
 		if ("name" in $$props) $$invalidate(0, name = $$props.name);
 		if ("description" in $$props) $$invalidate(1, description = $$props.description);
-		if ("$$scope" in $$props) $$invalidate(2, $$scope = $$props.$$scope);
+		if ("variants" in $$props) $$invalidate(2, variants = $$props.variants);
+		if ("$$scope" in $$props) $$invalidate(3, $$scope = $$props.$$scope);
 	};
 
-	return [name, description, $$scope, $$slots];
+	return [name, description, variants, $$scope, $$slots];
 }
 
 class StyleguideSection extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { name: 0, description: 1 });
+		init(this, options, instance, create_fragment, safe_not_equal, { name: 0, description: 1, variants: 2 });
 	}
 }
 

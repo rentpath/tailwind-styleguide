@@ -4,7 +4,10 @@ import {
 	HtmlTag,
 	SvelteComponent,
 	append,
+	attr,
+	binding_callbacks,
 	check_outros,
+	component_subscribe,
 	create_component,
 	destroy_component,
 	destroy_each,
@@ -15,9 +18,11 @@ import {
 	handle_promise,
 	init,
 	insert,
+	listen,
 	mount_component,
 	noop,
 	safe_not_equal,
+	set_data,
 	space,
 	text,
 	transition_in,
@@ -25,214 +30,19 @@ import {
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import { rules } from "./stores/rules.js";
+import { windsock as state } from "./stores/machine.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[2] = list[i];
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
-// (42:1) {:catch error}
-function create_catch_block(ctx) {
-	let div;
-	let t0;
-	let t1_value = /*section*/ ctx[2].sectionName + "";
-	let t1;
-	let t2;
-	let t3;
-	let code;
-	let pre;
-	let t4_value = JSON.stringify(/*error*/ ctx[6], 4, null) + "";
-	let t4;
-	let t5;
-
-	return {
-		c() {
-			div = element("div");
-			t0 = text("Uh oh! Section ");
-			t1 = text(t1_value);
-			t2 = text(" not found.");
-			t3 = space();
-			code = element("code");
-			pre = element("pre");
-			t4 = text(t4_value);
-			t5 = space();
-		},
-		m(target, anchor) {
-			insert(target, div, anchor);
-			append(div, t0);
-			append(div, t1);
-			append(div, t2);
-			insert(target, t3, anchor);
-			insert(target, code, anchor);
-			append(code, pre);
-			append(pre, t4);
-			insert(target, t5, anchor);
-		},
-		p: noop,
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) detach(div);
-			if (detaching) detach(t3);
-			if (detaching) detach(code);
-			if (detaching) detach(t5);
-		}
-	};
-}
-
-// (40:43)    <svelte:component this={sectionModule.default}
-function create_then_block(ctx) {
-	let switch_instance;
-	let t;
-	let current;
-	var switch_value = /*sectionModule*/ ctx[5].default;
-
-	function switch_props(ctx) {
-		return { props: { meta: /*section*/ ctx[2].meta } };
-	}
-
-	if (switch_value) {
-		switch_instance = new switch_value(switch_props(ctx));
-	}
-
-	return {
-		c() {
-			if (switch_instance) create_component(switch_instance.$$.fragment);
-			t = space();
-		},
-		m(target, anchor) {
-			if (switch_instance) {
-				mount_component(switch_instance, target, anchor);
-			}
-
-			insert(target, t, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			if (switch_value !== (switch_value = /*sectionModule*/ ctx[5].default)) {
-				if (switch_instance) {
-					group_outros();
-					const old_component = switch_instance;
-
-					transition_out(old_component.$$.fragment, 1, 0, () => {
-						destroy_component(old_component, 1);
-					});
-
-					check_outros();
-				}
-
-				if (switch_value) {
-					switch_instance = new switch_value(switch_props(ctx));
-					create_component(switch_instance.$$.fragment);
-					transition_in(switch_instance.$$.fragment, 1);
-					mount_component(switch_instance, t.parentNode, t);
-				} else {
-					switch_instance = null;
-				}
-			} else if (switch_value) {
-				0;
-			}
-		},
-		i(local) {
-			if (current) return;
-			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (switch_instance) destroy_component(switch_instance, detaching);
-			if (detaching) detach(t);
-		}
-	};
-}
-
-// (1:0) <script>  import { rules }
-function create_pending_block(ctx) {
-	return {
-		c: noop,
-		m: noop,
-		p: noop,
-		i: noop,
-		o: noop,
-		d: noop
-	};
-}
-
-// (39:0) {#each sections as section}
-function create_each_block(ctx) {
-	let await_block_anchor;
-	let promise;
-	let current;
-
-	let info = {
-		ctx,
-		current: null,
-		token: null,
-		pending: create_pending_block,
-		then: create_then_block,
-		catch: create_catch_block,
-		value: 5,
-		error: 6,
-		blocks: [,,,]
-	};
-
-	handle_promise(promise = /*section*/ ctx[2].module, info);
-
-	return {
-		c() {
-			await_block_anchor = empty();
-			info.block.c();
-		},
-		m(target, anchor) {
-			insert(target, await_block_anchor, anchor);
-			info.block.m(target, info.anchor = anchor);
-			info.mount = () => await_block_anchor.parentNode;
-			info.anchor = await_block_anchor;
-			current = true;
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-
-			{
-				const child_ctx = ctx.slice();
-				child_ctx[5] = info.resolved;
-				info.block.p(child_ctx, dirty);
-			}
-		},
-		i(local) {
-			if (current) return;
-			transition_in(info.block);
-			current = true;
-		},
-		o(local) {
-			for (let i = 0; i < 3; i += 1) {
-				const block = info.blocks[i];
-				transition_out(block);
-			}
-
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(await_block_anchor);
-			info.block.d(detaching);
-			info.token = null;
-			info = null;
-		}
-	};
-}
-
-function create_fragment(ctx) {
-	let html_tag;
-	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "";
-	let html_anchor;
-	let t;
+// (60:37) 
+function create_if_block_2(ctx) {
 	let each_1_anchor;
 	let current;
-	let each_value = /*sections*/ ctx[1];
+	let each_value = /*sections*/ ctx[2];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -245,21 +55,13 @@ function create_fragment(ctx) {
 
 	return {
 		c() {
-			html_anchor = empty();
-			t = space();
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
 			each_1_anchor = empty();
-			html_tag = new HtmlTag(html_anchor);
 		},
 		m(target, anchor) {
-			html_tag.m(raw_value, document.head);
-			append(document.head, html_anchor);
-			insert(target, t, anchor);
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(target, anchor);
 			}
@@ -267,11 +69,9 @@ function create_fragment(ctx) {
 			insert(target, each_1_anchor, anchor);
 			current = true;
 		},
-		p(ctx, [dirty]) {
-			if ((!current || dirty & /*displayCSS*/ 1) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "")) html_tag.p(raw_value);
-
-			if (dirty & /*sections, JSON*/ 2) {
-				each_value = /*sections*/ ctx[1];
+		p(ctx, dirty) {
+			if (dirty & /*sections, JSON*/ 4) {
+				each_value = /*sections*/ ctx[2];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -316,30 +116,434 @@ function create_fragment(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			detach(html_anchor);
-			if (detaching) html_tag.d();
-			if (detaching) detach(t);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(each_1_anchor);
 		}
 	};
 }
 
+// (58:37) 
+function create_if_block_1(ctx) {
+	let em;
+
+	return {
+		c() {
+			em = element("em");
+			em.textContent = "...";
+		},
+		m(target, anchor) {
+			insert(target, em, anchor);
+		},
+		p: noop,
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(em);
+		}
+	};
+}
+
+// (54:0) {#if $state.value === "greeting"}
+function create_if_block(ctx) {
+	let h1;
+	let t1;
+	let input;
+	let t2;
+	let button;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			h1 = element("h1");
+			h1.textContent = "Windsock";
+			t1 = space();
+			input = element("input");
+			t2 = space();
+			button = element("button");
+			button.textContent = "Start";
+			attr(input, "type", "file");
+			attr(input, "accept", "text/css");
+		},
+		m(target, anchor) {
+			insert(target, h1, anchor);
+			insert(target, t1, anchor);
+			insert(target, input, anchor);
+			/*input_binding*/ ctx[5](input);
+			insert(target, t2, anchor);
+			insert(target, button, anchor);
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*parse*/ ctx[4]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(h1);
+			if (detaching) detach(t1);
+			if (detaching) detach(input);
+			/*input_binding*/ ctx[5](null);
+			if (detaching) detach(t2);
+			if (detaching) detach(button);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (64:2) {:catch error}
+function create_catch_block(ctx) {
+	let div;
+	let t0;
+	let t1_value = /*section*/ ctx[6].sectionName + "";
+	let t1;
+	let t2;
+	let t3;
+	let code;
+	let pre;
+	let t4_value = JSON.stringify(/*error*/ ctx[10], 4, null) + "";
+	let t4;
+	let t5;
+
+	return {
+		c() {
+			div = element("div");
+			t0 = text("Uh oh! Section ");
+			t1 = text(t1_value);
+			t2 = text(" not found.");
+			t3 = space();
+			code = element("code");
+			pre = element("pre");
+			t4 = text(t4_value);
+			t5 = space();
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			append(div, t0);
+			append(div, t1);
+			append(div, t2);
+			insert(target, t3, anchor);
+			insert(target, code, anchor);
+			append(code, pre);
+			append(pre, t4);
+			insert(target, t5, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*sections*/ 4 && t1_value !== (t1_value = /*section*/ ctx[6].sectionName + "")) set_data(t1, t1_value);
+			if (dirty & /*sections*/ 4 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[10], 4, null) + "")) set_data(t4, t4_value);
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+			if (detaching) detach(t3);
+			if (detaching) detach(code);
+			if (detaching) detach(t5);
+		}
+	};
+}
+
+// (62:44)     <svelte:component this={sectionModule.default}
+function create_then_block(ctx) {
+	let switch_instance;
+	let t;
+	let current;
+	var switch_value = /*sectionModule*/ ctx[9].default;
+
+	function switch_props(ctx) {
+		return { props: { meta: /*section*/ ctx[6].meta } };
+	}
+
+	if (switch_value) {
+		switch_instance = new switch_value(switch_props(ctx));
+	}
+
+	return {
+		c() {
+			if (switch_instance) create_component(switch_instance.$$.fragment);
+			t = space();
+		},
+		m(target, anchor) {
+			if (switch_instance) {
+				mount_component(switch_instance, target, anchor);
+			}
+
+			insert(target, t, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const switch_instance_changes = {};
+			if (dirty & /*sections*/ 4) switch_instance_changes.meta = /*section*/ ctx[6].meta;
+
+			if (switch_value !== (switch_value = /*sectionModule*/ ctx[9].default)) {
+				if (switch_instance) {
+					group_outros();
+					const old_component = switch_instance;
+
+					transition_out(old_component.$$.fragment, 1, 0, () => {
+						destroy_component(old_component, 1);
+					});
+
+					check_outros();
+				}
+
+				if (switch_value) {
+					switch_instance = new switch_value(switch_props(ctx));
+					create_component(switch_instance.$$.fragment);
+					transition_in(switch_instance.$$.fragment, 1);
+					mount_component(switch_instance, t.parentNode, t);
+				} else {
+					switch_instance = null;
+				}
+			} else if (switch_value) {
+				switch_instance.$set(switch_instance_changes);
+			}
+		},
+		i(local) {
+			if (current) return;
+			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (switch_instance) destroy_component(switch_instance, detaching);
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (1:0) <script>  import { rules }
+function create_pending_block(ctx) {
+	return {
+		c: noop,
+		m: noop,
+		p: noop,
+		i: noop,
+		o: noop,
+		d: noop
+	};
+}
+
+// (61:1) {#each sections as section}
+function create_each_block(ctx) {
+	let await_block_anchor;
+	let promise;
+	let current;
+
+	let info = {
+		ctx,
+		current: null,
+		token: null,
+		pending: create_pending_block,
+		then: create_then_block,
+		catch: create_catch_block,
+		value: 9,
+		error: 10,
+		blocks: [,,,]
+	};
+
+	handle_promise(promise = /*section*/ ctx[6].module, info);
+
+	return {
+		c() {
+			await_block_anchor = empty();
+			info.block.c();
+		},
+		m(target, anchor) {
+			insert(target, await_block_anchor, anchor);
+			info.block.m(target, info.anchor = anchor);
+			info.mount = () => await_block_anchor.parentNode;
+			info.anchor = await_block_anchor;
+			current = true;
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			info.ctx = ctx;
+
+			if (dirty & /*sections*/ 4 && promise !== (promise = /*section*/ ctx[6].module) && handle_promise(promise, info)) {
+				
+			} else {
+				const child_ctx = ctx.slice();
+				child_ctx[9] = info.resolved;
+				info.block.p(child_ctx, dirty);
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(info.block);
+			current = true;
+		},
+		o(local) {
+			for (let i = 0; i < 3; i += 1) {
+				const block = info.blocks[i];
+				transition_out(block);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(await_block_anchor);
+			info.block.d(detaching);
+			info.token = null;
+			info = null;
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let html_tag;
+	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "";
+	let html_anchor;
+	let t;
+	let current_block_type_index;
+	let if_block;
+	let if_block_anchor;
+	let current;
+	const if_block_creators = [create_if_block, create_if_block_1, create_if_block_2];
+	const if_blocks = [];
+
+	function select_block_type(ctx, dirty) {
+		if (/*$state*/ ctx[3].value === "greeting") return 0;
+		if (/*$state*/ ctx[3].value === "parsing") return 1;
+		if (/*$state*/ ctx[3].value === "display") return 2;
+		return -1;
+	}
+
+	if (~(current_block_type_index = select_block_type(ctx, -1))) {
+		if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+	}
+
+	return {
+		c() {
+			html_anchor = empty();
+			t = space();
+			if (if_block) if_block.c();
+			if_block_anchor = empty();
+			html_tag = new HtmlTag(html_anchor);
+		},
+		m(target, anchor) {
+			html_tag.m(raw_value, document.head);
+			append(document.head, html_anchor);
+			insert(target, t, anchor);
+
+			if (~current_block_type_index) {
+				if_blocks[current_block_type_index].m(target, anchor);
+			}
+
+			insert(target, if_block_anchor, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			if ((!current || dirty & /*displayCSS*/ 2) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "")) html_tag.p(raw_value);
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type(ctx, dirty);
+
+			if (current_block_type_index === previous_block_index) {
+				if (~current_block_type_index) {
+					if_blocks[current_block_type_index].p(ctx, dirty);
+				}
+			} else {
+				if (if_block) {
+					group_outros();
+
+					transition_out(if_blocks[previous_block_index], 1, 1, () => {
+						if_blocks[previous_block_index] = null;
+					});
+
+					check_outros();
+				}
+
+				if (~current_block_type_index) {
+					if_block = if_blocks[current_block_type_index];
+
+					if (!if_block) {
+						if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+						if_block.c();
+					}
+
+					transition_in(if_block, 1);
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				} else {
+					if_block = null;
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block);
+			current = false;
+		},
+		d(detaching) {
+			detach(html_anchor);
+			if (detaching) html_tag.d();
+			if (detaching) detach(t);
+
+			if (~current_block_type_index) {
+				if_blocks[current_block_type_index].d(detaching);
+			}
+
+			if (detaching) detach(if_block_anchor);
+		}
+	};
+}
+
 function instance($$self, $$props, $$invalidate) {
+	let $state;
+	component_subscribe($$self, state, $$value => $$invalidate(3, $state = $$value));
+	let uploader;
 	let displayCSS = "";
 
-	const sections = Object.keys(rules).map(sectionName => {
-		$$invalidate(0, displayCSS += rules[sectionName].css.join("\n"));
-		const module = import(`./sections/${sectionName}/Renderer.js`);
+	function parse() {
+		if (uploader.files.length) {
+			const reader = new FileReader();
 
-		return {
-			...rules[sectionName],
-			sectionName,
-			module
-		};
-	});
+			reader.onload = function (event) {
+				state.send({ type: "PARSE", raw: event.target.result });
+			};
 
-	return [displayCSS, sections];
+			reader.readAsText(uploader.files[0], "UTF-8");
+		}
+	}
+
+	function input_binding($$value) {
+		binding_callbacks[$$value ? "unshift" : "push"](() => {
+			uploader = $$value;
+			$$invalidate(0, uploader);
+		});
+	}
+
+	let sections;
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$state, displayCSS*/ 10) {
+			$: $$invalidate(2, sections = Object.keys($state.context.rules || {}).map(sectionName => {
+				$$invalidate(1, displayCSS += $state.context.rules[sectionName].css.join("\n"));
+				const module = import(`./sections/${sectionName}/Renderer.js`);
+
+				return {
+					...$state.context.rules[sectionName],
+					sectionName,
+					module
+				};
+			}));
+		}
+
+		if ($$self.$$.dirty & /*$state*/ 8) {
+			$: console.log($state.context);
+		}
+	};
+
+	return [uploader, displayCSS, sections, $state, parse, input_binding];
 }
 
 class App extends SvelteComponent {

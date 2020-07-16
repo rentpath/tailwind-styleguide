@@ -76,7 +76,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (37:0) <StyleguideSection name="Background Colors" description="Utilities for controlling an element's background color.">
+// (37:0) <StyleguideSection name="Background Colors" description="Utilities for controlling an element's background color." variants={meta.variants}>
 function create_default_slot(ctx) {
 	let div;
 	let each_value = /*meta*/ ctx[0].classNames;
@@ -142,6 +142,7 @@ function create_fragment(ctx) {
 			props: {
 				name: "Background Colors",
 				description: "Utilities for controlling an element's background color.",
+				variants: /*meta*/ ctx[0].variants,
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
 			}
@@ -157,6 +158,7 @@ function create_fragment(ctx) {
 		},
 		p(ctx, [dirty]) {
 			const styleguidesection_changes = {};
+			if (dirty & /*meta*/ 1) styleguidesection_changes.variants = /*meta*/ ctx[0].variants;
 
 			if (dirty & /*$$scope, meta*/ 17) {
 				styleguidesection_changes.$$scope = { dirty, ctx };

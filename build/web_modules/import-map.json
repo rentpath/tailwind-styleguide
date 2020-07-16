@@ -1,6 +1,7 @@
 {
   "imports": {
     "css-tree": "./css-tree.js",
-    "svelte/internal": "./svelte/internal.js"
+    "svelte/internal": "./svelte/internal.js",
+    "xstate": "./xstate.js"
   }
 }
