@@ -1,5 +1,4 @@
 <script>
-	import { rules } from "./stores/rules";
 	import { windsock as state } from "./stores/machine";
 
 	let uploader;
@@ -28,12 +27,32 @@
 		}
 	}
 
-	$: console.log($state.context);
+	function uploadFile(event) {
+		event.preventDefault();
+
+		const file = event.dataTransfer.items[0].getAsFile();
+		const reader = new FileReader();
+
+		reader.onload = function (event) {
+			state.send({ type: "PARSE", raw: event.target.result });
+		}
+		reader.readAsText(file, "UTF-8");
+	}
+
+	function preventOpen(event) {
+		event.preventDefault();
+	}
+
+	function triggerUploadDialog() {
+		uploader.click();
+	}
 </script>
 
 <svelte:head>
 	{@html `<style type="text/css">${displayCSS}</style>`}
 </svelte:head>
+
+<svelte:window on:dragover={preventOpen} on:drop={preventOpen}></svelte:window>
 
 <style>
 	:global(body) {
@@ -49,15 +68,35 @@
 		--section-margin: 64px;
 		--stacking-breakpoint: 768px;
 	}
+
+	#uploader {
+		display: none;
+	}
+
+	.drop-handler {
+		width: 480px;
+		height: 480px;
+		background: red;
+	}
 </style>
 
 {#if $state.value === "greeting"}
-	<h1>Windsock</h1>
-	<input type="file" accept="text/css" bind:this={uploader} />
+
+	<!-- Greeting Page -->
+	<div class="drop-handler" on:drop={uploadFile} on:click={triggerUploadDialog}></div>
+	<input id="uploader" type="file" accept="text/css" bind:this={uploader} />
 	<button on:click={parse}>Start</button>
+	<!---->
+
 {:else if $state.value === "parsing"}
+
+	<!-- Loader (For long parsing) -->
 	<em>...</em>
+	<!---->
+
 {:else if $state.value === "display"}
+
+	<!-- Style Guide Page -->
 	{#each sections as section}
 		{#await section.module then sectionModule}
 			<svelte:component this={sectionModule.default} meta={section.meta}></svelte:component>
@@ -66,4 +105,6 @@
 			<code><pre>{JSON.stringify(error, 4, null)}</pre></code>
 		{/await}
 	{/each}
+	<!---->
+
 {/if}

@@ -5,6 +5,8 @@ import { TextColorCollector } from "../sections/textColor/Collector";
 
 import { Machine, interpret, assign } from 'xstate';
 
+const LOCALSTORAGE_KEY = "parsed_rules";
+
 const ruleWalker = new RuleWalker([
 	new BackgroundColorCollector(),
 	new TextColorCollector()
@@ -26,35 +28,69 @@ type Event =
 	| ErrorEvent
 	| ResetEvent
 
+const initialState = (() => {
+	const cache = localStorage.getItem(LOCALSTORAGE_KEY);
+
+	if (cache) {
+		return {
+			initial: 'display',
+			context: {
+				rules: JSON.parse(cache)
+			}
+		};
+	} else {
+		return {
+			initial: 'greeting',
+			context: {}
+		};
+	}
+})();
+
 const windsockMachine = Machine<WindsockContext, Event>({
-    id: 'windsock',
-    initial: 'greeting',
-    context: {},
+	...initialState,
+	// Identifier (Unique)
+	id: 'windsock',
+	// Define the states:
     states: {
+		// The greeting page is the home page, it shows the uploader
 		greeting: {
 			on: {
+				// When we get a parse event, move to the parsing state
 				PARSE: 'parsing'
 			}
 		},
+		// The parsing state is where we're processing the Tailwind file
 		parsing: {
+			// When we enter the state, update the context to store the "raw" string of CSS uploaded
 			entry: [
 				assign({
 					raw: (_ctx, event) => (event as ParseEvent).raw,
 				})
 			],
+			// Invoke the RuleWalker to parse the CSS
 			invoke: {
 				src: function (ctx) {
 					return Promise.resolve(ruleWalker.parseAndCollect(ctx.raw!));
 				},
+				// When complete, move to the "display" state, where we show the style guide
 				onDone: {
 					target: 'display',
-					actions: assign({
-						rules: (_ctx, event) => event.data
-					})
+					// Store the parsed rules in the context
+					actions: [
+						assign({
+							rules: (_ctx, event) => event.data
+						}),
+						ctx => {
+							localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(ctx.rules));
+						}
+					]
 				},
+				// If something happens with the parsing, boot back to the homepage
+				// TODO: Add error messaging here
 				onError: 'greeting'
 			}
 		},
+		// The display page is where we show the style guide
 		display: {
 			on: {
 				RESET: 'greeting'
