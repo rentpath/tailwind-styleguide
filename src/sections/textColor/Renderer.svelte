@@ -24,7 +24,7 @@
 	}
 </style>
 
-<StyleguideSection name="Text Colors" description="Utilities for controlling the text color of an element.">
+<StyleguideSection name="Text Colors" description="Utilities for controlling the text color of an element." variants={meta.variants}>
 	<div class="colors">
 		{#each meta.classNames as className}
 			<div class="color-wrapper">

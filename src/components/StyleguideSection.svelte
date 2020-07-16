@@ -1,6 +1,7 @@
 <script>
 	export let name;
 	export let description = "";
+	export let variants = [];
 </script>
 
 <style>
@@ -44,6 +45,7 @@
 		padding: 4px 12px;
 		font-size: 0.8rem;
 		margin-right: 8px;
+		margin-bottom: 8px;
 		background-color: #2a62f5;
 		color: #FFF;
 		font-weight: 600;
@@ -70,13 +72,13 @@
 		<div class="sticky">
 			<h2>{name}</h2>
 			<em>{description}</em>
-			<ul class="variants">
-				<li>:sm</li>
-				<li>:md</li>
-				<li>:lg</li>
-				<li>:active</li>
-				<li>:hover</li>
-			</ul>
+			{#if variants.length}
+				<ul class="variants">
+					{#each variants as variant}
+						<li>{variant}:</li>
+					{/each}
+				</ul>
+			{/if}
 		</div>
 	</div>
 	<div class="right">

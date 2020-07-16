@@ -34,7 +34,7 @@
 	}
 </style>
 
-<StyleguideSection name="Background Colors" description="Utilities for controlling an element's background color.">
+<StyleguideSection name="Background Colors" description="Utilities for controlling an element's background color." variants={meta.variants}>
 	<div class="swatches">
 		{#each meta.classNames as className}
 			<div class="swatch-wrapper">
