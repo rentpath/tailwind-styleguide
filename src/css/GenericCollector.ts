@@ -3,9 +3,9 @@ import cssTree from "css-tree";
 import { RuleCollector } from "./types";
 
 export class GenericCollector implements RuleCollector {
-	private rules: cssTree.Rule[];
-	private classNames: string[];
-	private variants: Set<string>;
+	protected rules: cssTree.Rule[];
+	protected classNames: string[];
+	protected variants: Set<string>;
 
 	constructor(
 		public readonly name: string,
@@ -66,14 +66,14 @@ export class GenericCollector implements RuleCollector {
 				rule,
 				(node) => node.type === "Declaration"
 			) ?? []) as cssTree.Declaration[];
-	
+
 			// The declarations are still an AST. Get the string values they contain so we can
 			// inspect them.
 			const properties = declarations.map((d) => d.property);
-	
-			// If none of the properties of the rule match any of the properties we're looking for, 
+
+			// If none of the properties of the rule match any of the properties we're looking for,
 			// we can skip this class.
-			// 
+			//
 			// This handles the edge case of a Tailwind class starting with the regular expression
 			// we match on, but don't actually correspond to a given property. For example, /^.bg-/ will match
 			// background colors, but also background attachment rules. If we're collecting background color

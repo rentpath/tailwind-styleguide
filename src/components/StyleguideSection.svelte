@@ -46,7 +46,7 @@
 		font-size: 0.8rem;
 		margin-right: 8px;
 		margin-bottom: 8px;
-		background-color: #2a62f5;
+		background-color: var(--primary-color);
 		color: #FFF;
 		font-weight: 600;
 		border-radius: 12px;

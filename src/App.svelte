@@ -6,7 +6,7 @@
 
 	$: sections = Object.keys($state.context.rules || {}).map(sectionName => {
 		displayCSS += $state.context.rules[sectionName].css.join("\n");
-		
+
 		const module = import(`./sections/${sectionName}/Renderer.js`)
 
 		return {
@@ -67,6 +67,7 @@
 		--left-column-width: 320px;
 		--section-margin: 64px;
 		--stacking-breakpoint: 768px;
+		--primary-color: #2a62f5;
 	}
 
 	#uploader {

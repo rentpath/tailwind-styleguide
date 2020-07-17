@@ -4,12 +4,15 @@ import { BackgroundColorCollector } from '../sections/backgroundColor/Collector'
 import { TextColorCollector } from "../sections/textColor/Collector";
 
 import { Machine, interpret, assign } from 'xstate';
+import { tailwind } from '../temp';
+import { PaddingCollector } from '../sections/padding/Collector';
 
 const LOCALSTORAGE_KEY = "parsed_rules";
 
 const ruleWalker = new RuleWalker([
 	new BackgroundColorCollector(),
-	new TextColorCollector()
+	new TextColorCollector(),
+	new PaddingCollector()
 ]);
 
 interface WindsockContext {
@@ -22,16 +25,23 @@ type ParsedEvent = { type: "PARSED"; rules: string }
 type ErrorEvent = { type: "ERROR"; error: string }
 type ResetEvent = { type: "RESET" }
 
-type Event = 
+type Event =
 	| ParseEvent
-	| ParsedEvent 
+	| ParsedEvent
 	| ErrorEvent
 	| ResetEvent
 
 const initialState = (() => {
 	const cache = localStorage.getItem(LOCALSTORAGE_KEY);
 
-	if (cache) {
+	if (import.meta.env.MODE === 'development') {
+		return {
+			initial: 'display',
+			context: {
+				rules: ruleWalker.parseAndCollect(tailwind)
+			}
+		}
+	} else if (cache) {
 		return {
 			initial: 'display',
 			context: {
