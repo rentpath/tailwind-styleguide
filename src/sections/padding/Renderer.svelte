@@ -1,4 +1,5 @@
 <script>
+	import ClassName from "../../components/ClassName.svelte";
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
 
 	export let meta;
@@ -7,66 +8,62 @@
 </script>
 
 <style>
-	.paddings {
-		display: grid;
-		grid-template-columns: 128px 2fr;
+	table {
+		width: auto;
 	}
 
-	em {
-		font-style: normal;
-		font-weight: normal;
+	thead {
 		font-weight: 600;
-		font-size: 0.8rem;
 		color: #999;
 	}
 
-	li {
-		padding: 8px 16px;
+	tbody tr {
 		border-bottom: 1px solid #EFEFEF;
 	}
 
-	li:hover {
-		background-color: var(--primary-color);
+	tbody td {
+		padding: 8px 0;
 	}
 
-	li:hover em {
-		color: #FFF;
+	.measure {
+		font-weight: 600;
+		padding-right: 16px;
+		text-align: right;
 	}
 
-	.canvas {
-		height: 100vh;
-		position: sticky;
-		top: 0;
-		width: auto;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.unit {
+		color: #333;
+		font-weight: normal;
+		font-size: 0.8rem;
 	}
 
-	.box-outer {
-		display: inline-block;
-		background-color: #EFEFEF;
-	}
-
-	.box-inner {
-		width: 64px;
-		height: 64px;
+	.block {
 		background-color: #CCC;
+		height: 24px;
 	}
 </style>
 
 <StyleguideSection name="Padding" description="Utilities for controlling an element's padding." variants={meta.variants}>
-	<!-- <code><pre>{JSON.stringify(meta.classNames, null, 4)}</pre></code> -->
-	<div class="paddings">
-		<ul class="list">
-			{#each meta.classNames as className}
-				<li on:mouseenter={() => assignedClass = className}><em>{className}</em></li>
+	<table>
+		<thead>
+			<tr>
+				<td>Class</td>
+				<td class="measure">Width</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			{#each meta.spacings as spacing}
+				<tr>
+					<td>
+						<ClassName>.p-{spacing.name}</ClassName>
+					</td>
+					<td class="measure">{spacing.value} <span class="unit">{spacing.unit ?? ""}</span></td>
+					<td>
+						<div style={`width: ${spacing.value}${spacing.unit ?? ""}`} class="block"></div>
+					</td>
+				</tr>
 			{/each}
-		</ul>
-		<div class="canvas">
-			<div class={`box-outer ${assignedClass}`}>
-				<div class="box-inner"></div>
-			</div>
-		</div>
-	</div>
+		</tbody>
+	</table>
 </StyleguideSection>

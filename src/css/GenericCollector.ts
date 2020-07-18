@@ -1,6 +1,7 @@
 import cssTree from "css-tree";
 
 import { RuleCollector } from "./types";
+import { getClassSelector, getDeclarations, extractVariant } from "./ast";
 
 export class GenericCollector implements RuleCollector {
 	protected rules: cssTree.Rule[];
@@ -37,35 +38,20 @@ export class GenericCollector implements RuleCollector {
 		return new RegExp(`^${this.matcher}`);
 	}
 
-	private variantRegex() {
-		return new RegExp(`^([^:]+):.*${this.matcher}`);
-	}
-
 	protected extractMeta(rule: cssTree.Rule) {
 		// Each call to this method receives an AST for a CSS rule
-		// Walk the rule and try to find a class selector. All Tailwind utilities will be classes.
-		const classSelector = cssTree.find(
-			rule,
-			(node) => node.type === "ClassSelector"
-		) as cssTree.ClassSelector | null;
+		const classSelector = getClassSelector(rule);
 
 		// Things like element selectors and ID selectors aren't needed, so skip them.
 		// Past this point we know we are working with a CSS rule; something like .bg-red-500 { ... }
-		if (!classSelector) {
-			return;
-		}
-
-		let variants
+		if (!classSelector) return;
 
 		// Try to match the selector's name (the actual class definition) with the regex for this
 		// collector. So if we're matching on /^.bg-/, we'll ignore text-red-xxx classes.
 		if (classSelector.name.match(this.classRegex())) {
 			// The declarations are the actual "rules" for a CSS expression;
 			// something like background-color: #FF0000;
-			const declarations = (cssTree.findAll(
-				rule,
-				(node) => node.type === "Declaration"
-			) ?? []) as cssTree.Declaration[];
+			const declarations = getDeclarations(rule);
 
 			// The declarations are still an AST. Get the string values they contain so we can
 			// inspect them.
@@ -78,20 +64,23 @@ export class GenericCollector implements RuleCollector {
 			// we match on, but don't actually correspond to a given property. For example, /^.bg-/ will match
 			// background colors, but also background attachment rules. If we're collecting background color
 			// classes, we don't want to accidentally include attachment classes too.
-			if (!properties.some((p) => this.declarations.includes(p))) {
-				return;
-			}
+			if (!properties.some((p) => this.declarations.includes(p))) return;
 
 			// If we've made it this far, the rule we received is one we're interested in collecting.
 			return {
 				rule,
-				name: classSelector.name
+				name: classSelector.name,
 			};
-		// If we didn't match the selector name, this may still be a variant. Try to extract it if it exists
-		} else if (!!(variants = classSelector.name.match(this.variantRegex())) /* Intentional Assignment */) {
-			return {
-				variant: variants[1].replace(/\\$/, '')
-			};
+			// If we didn't match the selector name, this may still be a variant. Try to extract it if it exists
+		} else {
+			const maybeVariant = extractVariant(
+				this.matcher,
+				classSelector.name
+			);
+
+			if (maybeVariant) {
+				return { variant: maybeVariant };
+			}
 		}
 
 		return;
@@ -99,11 +88,11 @@ export class GenericCollector implements RuleCollector {
 
 	public collect() {
 		return {
-			css: this.rules.map(r => cssTree.generate(r)),
+			css: this.rules.map((r) => cssTree.generate(r)),
 			meta: {
 				classNames: this.classNames,
-				variants: [...this.variants]
-			}
+				variants: [...this.variants],
+			},
 		};
 	}
 }
