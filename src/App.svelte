@@ -86,7 +86,7 @@
 {#if $state.value === "greeting"}
 
 	<!-- Greeting Page -->
-	<div class="drop-handler" on:drop={uploadFile} on:click={triggerUploadDialog}></div>
+	<div class="drop-handler" on:drop={uploadFile} on:click={triggerUploadDialog}>Behold my glorious red drop zone.</div>
 	<input id="uploader" type="file" accept="text/css" bind:this={uploader} />
 	<button on:click={parse}>Start</button>
 	<!---->

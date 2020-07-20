@@ -15,6 +15,10 @@
 		font-size: 1.2rem;
 	}
 
+	p::after {
+		content: "The quick brown fox jumped over the lazy dog.";
+	}
+
 	em {
 		font-style: normal;
 		font-weight: normal;
@@ -22,13 +26,19 @@
 		font-size: 0.8rem;
 		color: #999;
 	}
+
+	@media (max-width: 500px) {
+		p::after {
+			content: "The quick brown fox etc."
+		}
+	}
 </style>
 
 <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={meta.variants}>
 	<div class="colors">
 		{#each meta.classNames as className}
 			<div class="color-wrapper">
-				<p class={className}>The quick brown fox jumped over the lazy dog.</p>
+				<p class={className}></p>
 				<em>.{className}</em>
 			</div>
 		{/each}
