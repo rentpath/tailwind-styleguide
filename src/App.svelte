@@ -68,6 +68,8 @@
 		--section-margin: 64px;
 		--stacking-breakpoint: 768px;
 		--primary-color: #2a62f5;
+		--subtle-color: #edf2f7;
+		--less-subtle-color: #e2e8f0;
 	}
 
 	#uploader {

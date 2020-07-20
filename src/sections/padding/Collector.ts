@@ -10,6 +10,8 @@ interface Spacing {
 	unit?: string;
 }
 
+// TODO: WTF was I even doing here? Just start over.
+
 export class PaddingCollector implements RuleCollector {
 	public name = "padding";
 

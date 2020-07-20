@@ -5,14 +5,18 @@ import { TextColorCollector } from "../sections/textColor/Collector";
 
 import { Machine, interpret, assign } from 'xstate';
 import { tailwind } from '../temp';
-import { PaddingCollector } from '../sections/padding/Collector';
+// import { PaddingCollector } from '../sections/padding/Collector';
+import { BoxShadowCollector } from '../sections/boxShadow/Collector';
+import { BorderRadiusCollector } from '../sections/borderRadius/Collector';
 
 const LOCALSTORAGE_KEY = "parsed_rules";
 
 const ruleWalker = new RuleWalker([
 	new BackgroundColorCollector(),
 	new TextColorCollector(),
-	new PaddingCollector()
+	// new PaddingCollector(),
+	new BoxShadowCollector(),
+	new BorderRadiusCollector(),
 ]);
 
 interface WindsockContext {

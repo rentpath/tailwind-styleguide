@@ -5,6 +5,6 @@
 	export let meta;
 </script>
 
-<StyleguideSection name="Background Colors" description="Most of the colors of the rainbow." variants={meta.variants}>
-	<Grid swatches={meta.classNames} circle fancy></Grid>
+<StyleguideSection name="Border Radius" description="For rounding those sharp corners." variants={meta.variants}>
+	<Grid swatches={meta.classNames} filled stroked></Grid>
 </StyleguideSection>
