@@ -4,7 +4,7 @@
     "start": "snowpack dev",
 	"build": "snowpack build",
 	"make": "make build",
-	"deploy": "git subtree push --prefix build origin gh-pages",
+	"deploy": "make deploy",
 	"plop": "plop"
   },
   "dependencies": {

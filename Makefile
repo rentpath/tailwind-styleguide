@@ -9,3 +9,6 @@ promote-env: snowpack
 	rm -r ./build/tailwind-styleguide
 
 build: promote-env jekyll-ignore
+
+deploy: build
+	git subtree push --prefix build origin gh-pages
