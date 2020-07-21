@@ -31,7 +31,7 @@ import {
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import { windsock as state } from "./stores/machine.js";
-import Upload from "./components/Icons/Upload.js";
+import Upload from "./components/icons/Upload.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();

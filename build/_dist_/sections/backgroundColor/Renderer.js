@@ -11,7 +11,7 @@ import {
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import StyleguideSection from "../../components/StyleguideSection.js";
-import Grid from "../../components/Swatches/Grid.js";
+import Grid from "../../components/swatches/Grid.js";
 
 function create_default_slot(ctx) {
 	let grid;

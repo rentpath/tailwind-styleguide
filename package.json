@@ -11,8 +11,8 @@
     "@xstate/fsm": "^1.4.0",
     "css-tree": "^1.0.0-alpha.39",
     "ramda": "^0.27.0",
-    "svelte": "^3.21.0",
-    "xstate": "^4.11.0"
+    "rxjs": "^6.6.0",
+    "svelte": "^3.21.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",

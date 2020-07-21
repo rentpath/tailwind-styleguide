@@ -1,6 +1,6 @@
 <script>
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
-	import Grid from "../../components/Swatches/Grid";
+	import Grid from "../../components/swatches/Grid";
 
 	export let meta;
 </script>
