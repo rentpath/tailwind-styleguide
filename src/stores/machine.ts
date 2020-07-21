@@ -8,6 +8,7 @@ import { tailwind } from '../temp';
 // import { PaddingCollector } from '../sections/padding/Collector';
 import { BoxShadowCollector } from '../sections/boxShadow/Collector';
 import { BorderRadiusCollector } from '../sections/borderRadius/Collector';
+import { LineHeightCollector } from '../sections/lineHeight/Collector';
 
 const LOCALSTORAGE_KEY = "parsed_rules";
 
@@ -17,6 +18,7 @@ const ruleWalker = new RuleWalker([
 	// new PaddingCollector(),
 	new BoxShadowCollector(),
 	new BorderRadiusCollector(),
+	new LineHeightCollector(),
 ]);
 
 interface WindsockContext {
