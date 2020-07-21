@@ -12,3 +12,4 @@ if (import.meta.hot) {
     app.$destroy();
   });
 }
+console.log("Touch");
