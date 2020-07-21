@@ -60,7 +60,7 @@ function create_fragment(ctx) {
 	styleguidesection = new StyleguideSection({
 			props: {
 				name: "Border Radius",
-				description: "For rounding those sharp corners.",
+				description: "For rounding off those sharp edges.",
 				variants: /*meta*/ ctx[0].variants,
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }

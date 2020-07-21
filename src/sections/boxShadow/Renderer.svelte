@@ -5,6 +5,6 @@
 	export let meta;
 </script>
 
-<StyleguideSection name="Box Shadow" description="Utilities for adding shadows to elements." variants={meta.variants}>
+<StyleguideSection name="Box Shadow" description="Determines how angsty your components should be." variants={meta.variants}>
 	<Grid swatches={meta.classNames} squircle filled></Grid>
 </StyleguideSection>

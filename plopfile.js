@@ -5,7 +5,7 @@ module.exports = function (plop) {
 			{
 				type: "input",
 				name: "name",
-				message: "Section name in Title Case, e.g. Background Color",
+				message: "Section name in Title Case, e.g. Background Color >",
 			},
 		],
 		actions: [

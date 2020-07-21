@@ -4,6 +4,9 @@
 
 	export let meta;
 
+	// CSS Grid can't do a column-fill with dynamic row count
+	// So we have to hack it with an inline style calculated from
+	// the number of elements we want to populate
 	$: numRows = Math.ceil(meta.classNames.length / 2);
 	$: gridTemplateRows = `grid-template-rows: repeat(${numRows}, 1fr)`;
 </script>

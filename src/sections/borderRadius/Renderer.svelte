@@ -5,6 +5,6 @@
 	export let meta;
 </script>
 
-<StyleguideSection name="Border Radius" description="For rounding those sharp corners." variants={meta.variants}>
+<StyleguideSection name="Border Radius" description="For rounding off those sharp edges." variants={meta.variants}>
 	<Grid swatches={meta.classNames} filled stroked></Grid>
 </StyleguideSection>

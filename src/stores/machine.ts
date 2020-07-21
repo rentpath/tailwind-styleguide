@@ -9,6 +9,7 @@ import { tailwind } from '../temp';
 import { BoxShadowCollector } from '../sections/boxShadow/Collector';
 import { BorderRadiusCollector } from '../sections/borderRadius/Collector';
 import { LineHeightCollector } from '../sections/lineHeight/Collector';
+import { FontSizeCollector } from '../sections/fontSize/Collector';
 
 const LOCALSTORAGE_KEY = "parsed_rules";
 
@@ -19,6 +20,7 @@ const ruleWalker = new RuleWalker([
 	new BoxShadowCollector(),
 	new BorderRadiusCollector(),
 	new LineHeightCollector(),
+	new FontSizeCollector(),
 ]);
 
 interface WindsockContext {
@@ -42,11 +44,15 @@ const initialState = (() => {
 
 	if (import.meta.env.MODE === 'development') {
 		return {
-			initial: 'display',
-			context: {
-				rules: ruleWalker.parseAndCollect(tailwind)
-			}
-		}
+			initial: 'greeting',
+			context: {}
+		};
+		// return {
+		// 	initial: 'display',
+		// 	context: {
+		// 		rules: ruleWalker.parseAndCollect(tailwind)
+		// 	}
+		// }
 	} else if (cache) {
 		return {
 			initial: 'display',

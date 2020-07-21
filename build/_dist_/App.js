@@ -5,7 +5,6 @@ import {
 	SvelteComponent,
 	append,
 	attr,
-	binding_callbacks,
 	check_outros,
 	component_subscribe,
 	create_component,
@@ -31,18 +30,19 @@ import {
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import { windsock as state } from "./stores/machine.js";
+import uploadIcon from "./static/upload.svg.proxy.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[8] = list[i];
+	child_ctx[7] = list[i];
 	return child_ctx;
 }
 
-// (100:37) 
+// (126:37) 
 function create_if_block_2(ctx) {
 	let each_1_anchor;
 	let current;
-	let each_value = /*sections*/ ctx[2];
+	let each_value = /*sections*/ ctx[1];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -70,8 +70,8 @@ function create_if_block_2(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*sections, JSON*/ 4) {
-				each_value = /*sections*/ ctx[2];
+			if (dirty & /*sections, JSON*/ 2) {
+				each_value = /*sections*/ ctx[1];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -122,7 +122,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (94:37) 
+// (120:37) 
 function create_if_block_1(ctx) {
 	let em;
 
@@ -143,44 +143,34 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (86:0) {#if $state.value === "greeting"}
+// (106:0) {#if $state.value === "greeting"}
 function create_if_block(ctx) {
-	let div;
-	let t1;
-	let input;
-	let t2;
-	let button;
+	let div1;
+	let div0;
+	let img;
+	let img_src_value;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
-			div = element("div");
-			div.textContent = "Behold my glorious red drop zone.";
-			t1 = space();
-			input = element("input");
-			t2 = space();
-			button = element("button");
-			button.textContent = "Start";
-			attr(div, "class", "drop-handler svelte-14f1tlk");
-			attr(input, "id", "uploader");
-			attr(input, "type", "file");
-			attr(input, "accept", "text/css");
-			attr(input, "class", "svelte-14f1tlk");
+			div1 = element("div");
+			div0 = element("div");
+			img = element("img");
+			if (img.src !== (img_src_value = uploadIcon)) attr(img, "src", img_src_value);
+			attr(img, "alt", "Upload");
+			attr(div0, "class", "drop-handler svelte-ggov79");
+			attr(div1, "class", "splash svelte-ggov79");
 		},
 		m(target, anchor) {
-			insert(target, div, anchor);
-			insert(target, t1, anchor);
-			insert(target, input, anchor);
-			/*input_binding*/ ctx[7](input);
-			insert(target, t2, anchor);
-			insert(target, button, anchor);
+			insert(target, div1, anchor);
+			append(div1, div0);
+			append(div0, img);
 
 			if (!mounted) {
 				dispose = [
-					listen(div, "drop", /*uploadFile*/ ctx[5]),
-					listen(div, "click", /*triggerUploadDialog*/ ctx[6]),
-					listen(button, "click", /*parse*/ ctx[4])
+					listen(div0, "drop", /*uploadFile*/ ctx[3]),
+					listen(div0, "click", /*triggerUploadDialog*/ ctx[4])
 				];
 
 				mounted = true;
@@ -190,29 +180,24 @@ function create_if_block(ctx) {
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(div);
-			if (detaching) detach(t1);
-			if (detaching) detach(input);
-			/*input_binding*/ ctx[7](null);
-			if (detaching) detach(t2);
-			if (detaching) detach(button);
+			if (detaching) detach(div1);
 			mounted = false;
 			run_all(dispose);
 		}
 	};
 }
 
-// (106:2) {:catch error}
+// (132:2) {:catch error}
 function create_catch_block(ctx) {
 	let div;
 	let t0;
-	let t1_value = /*section*/ ctx[8].sectionName + "";
+	let t1_value = /*section*/ ctx[7].sectionName + "";
 	let t1;
 	let t2;
 	let t3;
 	let code;
 	let pre;
-	let t4_value = JSON.stringify(/*error*/ ctx[12], 4, null) + "";
+	let t4_value = JSON.stringify(/*error*/ ctx[11], 4, null) + "";
 	let t4;
 	let t5;
 
@@ -240,8 +225,8 @@ function create_catch_block(ctx) {
 			insert(target, t5, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*sections*/ 4 && t1_value !== (t1_value = /*section*/ ctx[8].sectionName + "")) set_data(t1, t1_value);
-			if (dirty & /*sections*/ 4 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[12], 4, null) + "")) set_data(t4, t4_value);
+			if (dirty & /*sections*/ 2 && t1_value !== (t1_value = /*section*/ ctx[7].sectionName + "")) set_data(t1, t1_value);
+			if (dirty & /*sections*/ 2 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[11], 4, null) + "")) set_data(t4, t4_value);
 		},
 		i: noop,
 		o: noop,
@@ -254,15 +239,15 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (104:44)     <svelte:component this={sectionModule.default}
+// (130:44)     <svelte:component this={sectionModule.default}
 function create_then_block(ctx) {
 	let switch_instance;
 	let t;
 	let current;
-	var switch_value = /*sectionModule*/ ctx[11].default;
+	var switch_value = /*sectionModule*/ ctx[10].default;
 
 	function switch_props(ctx) {
-		return { props: { meta: /*section*/ ctx[8].meta } };
+		return { props: { meta: /*section*/ ctx[7].meta } };
 	}
 
 	if (switch_value) {
@@ -284,9 +269,9 @@ function create_then_block(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*sections*/ 4) switch_instance_changes.meta = /*section*/ ctx[8].meta;
+			if (dirty & /*sections*/ 2) switch_instance_changes.meta = /*section*/ ctx[7].meta;
 
-			if (switch_value !== (switch_value = /*sectionModule*/ ctx[11].default)) {
+			if (switch_value !== (switch_value = /*sectionModule*/ ctx[10].default)) {
 				if (switch_instance) {
 					group_outros();
 					const old_component = switch_instance;
@@ -338,7 +323,7 @@ function create_pending_block(ctx) {
 	};
 }
 
-// (103:1) {#each sections as section}
+// (129:1) {#each sections as section}
 function create_each_block(ctx) {
 	let await_block_anchor;
 	let promise;
@@ -351,12 +336,12 @@ function create_each_block(ctx) {
 		pending: create_pending_block,
 		then: create_then_block,
 		catch: create_catch_block,
-		value: 11,
-		error: 12,
+		value: 10,
+		error: 11,
 		blocks: [,,,]
 	};
 
-	handle_promise(promise = /*section*/ ctx[8].module, info);
+	handle_promise(promise = /*section*/ ctx[7].module, info);
 
 	return {
 		c() {
@@ -374,11 +359,11 @@ function create_each_block(ctx) {
 			ctx = new_ctx;
 			info.ctx = ctx;
 
-			if (dirty & /*sections*/ 4 && promise !== (promise = /*section*/ ctx[8].module) && handle_promise(promise, info)) {
+			if (dirty & /*sections*/ 2 && promise !== (promise = /*section*/ ctx[7].module) && handle_promise(promise, info)) {
 				
 			} else {
 				const child_ctx = ctx.slice();
-				child_ctx[11] = info.resolved;
+				child_ctx[10] = info.resolved;
 				info.block.p(child_ctx, dirty);
 			}
 		},
@@ -406,7 +391,7 @@ function create_each_block(ctx) {
 
 function create_fragment(ctx) {
 	let html_tag;
-	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "";
+	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "";
 	let html_anchor;
 	let t;
 	let current_block_type_index;
@@ -419,9 +404,9 @@ function create_fragment(ctx) {
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
-		if (/*$state*/ ctx[3].value === "greeting") return 0;
-		if (/*$state*/ ctx[3].value === "parsing") return 1;
-		if (/*$state*/ ctx[3].value === "display") return 2;
+		if (/*$state*/ ctx[2].value === "greeting") return 0;
+		if (/*$state*/ ctx[2].value === "parsing") return 1;
+		if (/*$state*/ ctx[2].value === "display") return 2;
 		return -1;
 	}
 
@@ -459,7 +444,7 @@ function create_fragment(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*displayCSS*/ 2) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "")) html_tag.p(raw_value);
+			if ((!current || dirty & /*displayCSS*/ 1) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "")) html_tag.p(raw_value);
 			let previous_block_index = current_block_type_index;
 			current_block_type_index = select_block_type(ctx, dirty);
 
@@ -524,7 +509,7 @@ function preventOpen(event) {
 
 function instance($$self, $$props, $$invalidate) {
 	let $state;
-	component_subscribe($$self, state, $$value => $$invalidate(3, $state = $$value));
+	component_subscribe($$self, state, $$value => $$invalidate(2, $state = $$value));
 	let uploader;
 	let displayCSS = "";
 
@@ -556,19 +541,12 @@ function instance($$self, $$props, $$invalidate) {
 		uploader.click();
 	}
 
-	function input_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
-			uploader = $$value;
-			$$invalidate(0, uploader);
-		});
-	}
-
 	let sections;
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$state, displayCSS*/ 10) {
-			$: $$invalidate(2, sections = Object.keys($state.context.rules || {}).map(sectionName => {
-				$$invalidate(1, displayCSS += $state.context.rules[sectionName].css.join("\n"));
+		if ($$self.$$.dirty & /*$state, displayCSS*/ 5) {
+			$: $$invalidate(1, sections = Object.keys($state.context.rules || {}).map(sectionName => {
+				$$invalidate(0, displayCSS += $state.context.rules[sectionName].css.join("\n"));
 				const module = import(`./sections/${sectionName}/Renderer.js`);
 
 				return {
@@ -580,16 +558,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	};
 
-	return [
-		uploader,
-		displayCSS,
-		sections,
-		$state,
-		parse,
-		uploadFile,
-		triggerUploadDialog,
-		input_binding
-	];
+	return [displayCSS, sections, $state, uploadFile, triggerUploadDialog];
 }
 
 class App extends SvelteComponent {

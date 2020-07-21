@@ -5,20 +5,18 @@ import {RuleWalker as RuleWalker2} from "../css/RuleWalker.js";
 import {BackgroundColorCollector} from "../sections/backgroundColor/Collector.js";
 import {TextColorCollector} from "../sections/textColor/Collector.js";
 import {Machine, interpret, assign} from "/tailwind-styleguide/web_modules/xstate.js";
-import {tailwind} from "../temp.js";
 import {BoxShadowCollector} from "../sections/boxShadow/Collector.js";
 import {BorderRadiusCollector} from "../sections/borderRadius/Collector.js";
 import {LineHeightCollector} from "../sections/lineHeight/Collector.js";
+import {FontSizeCollector} from "../sections/fontSize/Collector.js";
 const LOCALSTORAGE_KEY = "parsed_rules";
-const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector()]);
+const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector()]);
 const initialState = (() => {
   const cache = localStorage.getItem(LOCALSTORAGE_KEY);
   if (import.meta.env.MODE === "development") {
     return {
-      initial: "display",
-      context: {
-        rules: ruleWalker.parseAndCollect(tailwind)
-      }
+      initial: "greeting",
+      context: {}
     };
   } else if (cache) {
     return {

@@ -60,7 +60,7 @@ function create_fragment(ctx) {
 	styleguidesection = new StyleguideSection({
 			props: {
 				name: "Box Shadow",
-				description: "Utilities for adding shadows to elements.",
+				description: "Determines how angsty your components should be.",
 				variants: /*meta*/ ctx[0].variants,
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
