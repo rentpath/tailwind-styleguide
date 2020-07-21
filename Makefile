@@ -16,5 +16,5 @@ commit-artifacts:
 	git add ./build
 	git commit -m "Build Artifacts"
 
-deploy:
+deploy: build
 	git subtree push --prefix build origin gh-pages
