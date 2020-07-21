@@ -8,11 +8,11 @@ promote-env: snowpack
 	mv ./build/tailwind-styleguide/__snowpack__ ./build/__snowpack__
 	rm -r ./build/tailwind-styleguide
 
-build: promote-env jekyll-ignore
+build: promote-env jekyll-ignore commit-artifacts
 
 commit-artifacts:
 	git add ./build
 	git commit -m "Build Artifacts"
 
-deploy: build commit-artifacts
+deploy: build
 	git subtree push --prefix build origin gh-pages
