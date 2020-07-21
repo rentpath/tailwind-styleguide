@@ -1,6 +1,7 @@
 {
   "imports": {
     "css-tree": "./css-tree.js",
+    "ramda/es/uniqWith": "./ramda/es/uniqWith.js",
     "svelte/internal": "./svelte/internal.js",
     "xstate": "./xstate.js"
   }

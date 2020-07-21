@@ -21,6 +21,7 @@ import {
 	listen,
 	mount_component,
 	noop,
+	run_all,
 	safe_not_equal,
 	set_data,
 	space,
@@ -29,16 +30,15 @@ import {
 	transition_out
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
-import { rules } from "./stores/rules.js";
 import { windsock as state } from "./stores/machine.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[6] = list[i];
+	child_ctx[8] = list[i];
 	return child_ctx;
 }
 
-// (60:37) 
+// (100:37) 
 function create_if_block_2(ctx) {
 	let each_1_anchor;
 	let current;
@@ -122,7 +122,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (58:37) 
+// (94:37) 
 function create_if_block_1(ctx) {
 	let em;
 
@@ -143,9 +143,9 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (54:0) {#if $state.value === "greeting"}
+// (86:0) {#if $state.value === "greeting"}
 function create_if_block(ctx) {
-	let h1;
+	let div;
 	let t1;
 	let input;
 	let t2;
@@ -155,26 +155,34 @@ function create_if_block(ctx) {
 
 	return {
 		c() {
-			h1 = element("h1");
-			h1.textContent = "Windsock";
+			div = element("div");
+			div.textContent = "Behold my glorious red drop zone.";
 			t1 = space();
 			input = element("input");
 			t2 = space();
 			button = element("button");
 			button.textContent = "Start";
+			attr(div, "class", "drop-handler svelte-14f1tlk");
+			attr(input, "id", "uploader");
 			attr(input, "type", "file");
 			attr(input, "accept", "text/css");
+			attr(input, "class", "svelte-14f1tlk");
 		},
 		m(target, anchor) {
-			insert(target, h1, anchor);
+			insert(target, div, anchor);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			/*input_binding*/ ctx[5](input);
+			/*input_binding*/ ctx[7](input);
 			insert(target, t2, anchor);
 			insert(target, button, anchor);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*parse*/ ctx[4]);
+				dispose = [
+					listen(div, "drop", /*uploadFile*/ ctx[5]),
+					listen(div, "click", /*triggerUploadDialog*/ ctx[6]),
+					listen(button, "click", /*parse*/ ctx[4])
+				];
+
 				mounted = true;
 			}
 		},
@@ -182,29 +190,29 @@ function create_if_block(ctx) {
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(h1);
+			if (detaching) detach(div);
 			if (detaching) detach(t1);
 			if (detaching) detach(input);
-			/*input_binding*/ ctx[5](null);
+			/*input_binding*/ ctx[7](null);
 			if (detaching) detach(t2);
 			if (detaching) detach(button);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
 
-// (64:2) {:catch error}
+// (106:2) {:catch error}
 function create_catch_block(ctx) {
 	let div;
 	let t0;
-	let t1_value = /*section*/ ctx[6].sectionName + "";
+	let t1_value = /*section*/ ctx[8].sectionName + "";
 	let t1;
 	let t2;
 	let t3;
 	let code;
 	let pre;
-	let t4_value = JSON.stringify(/*error*/ ctx[10], 4, null) + "";
+	let t4_value = JSON.stringify(/*error*/ ctx[12], 4, null) + "";
 	let t4;
 	let t5;
 
@@ -232,8 +240,8 @@ function create_catch_block(ctx) {
 			insert(target, t5, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*sections*/ 4 && t1_value !== (t1_value = /*section*/ ctx[6].sectionName + "")) set_data(t1, t1_value);
-			if (dirty & /*sections*/ 4 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[10], 4, null) + "")) set_data(t4, t4_value);
+			if (dirty & /*sections*/ 4 && t1_value !== (t1_value = /*section*/ ctx[8].sectionName + "")) set_data(t1, t1_value);
+			if (dirty & /*sections*/ 4 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[12], 4, null) + "")) set_data(t4, t4_value);
 		},
 		i: noop,
 		o: noop,
@@ -246,15 +254,15 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (62:44)     <svelte:component this={sectionModule.default}
+// (104:44)     <svelte:component this={sectionModule.default}
 function create_then_block(ctx) {
 	let switch_instance;
 	let t;
 	let current;
-	var switch_value = /*sectionModule*/ ctx[9].default;
+	var switch_value = /*sectionModule*/ ctx[11].default;
 
 	function switch_props(ctx) {
-		return { props: { meta: /*section*/ ctx[6].meta } };
+		return { props: { meta: /*section*/ ctx[8].meta } };
 	}
 
 	if (switch_value) {
@@ -276,9 +284,9 @@ function create_then_block(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*sections*/ 4) switch_instance_changes.meta = /*section*/ ctx[6].meta;
+			if (dirty & /*sections*/ 4) switch_instance_changes.meta = /*section*/ ctx[8].meta;
 
-			if (switch_value !== (switch_value = /*sectionModule*/ ctx[9].default)) {
+			if (switch_value !== (switch_value = /*sectionModule*/ ctx[11].default)) {
 				if (switch_instance) {
 					group_outros();
 					const old_component = switch_instance;
@@ -318,7 +326,7 @@ function create_then_block(ctx) {
 	};
 }
 
-// (1:0) <script>  import { rules }
+// (1:0) <script>  import { windsock as state }
 function create_pending_block(ctx) {
 	return {
 		c: noop,
@@ -330,7 +338,7 @@ function create_pending_block(ctx) {
 	};
 }
 
-// (61:1) {#each sections as section}
+// (103:1) {#each sections as section}
 function create_each_block(ctx) {
 	let await_block_anchor;
 	let promise;
@@ -343,12 +351,12 @@ function create_each_block(ctx) {
 		pending: create_pending_block,
 		then: create_then_block,
 		catch: create_catch_block,
-		value: 9,
-		error: 10,
+		value: 11,
+		error: 12,
 		blocks: [,,,]
 	};
 
-	handle_promise(promise = /*section*/ ctx[6].module, info);
+	handle_promise(promise = /*section*/ ctx[8].module, info);
 
 	return {
 		c() {
@@ -366,11 +374,11 @@ function create_each_block(ctx) {
 			ctx = new_ctx;
 			info.ctx = ctx;
 
-			if (dirty & /*sections*/ 4 && promise !== (promise = /*section*/ ctx[6].module) && handle_promise(promise, info)) {
+			if (dirty & /*sections*/ 4 && promise !== (promise = /*section*/ ctx[8].module) && handle_promise(promise, info)) {
 				
 			} else {
 				const child_ctx = ctx.slice();
-				child_ctx[9] = info.resolved;
+				child_ctx[11] = info.resolved;
 				info.block.p(child_ctx, dirty);
 			}
 		},
@@ -405,6 +413,8 @@ function create_fragment(ctx) {
 	let if_block;
 	let if_block_anchor;
 	let current;
+	let mounted;
+	let dispose;
 	const if_block_creators = [create_if_block, create_if_block_1, create_if_block_2];
 	const if_blocks = [];
 
@@ -438,6 +448,15 @@ function create_fragment(ctx) {
 
 			insert(target, if_block_anchor, anchor);
 			current = true;
+
+			if (!mounted) {
+				dispose = [
+					listen(window, "dragover", preventOpen),
+					listen(window, "drop", preventOpen)
+				];
+
+				mounted = true;
+			}
 		},
 		p(ctx, [dirty]) {
 			if ((!current || dirty & /*displayCSS*/ 2) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "")) html_tag.p(raw_value);
@@ -493,8 +512,14 @@ function create_fragment(ctx) {
 			}
 
 			if (detaching) detach(if_block_anchor);
+			mounted = false;
+			run_all(dispose);
 		}
 	};
+}
+
+function preventOpen(event) {
+	event.preventDefault();
 }
 
 function instance($$self, $$props, $$invalidate) {
@@ -513,6 +538,22 @@ function instance($$self, $$props, $$invalidate) {
 
 			reader.readAsText(uploader.files[0], "UTF-8");
 		}
+	}
+
+	function uploadFile(event) {
+		event.preventDefault();
+		const file = event.dataTransfer.items[0].getAsFile();
+		const reader = new FileReader();
+
+		reader.onload = function (event) {
+			state.send({ type: "PARSE", raw: event.target.result });
+		};
+
+		reader.readAsText(file, "UTF-8");
+	}
+
+	function triggerUploadDialog() {
+		uploader.click();
 	}
 
 	function input_binding($$value) {
@@ -537,13 +578,18 @@ function instance($$self, $$props, $$invalidate) {
 				};
 			}));
 		}
-
-		if ($$self.$$.dirty & /*$state*/ 8) {
-			$: console.log($state.context);
-		}
 	};
 
-	return [uploader, displayCSS, sections, $state, parse, input_binding];
+	return [
+		uploader,
+		displayCSS,
+		sections,
+		$state,
+		parse,
+		uploadFile,
+		triggerUploadDialog,
+		input_binding
+	];
 }
 
 class App extends SvelteComponent {

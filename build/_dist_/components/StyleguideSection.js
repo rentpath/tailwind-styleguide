@@ -43,7 +43,7 @@ function create_if_block(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "variants svelte-11ym23w");
+			attr(ul, "class", "variants svelte-wvxosn");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -95,7 +95,7 @@ function create_each_block(ctx) {
 			li = element("li");
 			t0 = text(t0_value);
 			t1 = text(":");
-			attr(li, "class", "svelte-11ym23w");
+			attr(li, "class", "svelte-wvxosn");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -143,12 +143,12 @@ function create_fragment(ctx) {
 			t4 = space();
 			div2 = element("div");
 			if (default_slot) default_slot.c();
-			attr(h2, "class", "svelte-11ym23w");
-			attr(em, "class", "svelte-11ym23w");
-			attr(div0, "class", "sticky svelte-11ym23w");
-			attr(div1, "class", "left svelte-11ym23w");
-			attr(div2, "class", "right svelte-11ym23w");
-			attr(section, "class", "styleguide-section svelte-11ym23w");
+			attr(h2, "class", "svelte-wvxosn");
+			attr(em, "class", "svelte-wvxosn");
+			attr(div0, "class", "sticky svelte-wvxosn");
+			attr(div1, "class", "left svelte-wvxosn");
+			attr(div2, "class", "right svelte-wvxosn");
+			attr(section, "class", "styleguide-section svelte-wvxosn");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);

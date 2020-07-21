@@ -1,7 +1,9 @@
 {
+	"homepage": "http://joseph-walker.github.io/tailwind-styleguide",
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
+	"build": "snowpack build",
+	"make": "make build",
 	"deploy": "git subtree push --prefix build origin gh-pages",
 	"plop": "plop"
   },

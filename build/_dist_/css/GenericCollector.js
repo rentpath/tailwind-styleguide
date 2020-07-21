@@ -1,4 +1,5 @@
 import cssTree from "/tailwind-styleguide/web_modules/css-tree.js";
+import {getClassSelector, getDeclarations, extractVariant} from "./ast.js";
 export class GenericCollector {
   constructor(name, matcher, declarations) {
     this.name = name;
@@ -23,29 +24,26 @@ export class GenericCollector {
   classRegex() {
     return new RegExp(`^${this.matcher}`);
   }
-  variantRegex() {
-    return new RegExp(`^([^:]+):.*${this.matcher}`);
-  }
   extractMeta(rule) {
-    const classSelector = cssTree.find(rule, (node) => node.type === "ClassSelector");
-    if (!classSelector) {
+    const classSelector = getClassSelector(rule);
+    if (!classSelector)
       return;
-    }
-    let variants;
     if (classSelector.name.match(this.classRegex())) {
-      const declarations = cssTree.findAll(rule, (node) => node.type === "Declaration") ?? [];
+      const declarations = getDeclarations(rule);
       const properties = declarations.map((d) => d.property);
-      if (!properties.some((p) => this.declarations.includes(p))) {
+      if (!properties.some((p) => this.declarations.includes(p)))
         return;
-      }
       return {
         rule,
         name: classSelector.name
       };
-    } else if (!!(variants = classSelector.name.match(this.variantRegex()))) {
-      return {
-        variant: variants[1].replace(/\\$/, "")
-      };
+    } else {
+      const maybeVariant = extractVariant(this.matcher, classSelector.name);
+      if (maybeVariant) {
+        return {
+          variant: maybeVariant
+        };
+      }
     }
     return;
   }

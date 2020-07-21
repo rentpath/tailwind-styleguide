@@ -29,49 +29,46 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (29:2) {#each meta.classNames as className}
+// (39:2) {#each meta.classNames as className}
 function create_each_block(ctx) {
 	let div;
 	let p;
-	let t0;
 	let p_class_value;
-	let t1;
+	let t0;
 	let em;
+	let t1;
+	let t2_value = /*className*/ ctx[1] + "";
 	let t2;
-	let t3_value = /*className*/ ctx[1] + "";
 	let t3;
-	let t4;
 
 	return {
 		c() {
 			div = element("div");
 			p = element("p");
-			t0 = text("The quick brown fox jumped over the lazy dog.");
-			t1 = space();
+			t0 = space();
 			em = element("em");
-			t2 = text(".");
-			t3 = text(t3_value);
-			t4 = space();
-			attr(p, "class", p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-8mtak1"));
-			attr(em, "class", "svelte-8mtak1");
+			t1 = text(".");
+			t2 = text(t2_value);
+			t3 = space();
+			attr(p, "class", p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-z6b7gu"));
+			attr(em, "class", "svelte-z6b7gu");
 			attr(div, "class", "color-wrapper");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, p);
-			append(p, t0);
-			append(div, t1);
+			append(div, t0);
 			append(div, em);
+			append(em, t1);
 			append(em, t2);
-			append(em, t3);
-			append(div, t4);
+			append(div, t3);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-8mtak1"))) {
+			if (dirty & /*meta*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-z6b7gu"))) {
 				attr(p, "class", p_class_value);
 			}
 
-			if (dirty & /*meta*/ 1 && t3_value !== (t3_value = /*className*/ ctx[1] + "")) set_data(t3, t3_value);
+			if (dirty & /*meta*/ 1 && t2_value !== (t2_value = /*className*/ ctx[1] + "")) set_data(t2, t2_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -79,7 +76,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (27:0) <StyleguideSection name="Text Colors" description="Utilities for controlling the text color of an element." variants={meta.variants}>
+// (37:0) <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={meta.variants}>
 function create_default_slot(ctx) {
 	let div;
 	let each_value = /*meta*/ ctx[0].classNames;
@@ -97,7 +94,7 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "colors svelte-8mtak1");
+			attr(div, "class", "colors svelte-z6b7gu");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -144,7 +141,7 @@ function create_fragment(ctx) {
 	styleguidesection = new StyleguideSection({
 			props: {
 				name: "Text Colors",
-				description: "Utilities for controlling the text color of an element.",
+				description: "Only you can prevent text-yellow-200 on a bg-white background.",
 				variants: /*meta*/ ctx[0].variants,
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
