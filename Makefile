@@ -10,5 +10,9 @@ promote-env: snowpack
 
 build: promote-env jekyll-ignore
 
-deploy: build
+commit-artifacts:
+	git add ./build
+	git commit -m "Build Artifacts"
+
+deploy: build commit-artifacts
 	git subtree push --prefix build origin gh-pages
