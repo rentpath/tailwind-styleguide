@@ -1,0 +1,9 @@
+<script>
+	import StyleguideSection from "../../components/StyleguideSection.svelte";
+
+	export let meta;
+</script>
+
+<StyleguideSection name="{{name}}" description="Your description here." variants={meta.variants}>
+	<code><pre>{JSON.stringify(meta, null, 4)}</pre></code>
+</StyleguideSection>

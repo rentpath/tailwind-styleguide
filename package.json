@@ -2,7 +2,8 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "deploy": "git subtree push --prefix build origin gh-pages"
+	"deploy": "git subtree push --prefix build origin gh-pages",
+	"plop": "plop"
   },
   "dependencies": {
     "@xstate/fsm": "^1.4.0",
@@ -17,6 +18,7 @@
     "@testing-library/svelte": "^3.0.0",
     "@types/css-tree": "^1.0.3",
     "@types/ramda": "^0.27.11",
+    "plop": "^2.7.2",
     "snowpack": "^2.6.4"
   }
 }
