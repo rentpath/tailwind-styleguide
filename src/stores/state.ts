@@ -13,6 +13,7 @@ import {
 import { tailwind } from "../temp";
 
 import { ruleWalker } from "./rules";
+import { CollectPayload } from "../css/RuleWalker";
 
 interface SplashState {
 	view: "splash";
@@ -43,25 +44,27 @@ const initialState: State = (() => {
 
 const parser$ = new Subject<string>();
 
+function transformParsePayload(payload: CollectPayload): State {
+	if (payload.type === "progress") {
+		return {
+			view: "loading",
+			progress: payload.percentage
+		};
+	} else {
+		return {
+			view: "display",
+			rules: payload.parsed
+		};
+	}
+}
+
 const parse$: Observable<State> = parser$.pipe(
-	mergeMap(function (raw) {
+	mergeMap(raw => {
 		return ruleWalker.parseAndCollect(raw).pipe(
-			map(function (res) {
-				if (res.type === "progress") {
-					return {
-						view: "loading",
-						progress: res.percentage
-					} as LoadingState;
-				} else {
-					return {
-						view: "display",
-						rules: res.parsed
-					} as DisplayState;
-				}
-			})
+			map(transformParsePayload)
 		);
 	})
-)
+);
 
 export const state$ = new BehaviorSubject<State>(initialState);
 
@@ -74,5 +77,9 @@ _state$.connect();
 // ---
 
 export function parseWithTailwind() {
-	parser$.next(tailwind);
+	parseWithString(tailwind);
+}
+
+export function parseWithString(raw: string) {
+	parser$.next(raw);
 }

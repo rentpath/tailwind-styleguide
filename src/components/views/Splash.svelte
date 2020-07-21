@@ -1,31 +1,28 @@
 <script>
-	import { state$, parseWithTailwind } from "./../../stores/state";
+	import { state$, parseWithTailwind, parseWithString } from "./../../stores/state";
 
 	import Upload from "./../../components/icons/Upload.svelte";
 
 	let uploader;
 	let displayCSS = "";
 
-	function parse() {
-		if (uploader.files.length) {
-			const reader = new FileReader();
-
-			reader.onload = function (event) {
-				// state.send({ type: "PARSE", raw: event.target.result });
-			}
-			reader.readAsText(uploader.files[0], "UTF-8");
-		}
-	}
-
 	function uploadFile(event) {
 		event.preventDefault();
 
-		const file = event.dataTransfer.items[0].getAsFile();
+		const file = (() => {
+			if (event instanceof DragEvent) {
+				return event.dataTransfer.items[0].getAsFile();
+			} else {
+				return event.target.files[0];
+			}
+		})();
+
 		const reader = new FileReader();
 
 		reader.onload = function (event) {
-			// state.send({ type: "PARSE", raw: event.target.result });
+			parseWithString(event.target.result);
 		}
+
 		reader.readAsText(file, "UTF-8");
 	}
 
@@ -116,7 +113,7 @@
 		<Upload />
 		<em class="upload-instructions">Upload your project's custom Tailwind CSS file</em>
 	</div>
-	<input id="uploader" type="file" accept="text/css" bind:this={uploader} />
+	<input id="uploader" type="file" accept="text/css" bind:this={uploader} on:change={uploadFile} />
 
 	<hr class="divider" />
 
