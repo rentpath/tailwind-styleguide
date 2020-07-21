@@ -1,11 +1,11 @@
 {
-	"homepage": "http://joseph-walker.github.io/tailwind-styleguide",
+  "homepage": "http://joseph-walker.github.io/tailwind-styleguide",
   "scripts": {
     "start": "snowpack dev",
-	"build": "snowpack build",
-	"make": "make build",
-	"deploy": "make deploy",
-	"plop": "plop"
+    "build": "snowpack build",
+    "make": "make build",
+    "deploy": "make deploy",
+    "plop": "plop"
   },
   "dependencies": {
     "@xstate/fsm": "^1.4.0",
