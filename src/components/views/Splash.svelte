@@ -1,5 +1,5 @@
 <script>
-	import { state$, parseWithTailwind, parseWithString } from "./../../stores/state";
+	import { parseWithTailwind, parseWithString } from "./../../stores/state";
 
 	import Upload from "./../../components/icons/Upload.svelte";
 

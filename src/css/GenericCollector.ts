@@ -18,41 +18,32 @@ export class GenericCollector implements RuleCollector {
 		this.variants = new Set();
 	}
 
-	public walk(rule: cssTree.Rule) {
-		const meta = this.extractMeta(rule);
+	public walk(className: string, declarations: cssTree.Declaration[]) {
+		const meta = this.extractMeta(className, declarations);
 
-		if (meta?.rule) {
-			this.rules.push(meta.rule);
-		}
-
-		if (meta?.name) {
+		if (meta === null) {
+			return false;
+		} else if (meta?.name) {
 			this.classNames.push(meta.name);
-		}
-
-		if (meta?.variant) {
+			return true;
+		} else if (meta?.variant) {
 			this.variants.add(meta.variant);
 		}
+
+		return false;
 	}
 
 	private classRegex() {
 		return new RegExp(`^${this.matcher}`);
 	}
 
-	protected extractMeta(rule: cssTree.Rule) {
-		// Each call to this method receives an AST for a CSS rule
-		const classSelector = getClassSelector(rule);
-
-		// Things like element selectors and ID selectors aren't needed, so skip them.
-		// Past this point we know we are working with a CSS rule; something like .bg-red-500 { ... }
-		if (!classSelector) return;
-
+	protected extractMeta(
+		className: string,
+		declarations: cssTree.Declaration[]
+	) {
 		// Try to match the selector's name (the actual class definition) with the regex for this
 		// collector. So if we're matching on /^.bg-/, we'll ignore text-red-xxx classes.
-		if (classSelector.name.match(this.classRegex())) {
-			// The declarations are the actual "rules" for a CSS expression;
-			// something like background-color: #FF0000;
-			const declarations = getDeclarations(rule);
-
+		if (className.match(this.classRegex())) {
 			// The declarations are still an AST. Get the string values they contain so we can
 			// inspect them.
 			const properties = declarations.map((d) => d.property);
@@ -68,31 +59,26 @@ export class GenericCollector implements RuleCollector {
 
 			// If we've made it this far, the rule we received is one we're interested in collecting.
 			return {
-				rule,
-				name: classSelector.name,
+				name: className,
 			};
-			// If we didn't match the selector name, this may still be a variant. Try to extract it if it exists
 		} else {
-			const maybeVariant = extractVariant(
-				this.matcher,
-				classSelector.name
-			);
+			// If we didn't match the selector name, this may still be a variant. Try to extract it if it exists
+			const maybeVariant = extractVariant(this.matcher, className);
 
 			if (maybeVariant) {
 				return { variant: maybeVariant };
 			}
 		}
 
-		return;
+		return null;
 	}
 
 	public collect() {
 		return {
-			css: this.rules.map((r) => cssTree.generate(r)),
-			meta: {
-				classNames: this.classNames,
-				variants: [...this.variants],
-			},
+			classes: this.classNames.map((n) => ({
+				name: n,
+			})),
+			variants: [...this.variants],
 		};
 	}
 }

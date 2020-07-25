@@ -2,7 +2,8 @@
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
 	import ClassName from "../../components/ClassName.svelte";
 
-	export let meta;
+	export let classes;
+	export let variants;
 </script>
 
 <style>
@@ -19,11 +20,11 @@
 	}
 </style>
 
-<StyleguideSection name="Font Size" description="Controls how accessible your site is to the elderly." variants={meta.variants}>
-	{#each meta.classNames as className}
+<StyleguideSection name="Font Size" description="Controls how accessible your site is to the elderly." variants={variants}>
+	{#each classes as c}
 		<div class="sample">
-			<ClassName>.{className}</ClassName>
-			<p class={className}>The quick brown fox etc.</p>
+			<ClassName>.{c.name}</ClassName>
+			<p class={c.name}>The quick brown fox etc.</p>
 		</div>
 	{/each}
 </StyleguideSection>

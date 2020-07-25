@@ -1,11 +1,11 @@
-import { 
+import {
 	merge,
 	Subject,
 	BehaviorSubject,
 	Observable,
 	ConnectableObservable
 } from "rxjs";
-import { 
+import {
 	map,
 	mergeMap,
 	multicast
@@ -13,7 +13,7 @@ import {
 import { tailwind } from "../temp";
 
 import { ruleWalker } from "./rules";
-import { CollectPayload } from "../css/RuleWalker";
+import { CollectPayload, Parsed } from "../css/RuleWalker";
 
 interface SplashState {
 	view: "splash";
@@ -26,7 +26,7 @@ interface LoadingState {
 
 interface DisplayState {
 	view: "display";
-	rules: string;
+	parsed: Parsed;
 }
 
 type State =
@@ -53,7 +53,7 @@ function transformParsePayload(payload: CollectPayload): State {
 	} else {
 		return {
 			view: "display",
-			rules: payload.parsed
+			parsed: payload.parsed
 		};
 	}
 }

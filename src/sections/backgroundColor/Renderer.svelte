@@ -2,9 +2,10 @@
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
 	import Grid from "../../components/swatches/Grid";
 
-	export let meta;
+	export let classes;
+	export let variants;
 </script>
 
-<StyleguideSection name="Background Colors" description="Most of the colors of the rainbow." variants={meta.variants}>
-	<Grid swatches={meta.classNames} circle fancy></Grid>
+<StyleguideSection name="Background Colors" description="Most of the colors of the rainbow." variants={variants}>
+	<Grid swatches={classes.map(c => c.name)} circle fancy></Grid>
 </StyleguideSection>

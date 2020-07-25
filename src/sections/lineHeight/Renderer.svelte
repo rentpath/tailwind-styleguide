@@ -2,12 +2,13 @@
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
 	import ClassName from "../../components/ClassName.svelte";
 
-	export let meta;
+	export let classes;
+	export let variants;
 
 	// CSS Grid can't do a column-fill with dynamic row count
 	// So we have to hack it with an inline style calculated from
 	// the number of elements we want to populate
-	$: numRows = Math.ceil(meta.classNames.length / 2);
+	$: numRows = Math.ceil(classes.length / 2);
 	$: gridTemplateRows = `grid-template-rows: repeat(${numRows}, 1fr)`;
 </script>
 
@@ -39,12 +40,12 @@
 	}
 </style>
 
-<StyleguideSection name="Line Height" description="Respect the personal space of your text." variants={meta.variants}>
+<StyleguideSection name="Line Height" description="Respect the personal space of your text." variants={variants}>
 	<div class="text" style={gridTemplateRows}>
-		{#each meta.classNames as className}
+		{#each classes as c}
 			<div class="leading-cell">
-				<ClassName>.{className}</ClassName>
-				<p class={className}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, laborum dolor accusantium itaque voluptate dolores enim aliquid, nisi cupiditate, veritatis non nam! Nesciunt nihil doloribus, suscipit cumque corrupti dolor dolorum!</p>
+				<ClassName>.{c.name}</ClassName>
+				<p class={c.name}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, laborum dolor accusantium itaque voluptate dolores enim aliquid, nisi cupiditate, veritatis non nam! Nesciunt nihil doloribus, suscipit cumque corrupti dolor dolorum!</p>
 			</div>
 		{/each}
 	</div>

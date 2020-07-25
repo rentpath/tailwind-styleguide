@@ -2,9 +2,10 @@
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
 	import Grid from "../../components/swatches/Grid";
 
-	export let meta;
+	export let classes;
+	export let variants;
 </script>
 
-<StyleguideSection name="Border Radius" description="For rounding off those sharp edges." variants={meta.variants}>
-	<Grid swatches={meta.classNames} filled stroked></Grid>
+<StyleguideSection name="Border Radius" description="For rounding off those sharp edges." variants={variants}>
+	<Grid swatches={classes.map(c => c.name)} filled stroked></Grid>
 </StyleguideSection>

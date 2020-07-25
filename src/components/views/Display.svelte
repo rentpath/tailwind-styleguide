@@ -1,19 +1,17 @@
 <script>
 	import { state$ } from "./../../stores/state";
 
-	let displayCSS = "";
-
-	$: sections = Object.keys($state$.rules || {}).map(sectionName => {
-		displayCSS += $state$.rules[sectionName].css.join("\n");
-
+	$: sections = Object.keys($state$.parsed.collection || {}).map(sectionName => {
 		const module = import(`./../../sections/${sectionName}/Renderer.js`)
 
 		return {
-			...$state$.rules[sectionName],
+			...$state$.parsed.collection[sectionName],
 			sectionName,
 			module
 		};
 	});
+
+	$: displayCSS = $state$.parsed.rules.join("\n");
 </script>
 
 <svelte:head>
@@ -22,7 +20,7 @@
 
 {#each sections as section}
 	{#await section.module then sectionModule}
-		<svelte:component this={sectionModule.default} meta={section.meta}></svelte:component>
+		<svelte:component this={sectionModule.default} classes={section.classes} variants={section.variants}></svelte:component>
 	{:catch error}
 		<div>Uh oh! Section {section.sectionName} not found.</div>
 		<code><pre>{JSON.stringify(error, 4, null)}</pre></code>

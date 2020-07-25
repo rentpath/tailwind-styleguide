@@ -1,7 +1,9 @@
 <script>
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
+	import ClassName from "../../components/ClassName.svelte";
 
-	export let meta;
+	export let classes;
+	export let variants;
 </script>
 
 <style>
@@ -19,14 +21,6 @@
 		content: "The quick brown fox jumped over the lazy dog.";
 	}
 
-	em {
-		font-style: normal;
-		font-weight: normal;
-		font-weight: 600;
-		font-size: 0.8rem;
-		color: #999;
-	}
-
 	@media (max-width: 500px) {
 		p::after {
 			content: "The quick brown fox etc."
@@ -34,12 +28,12 @@
 	}
 </style>
 
-<StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={meta.variants}>
+<StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={variants}>
 	<div class="colors">
-		{#each meta.classNames as className}
+		{#each classes as c}
 			<div class="color-wrapper">
-				<p class={className}></p>
-				<em>.{className}</em>
+				<p class={c.name}></p>
+				<ClassName>.{c.name}</ClassName>
 			</div>
 		{/each}
 	</div>

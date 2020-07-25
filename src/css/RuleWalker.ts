@@ -1,7 +1,8 @@
 import cssTree from "css-tree";
 import { Observable } from "rxjs";
 
-import { RuleCollector } from "./types";
+import { RuleCollector, Collection } from "./types";
+import { getClassSelector, getDeclarations } from "./ast";
 
 // Controls how many rules are walked in a single "chunk" of time.
 // Increasing this number results in faster parsing because fewer tasks are taken
@@ -14,9 +15,14 @@ export interface ProgressPayload {
 	percentage: number;
 }
 
+export interface Parsed {
+	collection: Record<string, Collection>;
+	rules: string[];
+}
+
 export interface CompletePayload {
 	type: "complete";
-	parsed: any;
+	parsed: Parsed;
 }
 
 export type CollectPayload =
@@ -24,7 +30,11 @@ export type CollectPayload =
 	| CompletePayload
 
 export class RuleWalker {
-	constructor(private readonly collectors: RuleCollector[]) {}
+	private rules: cssTree.Rule[];
+
+	constructor(private readonly collectors: RuleCollector[]) {
+		this.rules = [];
+	}
 
 	public parseAndCollect(css: string) {
 		const parsed = cssTree.parse(css);
@@ -37,30 +47,46 @@ export class RuleWalker {
 			let index = 0;
 
 			const rules = cssTree
-				.findAll(ast, node => node.type === "Rule");
+				.findAll(ast, node => node.type === "Rule") as cssTree.Rule[];
 
 			const parseNextChunk = () => {
 				const chunk = Math.min(rules.length, index + BLOCKING_FACTOR);
 
 				while (index < chunk) {
+					const classSelector = getClassSelector(rules[index]);
+
+					if (!classSelector) {
+						index++;
+						continue;
+					}
+
+					const declarations = getDeclarations(rules[index]);
+
 					this.collectors.forEach(collector => {
-						collector.walk(rules[index] as cssTree.Rule);
+						const shouldIncludeRule = collector.walk(classSelector.name, declarations);
+
+						if (shouldIncludeRule) {
+							this.rules.push(rules[index]);
+						}
 					});
 
 					index++;
 				}
 
 				if (index >= rules.length) {
-					const parsed = this.collectors.reduce(function (carry, collector) {
+					const collection = this.collectors.reduce(function (carry, collector) {
 						return {
 							...carry,
 							[collector.name]: collector.collect()
-						}
-					}, {});
+						};
+					}, {} as Record<string, Collection>);
 
 					subscriber.next({
 						type: "complete",
-						parsed
+						parsed: {
+							collection,
+							rules: this.rules.map((r) => cssTree.generate(r)),
+						}
 					});
 
 					subscriber.complete();
