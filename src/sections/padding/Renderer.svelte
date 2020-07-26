@@ -5,6 +5,6 @@
 	export let variants;
 </script>
 
-<StyleguideSection name="{{name}}" description="Your description here." variants={variants}>
+<StyleguideSection name="Padding" description="Your description here." variants={variants}>
 	<code><pre>{JSON.stringify(classes, null, 4)}</pre></code>
 </StyleguideSection>

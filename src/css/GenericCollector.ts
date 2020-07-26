@@ -1,7 +1,7 @@
 import cssTree from "css-tree";
 
 import { RuleCollector } from "./types";
-import { getClassSelector, getDeclarations, extractVariant } from "./ast";
+import { extractVariant } from "./ast";
 
 export class GenericCollector implements RuleCollector {
 	protected rules: cssTree.Rule[];
