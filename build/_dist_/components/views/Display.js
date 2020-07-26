@@ -33,7 +33,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (26:1) {:catch error}
+// (24:1) {:catch error}
 function create_catch_block(ctx) {
 	let div;
 	let t0;
@@ -71,8 +71,8 @@ function create_catch_block(ctx) {
 			insert(target, t5, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*sections*/ 2 && t1_value !== (t1_value = /*section*/ ctx[3].sectionName + "")) set_data(t1, t1_value);
-			if (dirty & /*sections*/ 2 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[7], 4, null) + "")) set_data(t4, t4_value);
+			if (dirty & /*sections*/ 1 && t1_value !== (t1_value = /*section*/ ctx[3].sectionName + "")) set_data(t1, t1_value);
+			if (dirty & /*sections*/ 1 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[7], 4, null) + "")) set_data(t4, t4_value);
 		},
 		i: noop,
 		o: noop,
@@ -85,7 +85,7 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (24:43)    <svelte:component this={sectionModule.default}
+// (22:43)    <svelte:component this={sectionModule.default}
 function create_then_block(ctx) {
 	let switch_instance;
 	let t;
@@ -93,7 +93,12 @@ function create_then_block(ctx) {
 	var switch_value = /*sectionModule*/ ctx[6].default;
 
 	function switch_props(ctx) {
-		return { props: { meta: /*section*/ ctx[3].meta } };
+		return {
+			props: {
+				classes: /*section*/ ctx[3].classes,
+				variants: /*section*/ ctx[3].variants
+			}
+		};
 	}
 
 	if (switch_value) {
@@ -115,7 +120,8 @@ function create_then_block(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*sections*/ 2) switch_instance_changes.meta = /*section*/ ctx[3].meta;
+			if (dirty & /*sections*/ 1) switch_instance_changes.classes = /*section*/ ctx[3].classes;
+			if (dirty & /*sections*/ 1) switch_instance_changes.variants = /*section*/ ctx[3].variants;
 
 			if (switch_value !== (switch_value = /*sectionModule*/ ctx[6].default)) {
 				if (switch_instance) {
@@ -169,7 +175,7 @@ function create_pending_block(ctx) {
 	};
 }
 
-// (23:0) {#each sections as section}
+// (21:0) {#each sections as section}
 function create_each_block(ctx) {
 	let await_block_anchor;
 	let promise;
@@ -205,7 +211,7 @@ function create_each_block(ctx) {
 			ctx = new_ctx;
 			info.ctx = ctx;
 
-			if (dirty & /*sections*/ 2 && promise !== (promise = /*section*/ ctx[3].module) && handle_promise(promise, info)) {
+			if (dirty & /*sections*/ 1 && promise !== (promise = /*section*/ ctx[3].module) && handle_promise(promise, info)) {
 				
 			} else {
 				const child_ctx = ctx.slice();
@@ -237,12 +243,12 @@ function create_each_block(ctx) {
 
 function create_fragment(ctx) {
 	let html_tag;
-	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "";
+	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "";
 	let html_anchor;
 	let t;
 	let each_1_anchor;
 	let current;
-	let each_value = /*sections*/ ctx[1];
+	let each_value = /*sections*/ ctx[0];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -278,10 +284,10 @@ function create_fragment(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*displayCSS*/ 1) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[0]}</style>` + "")) html_tag.p(raw_value);
+			if ((!current || dirty & /*displayCSS*/ 2) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "")) html_tag.p(raw_value);
 
-			if (dirty & /*sections, JSON*/ 2) {
-				each_value = /*sections*/ ctx[1];
+			if (dirty & /*sections, JSON*/ 1) {
+				each_value = /*sections*/ ctx[0];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -338,25 +344,28 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let $state$;
 	component_subscribe($$self, state$, $$value => $$invalidate(2, $state$ = $$value));
-	let displayCSS = "";
 	let sections;
+	let displayCSS;
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$state$, displayCSS*/ 5) {
-			$: $$invalidate(1, sections = Object.keys($state$.rules || {}).map(sectionName => {
-				$$invalidate(0, displayCSS += $state$.rules[sectionName].css.join("\n"));
+		if ($$self.$$.dirty & /*$state$*/ 4) {
+			$: $$invalidate(0, sections = Object.keys($state$.parsed.collection || {}).map(sectionName => {
 				const module = import(`./../../sections/${sectionName}/Renderer.js`);
 
 				return {
-					...$state$.rules[sectionName],
+					...$state$.parsed.collection[sectionName],
 					sectionName,
 					module
 				};
 			}));
 		}
+
+		if ($$self.$$.dirty & /*$state$*/ 4) {
+			$: $$invalidate(1, displayCSS = $state$.parsed.rules.join("\n"));
+		}
 	};
 
-	return [displayCSS, sections];
+	return [sections, displayCSS];
 }
 
 class Display extends SvelteComponent {

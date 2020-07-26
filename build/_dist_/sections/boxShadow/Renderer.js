@@ -19,7 +19,7 @@ function create_default_slot(ctx) {
 
 	grid = new Grid({
 			props: {
-				swatches: /*meta*/ ctx[0].classNames,
+				swatches: /*classes*/ ctx[0].map(func),
 				squircle: true,
 				filled: true
 			}
@@ -35,7 +35,7 @@ function create_default_slot(ctx) {
 		},
 		p(ctx, dirty) {
 			const grid_changes = {};
-			if (dirty & /*meta*/ 1) grid_changes.swatches = /*meta*/ ctx[0].classNames;
+			if (dirty & /*classes*/ 1) grid_changes.swatches = /*classes*/ ctx[0].map(func);
 			grid.$set(grid_changes);
 		},
 		i(local) {
@@ -61,7 +61,7 @@ function create_fragment(ctx) {
 			props: {
 				name: "Box Shadow",
 				description: "Determines how angsty your components should be.",
-				variants: /*meta*/ ctx[0].variants,
+				variants: /*variants*/ ctx[1],
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
 			}
@@ -77,9 +77,9 @@ function create_fragment(ctx) {
 		},
 		p(ctx, [dirty]) {
 			const styleguidesection_changes = {};
-			if (dirty & /*meta*/ 1) styleguidesection_changes.variants = /*meta*/ ctx[0].variants;
+			if (dirty & /*variants*/ 2) styleguidesection_changes.variants = /*variants*/ ctx[1];
 
-			if (dirty & /*$$scope, meta*/ 3) {
+			if (dirty & /*$$scope, classes*/ 5) {
 				styleguidesection_changes.$$scope = { dirty, ctx };
 			}
 
@@ -100,20 +100,24 @@ function create_fragment(ctx) {
 	};
 }
 
+const func = c => c.name;
+
 function instance($$self, $$props, $$invalidate) {
-	let { meta } = $$props;
+	let { classes } = $$props;
+	let { variants } = $$props;
 
 	$$self.$set = $$props => {
-		if ("meta" in $$props) $$invalidate(0, meta = $$props.meta);
+		if ("classes" in $$props) $$invalidate(0, classes = $$props.classes);
+		if ("variants" in $$props) $$invalidate(1, variants = $$props.variants);
 	};
 
-	return [meta];
+	return [classes, variants];
 }
 
 class Renderer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { meta: 0 });
+		init(this, options, instance, create_fragment, safe_not_equal, { classes: 0, variants: 1 });
 	}
 }
 

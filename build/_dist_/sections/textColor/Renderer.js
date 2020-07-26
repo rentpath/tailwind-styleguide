@@ -4,11 +4,13 @@ import {
 	SvelteComponent,
 	append,
 	attr,
+	check_outros,
 	create_component,
 	destroy_component,
 	destroy_each,
 	detach,
 	element,
+	group_outros,
 	init,
 	insert,
 	mount_component,
@@ -22,69 +24,117 @@ import {
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
 import StyleguideSection from "../../components/StyleguideSection.js";
+import ClassName from "../../components/ClassName.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[1] = list[i];
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
-// (39:2) {#each meta.classNames as className}
+// (36:4) <ClassName>
+function create_default_slot_1(ctx) {
+	let t0;
+	let t1_value = /*c*/ ctx[2].name + "";
+	let t1;
+
+	return {
+		c() {
+			t0 = text(".");
+			t1 = text(t1_value);
+		},
+		m(target, anchor) {
+			insert(target, t0, anchor);
+			insert(target, t1, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*classes*/ 1 && t1_value !== (t1_value = /*c*/ ctx[2].name + "")) set_data(t1, t1_value);
+		},
+		d(detaching) {
+			if (detaching) detach(t0);
+			if (detaching) detach(t1);
+		}
+	};
+}
+
+// (33:2) {#each classes as c}
 function create_each_block(ctx) {
 	let div;
 	let p;
 	let p_class_value;
 	let t0;
-	let em;
+	let classname;
 	let t1;
-	let t2_value = /*className*/ ctx[1] + "";
-	let t2;
-	let t3;
+	let current;
+
+	classname = new ClassName({
+			props: {
+				$$slots: { default: [create_default_slot_1] },
+				$$scope: { ctx }
+			}
+		});
 
 	return {
 		c() {
 			div = element("div");
 			p = element("p");
 			t0 = space();
-			em = element("em");
-			t1 = text(".");
-			t2 = text(t2_value);
-			t3 = space();
-			attr(p, "class", p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-z6b7gu"));
-			attr(em, "class", "svelte-z6b7gu");
+			create_component(classname.$$.fragment);
+			t1 = space();
+			attr(p, "class", p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-6248pu"));
 			attr(div, "class", "color-wrapper");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, p);
 			append(div, t0);
-			append(div, em);
-			append(em, t1);
-			append(em, t2);
-			append(div, t3);
+			mount_component(classname, div, null);
+			append(div, t1);
+			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-z6b7gu"))) {
+			if (!current || dirty & /*classes*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-6248pu"))) {
 				attr(p, "class", p_class_value);
 			}
 
-			if (dirty & /*meta*/ 1 && t2_value !== (t2_value = /*className*/ ctx[1] + "")) set_data(t2, t2_value);
+			const classname_changes = {};
+
+			if (dirty & /*$$scope, classes*/ 33) {
+				classname_changes.$$scope = { dirty, ctx };
+			}
+
+			classname.$set(classname_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(classname.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(classname.$$.fragment, local);
+			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(div);
+			destroy_component(classname);
 		}
 	};
 }
 
-// (37:0) <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={meta.variants}>
+// (31:0) <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={variants}>
 function create_default_slot(ctx) {
 	let div;
-	let each_value = /*meta*/ ctx[0].classNames;
+	let current;
+	let each_value = /*classes*/ ctx[0];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
 	}
+
+	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+		each_blocks[i] = null;
+	});
 
 	return {
 		c() {
@@ -94,7 +144,7 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "colors svelte-z6b7gu");
+			attr(div, "class", "colors svelte-6248pu");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -102,10 +152,12 @@ function create_default_slot(ctx) {
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div, null);
 			}
+
+			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1) {
-				each_value = /*meta*/ ctx[0].classNames;
+			if (dirty & /*classes*/ 1) {
+				each_value = /*classes*/ ctx[0];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -113,19 +165,41 @@ function create_default_slot(ctx) {
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
+						transition_in(each_blocks[i], 1);
 					} else {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
 						each_blocks[i].m(div, null);
 					}
 				}
 
-				for (; i < each_blocks.length; i += 1) {
-					each_blocks[i].d(1);
+				group_outros();
+
+				for (i = each_value.length; i < each_blocks.length; i += 1) {
+					out(i);
 				}
 
-				each_blocks.length = each_value.length;
+				check_outros();
 			}
+		},
+		i(local) {
+			if (current) return;
+
+			for (let i = 0; i < each_value.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			each_blocks = each_blocks.filter(Boolean);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -142,7 +216,7 @@ function create_fragment(ctx) {
 			props: {
 				name: "Text Colors",
 				description: "Only you can prevent text-yellow-200 on a bg-white background.",
-				variants: /*meta*/ ctx[0].variants,
+				variants: /*variants*/ ctx[1],
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
 			}
@@ -158,9 +232,9 @@ function create_fragment(ctx) {
 		},
 		p(ctx, [dirty]) {
 			const styleguidesection_changes = {};
-			if (dirty & /*meta*/ 1) styleguidesection_changes.variants = /*meta*/ ctx[0].variants;
+			if (dirty & /*variants*/ 2) styleguidesection_changes.variants = /*variants*/ ctx[1];
 
-			if (dirty & /*$$scope, meta*/ 17) {
+			if (dirty & /*$$scope, classes*/ 33) {
 				styleguidesection_changes.$$scope = { dirty, ctx };
 			}
 
@@ -182,19 +256,21 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let { meta } = $$props;
+	let { classes } = $$props;
+	let { variants } = $$props;
 
 	$$self.$set = $$props => {
-		if ("meta" in $$props) $$invalidate(0, meta = $$props.meta);
+		if ("classes" in $$props) $$invalidate(0, classes = $$props.classes);
+		if ("variants" in $$props) $$invalidate(1, variants = $$props.variants);
 	};
 
-	return [meta];
+	return [classes, variants];
 }
 
 class Renderer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { meta: 0 });
+		init(this, options, instance, create_fragment, safe_not_equal, { classes: 0, variants: 1 });
 	}
 }
 

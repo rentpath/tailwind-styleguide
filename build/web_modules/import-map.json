@@ -1,7 +1,6 @@
 {
   "imports": {
     "css-tree": "./css-tree.js",
-    "ramda/es/uniqWith": "./ramda/es/uniqWith.js",
     "rxjs": "./rxjs.js",
     "rxjs/operators": "./rxjs/operators.js",
     "svelte/internal": "./svelte/internal.js"

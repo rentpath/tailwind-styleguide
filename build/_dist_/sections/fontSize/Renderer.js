@@ -29,14 +29,14 @@ import ClassName from "../../components/ClassName.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[1] = list[i];
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
-// (25:3) <ClassName>
+// (26:3) <ClassName>
 function create_default_slot_1(ctx) {
 	let t0;
-	let t1_value = /*className*/ ctx[1] + "";
+	let t1_value = /*c*/ ctx[2].name + "";
 	let t1;
 
 	return {
@@ -49,7 +49,7 @@ function create_default_slot_1(ctx) {
 			insert(target, t1, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1 && t1_value !== (t1_value = /*className*/ ctx[1] + "")) set_data(t1, t1_value);
+			if (dirty & /*classes*/ 1 && t1_value !== (t1_value = /*c*/ ctx[2].name + "")) set_data(t1, t1_value);
 		},
 		d(detaching) {
 			if (detaching) detach(t0);
@@ -58,7 +58,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (23:1) {#each meta.classNames as className}
+// (24:1) {#each classes as c}
 function create_each_block(ctx) {
 	let div;
 	let classname;
@@ -84,7 +84,7 @@ function create_each_block(ctx) {
 			p = element("p");
 			t1 = text("The quick brown fox etc.");
 			t2 = space();
-			attr(p, "class", p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-1y1f7yv"));
+			attr(p, "class", p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-1y1f7yv"));
 			attr(div, "class", "sample svelte-1y1f7yv");
 		},
 		m(target, anchor) {
@@ -99,13 +99,13 @@ function create_each_block(ctx) {
 		p(ctx, dirty) {
 			const classname_changes = {};
 
-			if (dirty & /*$$scope, meta*/ 17) {
+			if (dirty & /*$$scope, classes*/ 33) {
 				classname_changes.$$scope = { dirty, ctx };
 			}
 
 			classname.$set(classname_changes);
 
-			if (!current || dirty & /*meta*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*className*/ ctx[1]) + " svelte-1y1f7yv"))) {
+			if (!current || dirty & /*classes*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-1y1f7yv"))) {
 				attr(p, "class", p_class_value);
 			}
 		},
@@ -125,11 +125,11 @@ function create_each_block(ctx) {
 	};
 }
 
-// (22:0) <StyleguideSection name="Font Size" description="Controls how accessible your site is to the elderly." variants={meta.variants}>
+// (23:0) <StyleguideSection name="Font Size" description="Controls how accessible your site is to the elderly." variants={variants}>
 function create_default_slot(ctx) {
 	let each_1_anchor;
 	let current;
-	let each_value = /*meta*/ ctx[0].classNames;
+	let each_value = /*classes*/ ctx[0];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -157,8 +157,8 @@ function create_default_slot(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1) {
-				each_value = /*meta*/ ctx[0].classNames;
+			if (dirty & /*classes*/ 1) {
+				each_value = /*classes*/ ctx[0];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -217,7 +217,7 @@ function create_fragment(ctx) {
 			props: {
 				name: "Font Size",
 				description: "Controls how accessible your site is to the elderly.",
-				variants: /*meta*/ ctx[0].variants,
+				variants: /*variants*/ ctx[1],
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
 			}
@@ -233,9 +233,9 @@ function create_fragment(ctx) {
 		},
 		p(ctx, [dirty]) {
 			const styleguidesection_changes = {};
-			if (dirty & /*meta*/ 1) styleguidesection_changes.variants = /*meta*/ ctx[0].variants;
+			if (dirty & /*variants*/ 2) styleguidesection_changes.variants = /*variants*/ ctx[1];
 
-			if (dirty & /*$$scope, meta*/ 17) {
+			if (dirty & /*$$scope, classes*/ 33) {
 				styleguidesection_changes.$$scope = { dirty, ctx };
 			}
 
@@ -257,19 +257,21 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let { meta } = $$props;
+	let { classes } = $$props;
+	let { variants } = $$props;
 
 	$$self.$set = $$props => {
-		if ("meta" in $$props) $$invalidate(0, meta = $$props.meta);
+		if ("classes" in $$props) $$invalidate(0, classes = $$props.classes);
+		if ("variants" in $$props) $$invalidate(1, variants = $$props.variants);
 	};
 
-	return [meta];
+	return [classes, variants];
 }
 
 class Renderer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { meta: 0 });
+		init(this, options, instance, create_fragment, safe_not_equal, { classes: 0, variants: 1 });
 	}
 }
 

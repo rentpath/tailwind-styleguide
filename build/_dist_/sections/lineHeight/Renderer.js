@@ -10,6 +10,7 @@ import {
 	destroy_each,
 	detach,
 	element,
+	empty,
 	group_outros,
 	init,
 	insert,
@@ -28,14 +29,14 @@ import ClassName from "../../components/ClassName.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
-// (46:4) <ClassName>
+// (27:3) <ClassName>
 function create_default_slot_1(ctx) {
 	let t0;
-	let t1_value = /*className*/ ctx[3] + "";
+	let t1_value = /*c*/ ctx[2].name + "";
 	let t1;
 
 	return {
@@ -48,7 +49,7 @@ function create_default_slot_1(ctx) {
 			insert(target, t1, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1 && t1_value !== (t1_value = /*className*/ ctx[3] + "")) set_data(t1, t1_value);
+			if (dirty & /*classes*/ 1 && t1_value !== (t1_value = /*c*/ ctx[2].name + "")) set_data(t1, t1_value);
 		},
 		d(detaching) {
 			if (detaching) detach(t0);
@@ -57,15 +58,17 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (44:2) {#each meta.classNames as className}
+// (25:1) {#each classes as c}
 function create_each_block(ctx) {
 	let div;
 	let classname;
 	let t0;
 	let p;
 	let t1;
-	let p_class_value;
+	let br;
 	let t2;
+	let p_class_value;
+	let t3;
 	let current;
 
 	classname = new ClassName({
@@ -81,10 +84,12 @@ function create_each_block(ctx) {
 			create_component(classname.$$.fragment);
 			t0 = space();
 			p = element("p");
-			t1 = text("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, laborum dolor accusantium itaque voluptate dolores enim aliquid, nisi cupiditate, veritatis non nam! Nesciunt nihil doloribus, suscipit cumque corrupti dolor dolorum!");
-			t2 = space();
-			attr(p, "class", p_class_value = "" + (null_to_empty(/*className*/ ctx[3]) + " svelte-1583b8t"));
-			attr(div, "class", "leading-cell svelte-1583b8t");
+			t1 = text("Lorem ipsum dolor sit amet, consectetur adipisicing elit.");
+			br = element("br");
+			t2 = text("Esse, laborum dolor accusantium itaque voluptate dolores enim aliquid.");
+			t3 = space();
+			attr(p, "class", p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-7mtjij"));
+			attr(div, "class", "sample svelte-7mtjij");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -92,19 +97,21 @@ function create_each_block(ctx) {
 			append(div, t0);
 			append(div, p);
 			append(p, t1);
-			append(div, t2);
+			append(p, br);
+			append(p, t2);
+			append(div, t3);
 			current = true;
 		},
 		p(ctx, dirty) {
 			const classname_changes = {};
 
-			if (dirty & /*$$scope, meta*/ 65) {
+			if (dirty & /*$$scope, classes*/ 33) {
 				classname_changes.$$scope = { dirty, ctx };
 			}
 
 			classname.$set(classname_changes);
 
-			if (!current || dirty & /*meta*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*className*/ ctx[3]) + " svelte-1583b8t"))) {
+			if (!current || dirty & /*classes*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-7mtjij"))) {
 				attr(p, "class", p_class_value);
 			}
 		},
@@ -124,11 +131,11 @@ function create_each_block(ctx) {
 	};
 }
 
-// (42:0) <StyleguideSection name="Line Height" description="Respect the personal space of your text." variants={meta.variants}>
+// (24:0) <StyleguideSection name="Line Height" description="Respect the personal space of your text." variants={variants}>
 function create_default_slot(ctx) {
-	let div;
+	let each_1_anchor;
 	let current;
-	let each_value = /*meta*/ ctx[0].classNames;
+	let each_value = /*classes*/ ctx[0];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -141,27 +148,23 @@ function create_default_slot(ctx) {
 
 	return {
 		c() {
-			div = element("div");
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "text svelte-1583b8t");
-			attr(div, "style", /*gridTemplateRows*/ ctx[1]);
+			each_1_anchor = empty();
 		},
 		m(target, anchor) {
-			insert(target, div, anchor);
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div, null);
+				each_blocks[i].m(target, anchor);
 			}
 
+			insert(target, each_1_anchor, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*meta*/ 1) {
-				each_value = /*meta*/ ctx[0].classNames;
+			if (dirty & /*classes*/ 1) {
+				each_value = /*classes*/ ctx[0];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -174,7 +177,7 @@ function create_default_slot(ctx) {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(div, null);
+						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
 					}
 				}
 
@@ -185,10 +188,6 @@ function create_default_slot(ctx) {
 				}
 
 				check_outros();
-			}
-
-			if (!current || dirty & /*gridTemplateRows*/ 2) {
-				attr(div, "style", /*gridTemplateRows*/ ctx[1]);
 			}
 		},
 		i(local) {
@@ -210,8 +209,8 @@ function create_default_slot(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div);
 			destroy_each(each_blocks, detaching);
+			if (detaching) detach(each_1_anchor);
 		}
 	};
 }
@@ -224,7 +223,7 @@ function create_fragment(ctx) {
 			props: {
 				name: "Line Height",
 				description: "Respect the personal space of your text.",
-				variants: /*meta*/ ctx[0].variants,
+				variants: /*variants*/ ctx[1],
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
 			}
@@ -240,9 +239,9 @@ function create_fragment(ctx) {
 		},
 		p(ctx, [dirty]) {
 			const styleguidesection_changes = {};
-			if (dirty & /*meta*/ 1) styleguidesection_changes.variants = /*meta*/ ctx[0].variants;
+			if (dirty & /*variants*/ 2) styleguidesection_changes.variants = /*variants*/ ctx[1];
 
-			if (dirty & /*$$scope, gridTemplateRows, meta*/ 67) {
+			if (dirty & /*$$scope, classes*/ 33) {
 				styleguidesection_changes.$$scope = { dirty, ctx };
 			}
 
@@ -264,35 +263,21 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let { meta } = $$props;
+	let { classes } = $$props;
+	let { variants } = $$props;
 
 	$$self.$set = $$props => {
-		if ("meta" in $$props) $$invalidate(0, meta = $$props.meta);
+		if ("classes" in $$props) $$invalidate(0, classes = $$props.classes);
+		if ("variants" in $$props) $$invalidate(1, variants = $$props.variants);
 	};
 
-	let numRows;
-	let gridTemplateRows;
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*meta*/ 1) {
-			// CSS Grid can't do a column-fill with dynamic row count
-			// So we have to hack it with an inline style calculated from
-			// the number of elements we want to populate
-			$: $$invalidate(2, numRows = Math.ceil(meta.classNames.length / 2));
-		}
-
-		if ($$self.$$.dirty & /*numRows*/ 4) {
-			$: $$invalidate(1, gridTemplateRows = `grid-template-rows: repeat(${numRows}, 1fr)`);
-		}
-	};
-
-	return [meta, gridTemplateRows];
+	return [classes, variants];
 }
 
 class Renderer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { meta: 0 });
+		init(this, options, instance, create_fragment, safe_not_equal, { classes: 0, variants: 1 });
 	}
 }
 

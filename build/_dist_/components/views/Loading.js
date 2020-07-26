@@ -4,7 +4,6 @@ import {
 	SvelteComponent,
 	append,
 	attr,
-	binding_callbacks,
 	component_subscribe,
 	detach,
 	element,
@@ -30,32 +29,31 @@ function create_fragment(ctx) {
 			svg = svg_element("svg");
 			circle0 = svg_element("circle");
 			circle1 = svg_element("circle");
-			attr(circle0, "class", "bg svelte-18f6w9q");
+			attr(circle0, "class", "bg svelte-uvcm21");
 			attr(circle0, "cx", "60");
 			attr(circle0, "cy", "60");
 			attr(circle0, "r", RADIUS);
 			attr(circle0, "stroke-width", "12");
-			attr(circle1, "style", circle1_style_value = `stroke-dasharray: ${/*CIRCUMFERENCE*/ ctx[2]}; stroke-dashoffset: ${/*dashoffset*/ ctx[1]}`);
-			attr(circle1, "class", "progress svelte-18f6w9q");
+			attr(circle1, "style", circle1_style_value = `stroke-dasharray: ${/*CIRCUMFERENCE*/ ctx[1]}; stroke-dashoffset: ${/*dashoffset*/ ctx[0]}`);
+			attr(circle1, "class", "progress svelte-uvcm21");
 			attr(circle1, "cx", "60");
 			attr(circle1, "cy", "60");
 			attr(circle1, "r", RADIUS);
 			attr(circle1, "stroke-width", "12");
-			attr(svg, "class", "progress svelte-18f6w9q");
+			attr(svg, "class", "progress svelte-uvcm21");
 			attr(svg, "width", "120");
 			attr(svg, "height", "120");
 			attr(svg, "viewBox", "0 0 120 120");
-			attr(div, "class", "wrapper svelte-18f6w9q");
+			attr(div, "class", "wrapper svelte-uvcm21");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, svg);
 			append(svg, circle0);
 			append(svg, circle1);
-			/*circle1_binding*/ ctx[3](circle1);
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*dashoffset*/ 2 && circle1_style_value !== (circle1_style_value = `stroke-dasharray: ${/*CIRCUMFERENCE*/ ctx[2]}; stroke-dashoffset: ${/*dashoffset*/ ctx[1]}`)) {
+			if (dirty & /*dashoffset*/ 1 && circle1_style_value !== (circle1_style_value = `stroke-dasharray: ${/*CIRCUMFERENCE*/ ctx[1]}; stroke-dashoffset: ${/*dashoffset*/ ctx[0]}`)) {
 				attr(circle1, "style", circle1_style_value);
 			}
 		},
@@ -63,7 +61,6 @@ function create_fragment(ctx) {
 		o: noop,
 		d(detaching) {
 			if (detaching) detach(div);
-			/*circle1_binding*/ ctx[3](null);
 		}
 	};
 }
@@ -72,31 +69,22 @@ const RADIUS = 54;
 
 function instance($$self, $$props, $$invalidate) {
 	let $state$;
-	component_subscribe($$self, state$, $$value => $$invalidate(5, $state$ = $$value));
+	component_subscribe($$self, state$, $$value => $$invalidate(3, $state$ = $$value));
 	const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-	let progress;
-
-	function circle1_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
-			progress = $$value;
-			$$invalidate(0, progress);
-		});
-	}
-
 	let percentage;
 	let dashoffset;
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$state$*/ 32) {
-			$: $$invalidate(4, percentage = $state$.progress);
+		if ($$self.$$.dirty & /*$state$*/ 8) {
+			$: $$invalidate(2, percentage = $state$.progress);
 		}
 
-		if ($$self.$$.dirty & /*percentage*/ 16) {
-			$: $$invalidate(1, dashoffset = CIRCUMFERENCE * (1 - percentage));
+		if ($$self.$$.dirty & /*percentage*/ 4) {
+			$: $$invalidate(0, dashoffset = CIRCUMFERENCE * (1 - percentage));
 		}
 	};
 
-	return [progress, dashoffset, CIRCUMFERENCE, circle1_binding];
+	return [dashoffset, CIRCUMFERENCE];
 }
 
 class Loading extends SvelteComponent {
