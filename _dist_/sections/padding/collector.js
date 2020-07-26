@@ -1,47 +1,37 @@
 import cssTree from "/tailwind-styleguide/web_modules/css-tree.js";
-import uniqWith2 from "/tailwind-styleguide/web_modules/ramda/es/uniqWith.js";
-import {getClassSelector, getNodeOfType, extractVariant} from "../../css/ast.js";
+import {extractVariant} from "../../css/ast.js";
 export class PaddingCollector {
   constructor() {
-    this.name = "padding";
-    this.rules = [];
+    this.name = "Padding";
     this.variants = new Set();
-    this.spacings = [];
+    this.classes = [];
   }
-  walk(rule) {
-    const classSelector = getClassSelector(rule);
-    if (!classSelector)
-      return;
-    const spacing = classSelector.name.match(/^p[xytrbl]?-(\d+)/);
-    if (spacing) {
-      this.rules.push(rule);
-      const paddingValue = getNodeOfType("Dimension", rule);
-      if (paddingValue === null) {
-        this.spacings.push({
-          name: "0",
-          value: 0
-        });
-      } else {
-        this.spacings.push({
-          name: spacing[1],
-          value: Number(paddingValue.value),
-          unit: paddingValue.unit
-        });
-      }
+  walk(className, declarations) {
+    if (className.match(/^p-/)) {
+      const paddingMeasurement = cssTree.find(declarations.filter((n) => n.property === "padding")[0], (d) => d.type === "Dimension" || d.type === "Number");
+      this.classes.push({
+        name: className,
+        measurement: paddingMeasurement.type === "Dimension" ? {
+          value: paddingMeasurement.value,
+          unit: paddingMeasurement.unit
+        } : {
+          value: 0,
+          unit: void 0
+        }
+      });
+      return true;
     } else {
-      const maybeVariant = extractVariant("p[xytrbl]?-(\\d+)", classSelector.name);
+      const maybeVariant = extractVariant("p-", className);
       if (maybeVariant) {
         this.variants.add(maybeVariant);
       }
     }
+    return false;
   }
   collect() {
     return {
-      css: this.rules.map((r) => cssTree.generate(r)),
-      meta: {
-        variants: [...this.variants],
-        spacings: uniqWith2((a, b) => a.value === b.value && a.name === b.name && a?.unit === b?.unit, this.spacings)
-      }
+      classes: this.classes,
+      variants: [...this.variants]
     };
   }
 }

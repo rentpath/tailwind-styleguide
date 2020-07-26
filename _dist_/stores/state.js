@@ -17,7 +17,7 @@ function transformParsePayload(payload) {
   } else {
     return {
       view: "display",
-      rules: payload.parsed
+      parsed: payload.parsed
     };
   }
 }

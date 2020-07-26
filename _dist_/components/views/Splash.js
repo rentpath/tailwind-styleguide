@@ -21,7 +21,7 @@ import {
 	transition_out
 } from "/tailwind-styleguide/web_modules/svelte/internal.js";
 
-import { state$, parseWithTailwind, parseWithString } from "./../../stores/state.js";
+import { parseWithTailwind, parseWithString } from "./../../stores/state.js";
 import Upload from "./../../components/icons/Upload.js";
 
 function create_fragment(ctx) {
@@ -56,15 +56,15 @@ function create_fragment(ctx) {
 			t4 = space();
 			button = element("button");
 			button.textContent = "Use Default Tailwind";
-			attr(em, "class", "upload-instructions svelte-1fjm7re");
-			attr(div, "class", "drop-handler svelte-1fjm7re");
+			attr(em, "class", "upload-instructions svelte-1o3b6fp");
+			attr(div, "class", "drop-handler svelte-1o3b6fp");
 			attr(input, "id", "uploader");
 			attr(input, "type", "file");
 			attr(input, "accept", "text/css");
-			attr(input, "class", "svelte-1fjm7re");
-			attr(hr, "class", "divider svelte-1fjm7re");
-			attr(button, "class", "button svelte-1fjm7re");
-			attr(main, "class", "splash svelte-1fjm7re");
+			attr(input, "class", "svelte-1o3b6fp");
+			attr(hr, "class", "divider svelte-1o3b6fp");
+			attr(button, "class", "button svelte-1o3b6fp");
+			attr(main, "class", "splash svelte-1o3b6fp");
 		},
 		m(target, anchor) {
 			insert(target, main, anchor);
