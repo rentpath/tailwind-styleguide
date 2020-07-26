@@ -22,20 +22,20 @@ Your app is ready to be deployed!
 ## Rules to Extract:
 
 - Colors
-- - ~~Background Colors
-- - ~~Text Colors
+- - ~~Background Colors~~
+- - ~~Text Colors~~
 - Spacings
 - - Margins
-- - ~~Paddings
+- - ~~Paddings~~
 - Borders
 - - Widths
 - - Colors
-- - ~~Radiuses
-- ~~Box Shadows
+- - ~~Radiuses~~
+- ~~Box Shadows~~
 - Fonts
-- - ~~Sizes
+- - ~~Sizes~~
 - - Weights
-- - ~~Line Heights
+- - ~~Line Heights~~
 - Sizes
 - - Widths
 - - Heights
