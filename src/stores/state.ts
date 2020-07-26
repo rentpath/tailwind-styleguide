@@ -3,7 +3,8 @@ import {
 	Subject,
 	BehaviorSubject,
 	Observable,
-	ConnectableObservable
+	ConnectableObservable,
+	empty
 } from "rxjs";
 import {
 	map,
@@ -68,7 +69,9 @@ const parse$: Observable<State> = parser$.pipe(
 
 export const state$ = new BehaviorSubject<State>(initialState);
 
-const _state$ = merge(parse$).pipe(
+const _state$ = merge(
+	parse$
+).pipe(
 	multicast(() => state$)
 ) as ConnectableObservable<State>;
 

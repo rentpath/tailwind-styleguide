@@ -25,8 +25,14 @@ export class PaddingCollector implements RuleCollector {
 				name: className,
 				measurement:
 					paddingMeasurement.type === "Dimension"
-						? `${paddingMeasurement.value}${paddingMeasurement.unit}`
-						: 0,
+						? {
+							value: paddingMeasurement.value,
+							unit: paddingMeasurement.unit
+						}
+						: {
+							value: 0,
+							unit: undefined
+						},
 			});
 
 			return true;

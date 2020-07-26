@@ -106,6 +106,12 @@
 		border-radius: 24px;
 		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	}
+
+	.button:focus,
+	.button:active {
+		outline: none;
+		box-shadow: 0 0 0 3px rgb(43, 90, 245, 0.33);
+	}
 </style>
 
 <main class="splash">
