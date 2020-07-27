@@ -1,10 +1,10 @@
 import { RuleWalker } from '../css/RuleWalker';
-import { BackgroundColorCollector } from '../sections/backgroundColor/collector';
-import { TextColorCollector } from "../sections/textColor/collector";
-import { BoxShadowCollector } from '../sections/boxShadow/collector';
-import { BorderRadiusCollector } from '../sections/borderRadius/collector';
-import { LineHeightCollector } from '../sections/lineHeight/collector';
-import { FontSizeCollector } from '../sections/fontSize/collector';
+import { BackgroundColorCollector } from '../sections/backgroundColor/Collector';
+import { TextColorCollector } from "../sections/textColor/Collector";
+import { BoxShadowCollector } from '../sections/boxShadow/Collector';
+import { BorderRadiusCollector } from '../sections/borderRadius/Collector';
+import { LineHeightCollector } from '../sections/lineHeight/Collector';
+import { FontSizeCollector } from '../sections/fontSize/Collector';
 import { PaddingCollector } from '../sections/padding/Collector';
 import { MarginCollector } from '../sections/margin/Collector';
 
