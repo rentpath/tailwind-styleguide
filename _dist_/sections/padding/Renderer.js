@@ -271,7 +271,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (33:0) <StyleguideSection name="Padding" description="Give your components some personal space." variants={variants}>
+// (33:0) <StyleguideSection name="Padding" description="Give your components some breathing room." variants={variants}>
 function create_default_slot(ctx) {
 	let p;
 	let t0;
@@ -641,7 +641,7 @@ function create_fragment(ctx) {
 	styleguidesection = new StyleguideSection({
 			props: {
 				name: "Padding",
-				description: "Give your components some personal space.",
+				description: "Give your components some breathing room.",
 				variants: /*variants*/ ctx[1],
 				$$slots: { default: [create_default_slot] },
 				$$scope: { ctx }
