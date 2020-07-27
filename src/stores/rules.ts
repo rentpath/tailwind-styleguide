@@ -6,10 +6,12 @@ import { BorderRadiusCollector } from '../sections/borderRadius/collector';
 import { LineHeightCollector } from '../sections/lineHeight/collector';
 import { FontSizeCollector } from '../sections/fontSize/collector';
 import { PaddingCollector } from '../sections/padding/Collector';
+import { MarginCollector } from '../sections/margin/Collector';
 
 export const ruleWalker = new RuleWalker([
 	new BackgroundColorCollector(),
 	new PaddingCollector(),
+	new MarginCollector(),
 	new TextColorCollector(),
 	new BoxShadowCollector(),
 	new BorderRadiusCollector(),

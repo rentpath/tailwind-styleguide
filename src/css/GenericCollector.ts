@@ -4,7 +4,6 @@ import { RuleCollector } from "./types";
 import { extractVariant } from "./ast";
 
 export class GenericCollector implements RuleCollector {
-	protected rules: cssTree.Rule[];
 	protected classNames: string[];
 	protected variants: Set<string>;
 
@@ -13,7 +12,6 @@ export class GenericCollector implements RuleCollector {
 		protected readonly matcher: string,
 		protected readonly declarations: string[]
 	) {
-		this.rules = [];
 		this.classNames = [];
 		this.variants = new Set();
 	}

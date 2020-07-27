@@ -12,27 +12,40 @@
 		margin-bottom: var(--common-gutter);
 	}
 
-	.swatch,
-	.swatch-fill {
+	.swatch-left,
+	.swatch-right {
 		width: 32px;
 		height: 32px;
+	}
+
+	.swatch-left {
 		border-top-left-radius: 8px;
 		border-bottom-left-radius: 8px;
 	}
 
-	.swatch {
-		box-sizing: content-box;
-		background-color: var(--less-subtle-color);
+	.swatch-right {
+		border-top-right-radius: 8px;
+		border-bottom-right-radius: 8px;
 	}
 
-	.swatch-fill {
+	.swatch {
+		display: inline-block;
+		width: auto;
+		height: 32px;
+		background-color: var(--less-subtle-color);
+		border-radius: 8px;
+	}
+
+	.swatch-left,
+	.swatch-right {
+		display: inline-block;
 		background-color: var(--primary-color);
 	}
 </style>
 
-<StyleguideSection name="Padding" description="Give your components some personal space." variants={variants}>
+<StyleguideSection name="Margin" description="Please respect social distancing guidelines." variants={variants}>
 	<p class="description">
-		All padding options are available in
+		All margin options are available in
 		<ClassName>x</ClassName>,
 		<ClassName>y</ClassName>,
 		<ClassName>t</ClassName>,
@@ -47,11 +60,15 @@
 		<ClassName>.pr-8</ClassName>,
 		<ClassName>.pb-8</ClassName>,
 		<ClassName>.pl-8</ClassName>
-		variants as well to control left &amp; right, top &amp; bottom, top, right, bottom, and left paddings respectively.
+		variants as well to control left &amp; right, top &amp; bottom, top, right, bottom, and left margins respectively.
 	</p>
 	<SpacingTable {classes} let:measurement={m}>
-		<div class="swatch" style={`padding-right: ${m.value + (m.unit ?? "")}`}>
-			<div class="swatch-fill"></div>
+		<div class="swatch">
+			<!--
+			-- Because of how browsers render newlines around containers with display: inline-block,
+			-- these elements have to be on the same line
+			-->
+			<div class="swatch-left" style={`margin-right: ${m.value + (m.unit ?? "")}`}></div><div class="swatch-right"></div>
 		</div>
 	</SpacingTable>
 </StyleguideSection>
