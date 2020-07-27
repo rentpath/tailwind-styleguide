@@ -1,7 +1,6 @@
 <script>
 	import { state$ } from "./stores/state";
 
-	import Upload from "./components/icons/Upload.svelte";
 	import Splash from "./components/views/Splash.svelte";
 	import Loading from "./components/views/Loading.svelte";
 	import Display from "./components/views/Display.svelte";
