@@ -30,7 +30,7 @@
 	}
 </style>
 
-<StyleguideSection name="Padding" description="Give your components some personal space." variants={variants}>
+<StyleguideSection name="Padding" description="Give your components some breathing room." variants={variants}>
 	<p class="description">
 		All padding options are available in
 		<ClassName>x</ClassName>,
