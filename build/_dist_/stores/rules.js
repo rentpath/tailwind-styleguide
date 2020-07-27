@@ -1,0 +1,10 @@
+import {RuleWalker as RuleWalker2} from "../css/RuleWalker.js";
+import {BackgroundColorCollector} from "../sections/backgroundColor/Collector.js";
+import {TextColorCollector} from "../sections/textColor/Collector.js";
+import {BoxShadowCollector} from "../sections/boxShadow/Collector.js";
+import {BorderRadiusCollector} from "../sections/borderRadius/Collector.js";
+import {LineHeightCollector} from "../sections/lineHeight/Collector.js";
+import {FontSizeCollector} from "../sections/fontSize/Collector.js";
+import {PaddingCollector} from "../sections/padding/Collector.js";
+import {MarginCollector} from "../sections/margin/Collector.js";
+export const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new PaddingCollector(), new MarginCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector()]);
