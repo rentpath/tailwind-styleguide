@@ -4,7 +4,6 @@ export class GenericCollector {
     this.name = name;
     this.matcher = matcher;
     this.declarations = declarations;
-    this.rules = [];
     this.classNames = [];
     this.variants = new Set();
   }

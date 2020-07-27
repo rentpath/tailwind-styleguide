@@ -6,4 +6,5 @@ import {BorderRadiusCollector} from "../sections/borderRadius/collector.js";
 import {LineHeightCollector} from "../sections/lineHeight/collector.js";
 import {FontSizeCollector} from "../sections/fontSize/collector.js";
 import {PaddingCollector} from "../sections/padding/Collector.js";
-export const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new PaddingCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector()]);
+import {MarginCollector} from "../sections/margin/Collector.js";
+export const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new PaddingCollector(), new MarginCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector()]);
