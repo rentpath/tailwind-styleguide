@@ -15,7 +15,7 @@ import {
 	safe_not_equal,
 	transition_in,
 	transition_out
-} from "windsock.app/web_modules/svelte/internal.js";
+} from "/web_modules/svelte/internal.js";
 
 import { state$ } from "./stores/state.js";
 import Splash from "./components/views/Splash.js";

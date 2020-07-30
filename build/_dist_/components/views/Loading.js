@@ -12,7 +12,7 @@ import {
 	noop,
 	safe_not_equal,
 	svg_element
-} from "windsock.app/web_modules/svelte/internal.js";
+} from "/web_modules/svelte/internal.js";
 
 import { state$ } from "./../../stores/state.js";
 

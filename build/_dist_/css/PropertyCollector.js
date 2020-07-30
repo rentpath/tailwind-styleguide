@@ -1,4 +1,4 @@
-import cssTree from "windsock.app/web_modules/css-tree.js";
+import cssTree from "/web_modules/css-tree.js";
 import {extractVariant} from "./ast.js";
 export class PropertyCollector {
   constructor(name, matcher, cssProperty) {

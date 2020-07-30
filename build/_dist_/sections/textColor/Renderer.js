@@ -21,7 +21,7 @@ import {
 	text,
 	transition_in,
 	transition_out
-} from "windsock.app/web_modules/svelte/internal.js";
+} from "/web_modules/svelte/internal.js";
 
 import StyleguideSection from "../../components/StyleguideSection.js";
 import ClassName from "../../components/ClassName.js";
