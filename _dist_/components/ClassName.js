@@ -12,7 +12,7 @@ import {
 	transition_in,
 	transition_out,
 	update_slot
-} from "/tailwind-styleguide/web_modules/svelte/internal.js";
+} from "windsock.app/web_modules/svelte/internal.js";
 
 function create_fragment(ctx) {
 	let em;

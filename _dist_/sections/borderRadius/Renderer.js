@@ -8,7 +8,7 @@ import {
 	safe_not_equal,
 	transition_in,
 	transition_out
-} from "/tailwind-styleguide/web_modules/svelte/internal.js";
+} from "windsock.app/web_modules/svelte/internal.js";
 
 import StyleguideSection from "../../components/StyleguideSection.js";
 import Grid from "../../components/swatches/Grid.js";

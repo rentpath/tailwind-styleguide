@@ -19,7 +19,7 @@ import {
 	toggle_class,
 	transition_in,
 	transition_out
-} from "/tailwind-styleguide/web_modules/svelte/internal.js";
+} from "windsock.app/web_modules/svelte/internal.js";
 
 import ClassName from "../ClassName.js";
 
