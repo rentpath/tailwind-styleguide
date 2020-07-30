@@ -13,6 +13,8 @@ commit-artifacts:
 	git commit -m "Build Artifacts"
 
 subtree:
-	git subtree push --prefix build origin gh-pages
+	git subtree split --prefix build -b gh-pages
+	git push -f origin gh-pages:gh-pages
+	git branch -D gh-pages
 
 deploy: build subtree
