@@ -17,7 +17,7 @@ import {
 	transition_in,
 	transition_out,
 	update_slot
-} from "windsock.app/web_modules/svelte/internal.js";
+} from "/web_modules/svelte/internal.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();

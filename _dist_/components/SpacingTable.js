@@ -22,7 +22,7 @@ import {
 	transition_in,
 	transition_out,
 	update_slot
-} from "windsock.app/web_modules/svelte/internal.js";
+} from "/web_modules/svelte/internal.js";
 
 import ClassName from "./ClassName.js";
 const get_default_slot_changes = dirty => ({ measurement: dirty & /*classes*/ 1 });

@@ -1,4 +1,4 @@
-import cssTree from "windsock.app/web_modules/css-tree.js";
+import cssTree from "/web_modules/css-tree.js";
 export function getNodeOfType(type, rule) {
   return cssTree.find(rule, (node) => node.type === type);
 }
