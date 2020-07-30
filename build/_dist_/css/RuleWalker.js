@@ -1,5 +1,5 @@
-import cssTree from "/tailwind-styleguide/web_modules/css-tree.js";
-import {Observable} from "/tailwind-styleguide/web_modules/rxjs.js";
+import cssTree from "windsock.app/web_modules/css-tree.js";
+import {Observable} from "windsock.app/web_modules/rxjs.js";
 import {getClassSelector, getDeclarations} from "./ast.js";
 const BLOCKING_FACTOR = 250;
 export class RuleWalker {

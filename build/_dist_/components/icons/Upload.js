@@ -10,7 +10,7 @@ import {
 	noop,
 	safe_not_equal,
 	svg_element
-} from "/tailwind-styleguide/web_modules/svelte/internal.js";
+} from "windsock.app/web_modules/svelte/internal.js";
 
 function create_fragment(ctx) {
 	let svg;

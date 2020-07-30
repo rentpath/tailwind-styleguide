@@ -23,7 +23,7 @@ import {
 	text,
 	transition_in,
 	transition_out
-} from "/tailwind-styleguide/web_modules/svelte/internal.js";
+} from "windsock.app/web_modules/svelte/internal.js";
 
 import { state$ } from "./../../stores/state.js";
 

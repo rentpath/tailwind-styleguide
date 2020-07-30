@@ -1,5 +1,5 @@
-import {merge, Subject, BehaviorSubject} from "/tailwind-styleguide/web_modules/rxjs.js";
-import {map, mergeMap, multicast} from "/tailwind-styleguide/web_modules/rxjs/operators.js";
+import {merge, Subject, BehaviorSubject} from "windsock.app/web_modules/rxjs.js";
+import {map, mergeMap, multicast} from "windsock.app/web_modules/rxjs/operators.js";
 import {tailwind} from "../temp.js";
 import {ruleWalker} from "./rules.js";
 const initialState = (() => {
