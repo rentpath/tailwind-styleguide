@@ -1,5 +1,4 @@
 {
-  "homepage": "http://joseph-walker.github.io/tailwind-styleguide",
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",

@@ -1,7 +1,3 @@
 {
-  "extends": "@snowpack/app-scripts-svelte",
-  "buildOptions": {
-	"baseUrl": "/tailwind-styleguide/",
-	"metaDir": "tailwind-styleguide/__snowpack__"
-  }
+  "extends": "@snowpack/app-scripts-svelte"
 }

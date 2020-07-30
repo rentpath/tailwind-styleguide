@@ -4,13 +4,9 @@ snowpack:
 jekyll-ignore:
 	touch ./build/.nojekyll
 
-promote-env: snowpack
-	mv ./build/tailwind-styleguide/__snowpack__ ./build/__snowpack__
-	rm -r ./build/tailwind-styleguide
+build-no-commit: snowpack jekyll-ignore
 
-build: promote-env jekyll-ignore commit-artifacts
-
-build-no-commit: promote-env jekyll-ignore
+build: build-no-commit commit-artifacts
 
 commit-artifacts:
 	git add ./build
