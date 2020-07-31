@@ -1,9 +1,26 @@
 <script>
-	import { state$ } from "./stores/state";
+	import { onMount } from "svelte";
 
-	import Splash from "./components/views/Splash.svelte";
-	import Loading from "./components/views/Loading.svelte";
 	import Display from "./components/views/Display.svelte";
+
+	// State is injected by the render context
+	// For browser, it's the normal runtime state
+	// For console, it's a mock state with the "Display" view content
+	export let state$;
+
+	// This component must be SSR compatible, but there are no such restrictions
+	// on its children. Therefore we must load them asynchronously after the client has booted
+	// in onMount. This will not run in SSR mode (i.e. for the CLI)
+	let Splash;
+	let Loading;
+
+	onMount(async () => {
+		const splash = await import('./components/views/Splash.svelte');
+		const loading = await import('./components/views/Loading.svelte');
+
+		Splash = splash.default;
+		Loading = loading.default;
+	});
 </script>
 
 <style>
@@ -30,9 +47,9 @@
 </style>
 
 {#if $state$.view === "splash"}
-	<Splash />
+	<svelte:component this={Splash} />
 {:else if $state$.view === "loading"}
-	<Loading />
+	<svelte:component this={Loading} />
 {:else if $state$.view === "display"}
-	<Display />
+	<Display parsed={$state$.parsed} />
 {/if}

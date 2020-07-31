@@ -1,8 +1,13 @@
 // @ts-ignore
 import App from "./App.svelte";
 
+import { state$ } from "./stores/state";
+
 const app = new App({
 	target: document.body,
+	props: {
+		state$
+	}
 });
 
 export default app;
