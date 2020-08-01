@@ -10,16 +10,25 @@
     "@xstate/fsm": "^1.4.0",
     "css-tree": "^1.0.0-alpha.39",
     "ramda": "^0.27.0",
-    "rxjs": "^6.6.0",
-    "svelte": "^3.21.0"
+    "rxjs": "^6.6.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-typescript": "^5.0.2",
     "@snowpack/app-scripts-svelte": "^1.6.0-alpha.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
     "@types/css-tree": "^1.0.3",
     "@types/ramda": "^0.27.11",
     "plop": "^2.7.2",
-    "snowpack": "^2.6.4"
+    "rollup": "^2.23.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-svelte": "^5.2.3",
+    "snowpack": "^2.6.4",
+    "svelte": "^3.24.0",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.7"
   }
 }

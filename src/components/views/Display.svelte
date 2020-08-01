@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	{@html `<style type="text/css" ✂prettier:content✂="JHtwYXJzZWQucnVsZXMuam9pbigiXG4iKX0="></style>`}
+	{@html `<style type="text/css">${parsed.rules.join("\n")}</style>`}
 </svelte:head>
 
 <BackgroundColor

@@ -1,6 +1,6 @@
 <script>
 	import StyleguideSection from "../../components/StyleguideSection.svelte";
-	import Grid from "../../components/swatches/Grid";
+	import Grid from "../../components/swatches/Grid.svelte";
 
 	export let classes;
 	export let variants;

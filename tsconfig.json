@@ -1,9 +1,10 @@
 {
 	"compilerOptions": {
+		"rootDir": "src",
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
 		"outDir": "./dist/",
-		"sourceMap": true,
+		"sourceMap": false,
 		"strict": true,
 		"noImplicitReturns": true,
 		"noImplicitAny": true,

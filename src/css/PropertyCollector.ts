@@ -27,8 +27,6 @@ export class PropertyCollector implements RuleCollector {
 				(d) => d.type === "Dimension" || d.type === "Number" || d.type === "Identifier"
 			);
 
-			console.log(className, measurement);
-
 			this.classes.push({
 				name: className,
 				measurement: (() => {
