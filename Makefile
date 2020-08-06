@@ -1,3 +1,5 @@
+.PHONY: cname
+
 snowpack:
 	npm run build
 
@@ -5,7 +7,7 @@ jekyll-ignore:
 	touch ./build/.nojekyll
 
 cname:
-	cp ./cname ./build/cname
+	cp CNAME build/CNAME
 
 build-no-commit: snowpack jekyll-ignore cname
 
