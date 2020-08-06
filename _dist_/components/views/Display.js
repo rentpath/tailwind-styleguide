@@ -3,375 +3,243 @@ import {
 	HtmlTag,
 	SvelteComponent,
 	append,
-	check_outros,
-	component_subscribe,
 	create_component,
 	destroy_component,
-	destroy_each,
 	detach,
-	element,
 	empty,
-	group_outros,
-	handle_promise,
 	init,
 	insert,
 	mount_component,
-	noop,
 	safe_not_equal,
-	set_data,
 	space,
-	text,
 	transition_in,
 	transition_out
 } from "/web_modules/svelte/internal.js";
 
-import { state$ } from "./../../stores/state.js";
-
-function get_each_context(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
-	return child_ctx;
-}
-
-// (24:1) {:catch error}
-function create_catch_block(ctx) {
-	let div;
-	let t0;
-	let t1_value = /*section*/ ctx[3].sectionName + "";
-	let t1;
-	let t2;
-	let t3;
-	let code;
-	let pre;
-	let t4_value = JSON.stringify(/*error*/ ctx[7], 4, null) + "";
-	let t4;
-	let t5;
-
-	return {
-		c() {
-			div = element("div");
-			t0 = text("Uh oh! Section ");
-			t1 = text(t1_value);
-			t2 = text(" not found.");
-			t3 = space();
-			code = element("code");
-			pre = element("pre");
-			t4 = text(t4_value);
-			t5 = space();
-		},
-		m(target, anchor) {
-			insert(target, div, anchor);
-			append(div, t0);
-			append(div, t1);
-			append(div, t2);
-			insert(target, t3, anchor);
-			insert(target, code, anchor);
-			append(code, pre);
-			append(pre, t4);
-			insert(target, t5, anchor);
-		},
-		p(ctx, dirty) {
-			if (dirty & /*sections*/ 1 && t1_value !== (t1_value = /*section*/ ctx[3].sectionName + "")) set_data(t1, t1_value);
-			if (dirty & /*sections*/ 1 && t4_value !== (t4_value = JSON.stringify(/*error*/ ctx[7], 4, null) + "")) set_data(t4, t4_value);
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) detach(div);
-			if (detaching) detach(t3);
-			if (detaching) detach(code);
-			if (detaching) detach(t5);
-		}
-	};
-}
-
-// (22:43)    <svelte:component this={sectionModule.default}
-function create_then_block(ctx) {
-	let switch_instance;
-	let t;
-	let current;
-	var switch_value = /*sectionModule*/ ctx[6].default;
-
-	function switch_props(ctx) {
-		return {
-			props: {
-				classes: /*section*/ ctx[3].classes,
-				variants: /*section*/ ctx[3].variants
-			}
-		};
-	}
-
-	if (switch_value) {
-		switch_instance = new switch_value(switch_props(ctx));
-	}
-
-	return {
-		c() {
-			if (switch_instance) create_component(switch_instance.$$.fragment);
-			t = space();
-		},
-		m(target, anchor) {
-			if (switch_instance) {
-				mount_component(switch_instance, target, anchor);
-			}
-
-			insert(target, t, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const switch_instance_changes = {};
-			if (dirty & /*sections*/ 1) switch_instance_changes.classes = /*section*/ ctx[3].classes;
-			if (dirty & /*sections*/ 1) switch_instance_changes.variants = /*section*/ ctx[3].variants;
-
-			if (switch_value !== (switch_value = /*sectionModule*/ ctx[6].default)) {
-				if (switch_instance) {
-					group_outros();
-					const old_component = switch_instance;
-
-					transition_out(old_component.$$.fragment, 1, 0, () => {
-						destroy_component(old_component, 1);
-					});
-
-					check_outros();
-				}
-
-				if (switch_value) {
-					switch_instance = new switch_value(switch_props(ctx));
-					create_component(switch_instance.$$.fragment);
-					transition_in(switch_instance.$$.fragment, 1);
-					mount_component(switch_instance, t.parentNode, t);
-				} else {
-					switch_instance = null;
-				}
-			} else if (switch_value) {
-				switch_instance.$set(switch_instance_changes);
-			}
-		},
-		i(local) {
-			if (current) return;
-			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (switch_instance) destroy_component(switch_instance, detaching);
-			if (detaching) detach(t);
-		}
-	};
-}
-
-// (1:0) <script>  import { state$ }
-function create_pending_block(ctx) {
-	return {
-		c: noop,
-		m: noop,
-		p: noop,
-		i: noop,
-		o: noop,
-		d: noop
-	};
-}
-
-// (21:0) {#each sections as section}
-function create_each_block(ctx) {
-	let await_block_anchor;
-	let promise;
-	let current;
-
-	let info = {
-		ctx,
-		current: null,
-		token: null,
-		pending: create_pending_block,
-		then: create_then_block,
-		catch: create_catch_block,
-		value: 6,
-		error: 7,
-		blocks: [,,,]
-	};
-
-	handle_promise(promise = /*section*/ ctx[3].module, info);
-
-	return {
-		c() {
-			await_block_anchor = empty();
-			info.block.c();
-		},
-		m(target, anchor) {
-			insert(target, await_block_anchor, anchor);
-			info.block.m(target, info.anchor = anchor);
-			info.mount = () => await_block_anchor.parentNode;
-			info.anchor = await_block_anchor;
-			current = true;
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			info.ctx = ctx;
-
-			if (dirty & /*sections*/ 1 && promise !== (promise = /*section*/ ctx[3].module) && handle_promise(promise, info)) {
-				
-			} else {
-				const child_ctx = ctx.slice();
-				child_ctx[6] = info.resolved;
-				info.block.p(child_ctx, dirty);
-			}
-		},
-		i(local) {
-			if (current) return;
-			transition_in(info.block);
-			current = true;
-		},
-		o(local) {
-			for (let i = 0; i < 3; i += 1) {
-				const block = info.blocks[i];
-				transition_out(block);
-			}
-
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(await_block_anchor);
-			info.block.d(detaching);
-			info.token = null;
-			info = null;
-		}
-	};
-}
+import BackgroundColor from "./../../sections/backgroundColor/Renderer.js";
+import BorderRadius from "./../../sections/borderRadius/Renderer.js";
+import BoxShadow from "./../../sections/boxShadow/Renderer.js";
+import FontSize from "./../../sections/fontSize/Renderer.js";
+import LineHeight from "./../../sections/lineHeight/Renderer.js";
+import Margin from "./../../sections/margin/Renderer.js";
+import Padding from "./../../sections/padding/Renderer.js";
+import TextColor from "./../../sections/textColor/Renderer.js";
 
 function create_fragment(ctx) {
 	let html_tag;
-	let raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "";
+	let raw_value = `<style type="text/css">${/*parsed*/ ctx[0].rules.join("\n")}</style>` + "";
 	let html_anchor;
-	let t;
-	let each_1_anchor;
+	let t0;
+	let backgroundcolor;
+	let t1;
+	let borderradius;
+	let t2;
+	let boxshadow;
+	let t3;
+	let padding;
+	let t4;
+	let margin;
+	let t5;
+	let fontsize;
+	let t6;
+	let lineheight;
+	let t7;
+	let textcolor;
 	let current;
-	let each_value = /*sections*/ ctx[0];
-	let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-	}
+	backgroundcolor = new BackgroundColor({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["backgroundColor"].classes,
+				variants: /*parsed*/ ctx[0].collection["backgroundColor"].variants
+			}
+		});
 
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
+	borderradius = new BorderRadius({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["borderRadius"].classes,
+				variants: /*parsed*/ ctx[0].collection["borderRadius"].variants
+			}
+		});
+
+	boxshadow = new BoxShadow({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["boxShadow"].classes,
+				variants: /*parsed*/ ctx[0].collection["boxShadow"].variants
+			}
+		});
+
+	padding = new Padding({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["padding"].classes,
+				variants: /*parsed*/ ctx[0].collection["padding"].variants
+			}
+		});
+
+	margin = new Margin({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["margin"].classes,
+				variants: /*parsed*/ ctx[0].collection["margin"].variants
+			}
+		});
+
+	fontsize = new FontSize({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["fontSize"].classes,
+				variants: /*parsed*/ ctx[0].collection["fontSize"].variants
+			}
+		});
+
+	lineheight = new LineHeight({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["lineHeight"].classes,
+				variants: /*parsed*/ ctx[0].collection["lineHeight"].variants
+			}
+		});
+
+	textcolor = new TextColor({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["textColor"].classes,
+				variants: /*parsed*/ ctx[0].collection["textColor"].variants
+			}
+		});
 
 	return {
 		c() {
 			html_anchor = empty();
-			t = space();
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
-
-			each_1_anchor = empty();
+			t0 = space();
+			create_component(backgroundcolor.$$.fragment);
+			t1 = space();
+			create_component(borderradius.$$.fragment);
+			t2 = space();
+			create_component(boxshadow.$$.fragment);
+			t3 = space();
+			create_component(padding.$$.fragment);
+			t4 = space();
+			create_component(margin.$$.fragment);
+			t5 = space();
+			create_component(fontsize.$$.fragment);
+			t6 = space();
+			create_component(lineheight.$$.fragment);
+			t7 = space();
+			create_component(textcolor.$$.fragment);
 			html_tag = new HtmlTag(html_anchor);
 		},
 		m(target, anchor) {
 			html_tag.m(raw_value, document.head);
 			append(document.head, html_anchor);
-			insert(target, t, anchor);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(target, anchor);
-			}
-
-			insert(target, each_1_anchor, anchor);
+			insert(target, t0, anchor);
+			mount_component(backgroundcolor, target, anchor);
+			insert(target, t1, anchor);
+			mount_component(borderradius, target, anchor);
+			insert(target, t2, anchor);
+			mount_component(boxshadow, target, anchor);
+			insert(target, t3, anchor);
+			mount_component(padding, target, anchor);
+			insert(target, t4, anchor);
+			mount_component(margin, target, anchor);
+			insert(target, t5, anchor);
+			mount_component(fontsize, target, anchor);
+			insert(target, t6, anchor);
+			mount_component(lineheight, target, anchor);
+			insert(target, t7, anchor);
+			mount_component(textcolor, target, anchor);
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*displayCSS*/ 2) && raw_value !== (raw_value = `<style type="text/css">${/*displayCSS*/ ctx[1]}</style>` + "")) html_tag.p(raw_value);
-
-			if (dirty & /*sections, JSON*/ 1) {
-				each_value = /*sections*/ ctx[0];
-				let i;
-
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context(ctx, each_value, i);
-
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-					}
-				}
-
-				group_outros();
-
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out(i);
-				}
-
-				check_outros();
-			}
+			if ((!current || dirty & /*parsed*/ 1) && raw_value !== (raw_value = `<style type="text/css">${/*parsed*/ ctx[0].rules.join("\n")}</style>` + "")) html_tag.p(raw_value);
+			const backgroundcolor_changes = {};
+			if (dirty & /*parsed*/ 1) backgroundcolor_changes.classes = /*parsed*/ ctx[0].collection["backgroundColor"].classes;
+			if (dirty & /*parsed*/ 1) backgroundcolor_changes.variants = /*parsed*/ ctx[0].collection["backgroundColor"].variants;
+			backgroundcolor.$set(backgroundcolor_changes);
+			const borderradius_changes = {};
+			if (dirty & /*parsed*/ 1) borderradius_changes.classes = /*parsed*/ ctx[0].collection["borderRadius"].classes;
+			if (dirty & /*parsed*/ 1) borderradius_changes.variants = /*parsed*/ ctx[0].collection["borderRadius"].variants;
+			borderradius.$set(borderradius_changes);
+			const boxshadow_changes = {};
+			if (dirty & /*parsed*/ 1) boxshadow_changes.classes = /*parsed*/ ctx[0].collection["boxShadow"].classes;
+			if (dirty & /*parsed*/ 1) boxshadow_changes.variants = /*parsed*/ ctx[0].collection["boxShadow"].variants;
+			boxshadow.$set(boxshadow_changes);
+			const padding_changes = {};
+			if (dirty & /*parsed*/ 1) padding_changes.classes = /*parsed*/ ctx[0].collection["padding"].classes;
+			if (dirty & /*parsed*/ 1) padding_changes.variants = /*parsed*/ ctx[0].collection["padding"].variants;
+			padding.$set(padding_changes);
+			const margin_changes = {};
+			if (dirty & /*parsed*/ 1) margin_changes.classes = /*parsed*/ ctx[0].collection["margin"].classes;
+			if (dirty & /*parsed*/ 1) margin_changes.variants = /*parsed*/ ctx[0].collection["margin"].variants;
+			margin.$set(margin_changes);
+			const fontsize_changes = {};
+			if (dirty & /*parsed*/ 1) fontsize_changes.classes = /*parsed*/ ctx[0].collection["fontSize"].classes;
+			if (dirty & /*parsed*/ 1) fontsize_changes.variants = /*parsed*/ ctx[0].collection["fontSize"].variants;
+			fontsize.$set(fontsize_changes);
+			const lineheight_changes = {};
+			if (dirty & /*parsed*/ 1) lineheight_changes.classes = /*parsed*/ ctx[0].collection["lineHeight"].classes;
+			if (dirty & /*parsed*/ 1) lineheight_changes.variants = /*parsed*/ ctx[0].collection["lineHeight"].variants;
+			lineheight.$set(lineheight_changes);
+			const textcolor_changes = {};
+			if (dirty & /*parsed*/ 1) textcolor_changes.classes = /*parsed*/ ctx[0].collection["textColor"].classes;
+			if (dirty & /*parsed*/ 1) textcolor_changes.variants = /*parsed*/ ctx[0].collection["textColor"].variants;
+			textcolor.$set(textcolor_changes);
 		},
 		i(local) {
 			if (current) return;
-
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
-
+			transition_in(backgroundcolor.$$.fragment, local);
+			transition_in(borderradius.$$.fragment, local);
+			transition_in(boxshadow.$$.fragment, local);
+			transition_in(padding.$$.fragment, local);
+			transition_in(margin.$$.fragment, local);
+			transition_in(fontsize.$$.fragment, local);
+			transition_in(lineheight.$$.fragment, local);
+			transition_in(textcolor.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
-			each_blocks = each_blocks.filter(Boolean);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
-
+			transition_out(backgroundcolor.$$.fragment, local);
+			transition_out(borderradius.$$.fragment, local);
+			transition_out(boxshadow.$$.fragment, local);
+			transition_out(padding.$$.fragment, local);
+			transition_out(margin.$$.fragment, local);
+			transition_out(fontsize.$$.fragment, local);
+			transition_out(lineheight.$$.fragment, local);
+			transition_out(textcolor.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			detach(html_anchor);
 			if (detaching) html_tag.d();
-			if (detaching) detach(t);
-			destroy_each(each_blocks, detaching);
-			if (detaching) detach(each_1_anchor);
+			if (detaching) detach(t0);
+			destroy_component(backgroundcolor, detaching);
+			if (detaching) detach(t1);
+			destroy_component(borderradius, detaching);
+			if (detaching) detach(t2);
+			destroy_component(boxshadow, detaching);
+			if (detaching) detach(t3);
+			destroy_component(padding, detaching);
+			if (detaching) detach(t4);
+			destroy_component(margin, detaching);
+			if (detaching) detach(t5);
+			destroy_component(fontsize, detaching);
+			if (detaching) detach(t6);
+			destroy_component(lineheight, detaching);
+			if (detaching) detach(t7);
+			destroy_component(textcolor, detaching);
 		}
 	};
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let $state$;
-	component_subscribe($$self, state$, $$value => $$invalidate(2, $state$ = $$value));
-	let sections;
-	let displayCSS;
+	let { parsed } = $$props;
 
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$state$*/ 4) {
-			$: $$invalidate(0, sections = Object.keys($state$.parsed.collection || {}).map(sectionName => {
-				const module = import(`./../../sections/${sectionName}/Renderer.js`);
-
-				return {
-					...$state$.parsed.collection[sectionName],
-					sectionName,
-					module
-				};
-			}));
-		}
-
-		if ($$self.$$.dirty & /*$state$*/ 4) {
-			$: $$invalidate(1, displayCSS = $state$.parsed.rules.join("\n"));
-		}
+	$$self.$set = $$props => {
+		if ("parsed" in $$props) $$invalidate(0, parsed = $$props.parsed);
 	};
 
-	return [sections, displayCSS];
+	return [parsed];
 }
 
 class Display extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, {});
+		init(this, options, instance, create_fragment, safe_not_equal, { parsed: 0 });
 	}
 }
 

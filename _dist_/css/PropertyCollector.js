@@ -14,7 +14,6 @@ export class PropertyCollector {
   walk(className, declarations) {
     if (className.match(this.classRegex())) {
       const measurement = cssTree.find(declarations.filter((n) => n.property === this.cssProperty)[0], (d) => d.type === "Dimension" || d.type === "Number" || d.type === "Identifier");
-      console.log(className, measurement);
       this.classes.push({
         name: className,
         measurement: (() => {

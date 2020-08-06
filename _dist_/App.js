@@ -3,7 +3,6 @@ import './App.css.proxy.js';
 import {
 	SvelteComponent,
 	check_outros,
-	component_subscribe,
 	create_component,
 	destroy_component,
 	detach,
@@ -12,20 +11,23 @@ import {
 	init,
 	insert,
 	mount_component,
+	noop,
 	safe_not_equal,
+	subscribe,
 	transition_in,
 	transition_out
 } from "/web_modules/svelte/internal.js";
 
-import { state$ } from "./stores/state.js";
-import Splash from "./components/views/Splash.js";
-import Loading from "./components/views/Loading.js";
+import { onMount } from "/web_modules/svelte.js";
 import Display from "./components/views/Display.js";
 
 function create_if_block_2(ctx) {
 	let display;
 	let current;
-	display = new Display({});
+
+	display = new Display({
+			props: { parsed: /*$state$*/ ctx[3].parsed }
+		});
 
 	return {
 		c() {
@@ -34,6 +36,11 @@ function create_if_block_2(ctx) {
 		m(target, anchor) {
 			mount_component(display, target, anchor);
 			current = true;
+		},
+		p(ctx, dirty) {
+			const display_changes = {};
+			if (dirty & /*$state$*/ 8) display_changes.parsed = /*$state$*/ ctx[3].parsed;
+			display.$set(display_changes);
 		},
 		i(local) {
 			if (current) return;
@@ -50,60 +57,140 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (34:37) 
+// (51:37) 
 function create_if_block_1(ctx) {
-	let loading;
+	let switch_instance;
+	let switch_instance_anchor;
 	let current;
-	loading = new Loading({});
+	var switch_value = /*Loading*/ ctx[2];
+
+	function switch_props(ctx) {
+		return {};
+	}
+
+	if (switch_value) {
+		switch_instance = new switch_value(switch_props(ctx));
+	}
 
 	return {
 		c() {
-			create_component(loading.$$.fragment);
+			if (switch_instance) create_component(switch_instance.$$.fragment);
+			switch_instance_anchor = empty();
 		},
 		m(target, anchor) {
-			mount_component(loading, target, anchor);
+			if (switch_instance) {
+				mount_component(switch_instance, target, anchor);
+			}
+
+			insert(target, switch_instance_anchor, anchor);
 			current = true;
+		},
+		p(ctx, dirty) {
+			if (switch_value !== (switch_value = /*Loading*/ ctx[2])) {
+				if (switch_instance) {
+					group_outros();
+					const old_component = switch_instance;
+
+					transition_out(old_component.$$.fragment, 1, 0, () => {
+						destroy_component(old_component, 1);
+					});
+
+					check_outros();
+				}
+
+				if (switch_value) {
+					switch_instance = new switch_value(switch_props(ctx));
+					create_component(switch_instance.$$.fragment);
+					transition_in(switch_instance.$$.fragment, 1);
+					mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+				} else {
+					switch_instance = null;
+				}
+			} else if (switch_value) {
+				0;
+			}
 		},
 		i(local) {
 			if (current) return;
-			transition_in(loading.$$.fragment, local);
+			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
-			transition_out(loading.$$.fragment, local);
+			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(loading, detaching);
+			if (detaching) detach(switch_instance_anchor);
+			if (switch_instance) destroy_component(switch_instance, detaching);
 		}
 	};
 }
 
-// (32:0) {#if $state$.view === "splash"}
+// (49:0) {#if $state$.view === "splash"}
 function create_if_block(ctx) {
-	let splash;
+	let switch_instance;
+	let switch_instance_anchor;
 	let current;
-	splash = new Splash({});
+	var switch_value = /*Splash*/ ctx[1];
+
+	function switch_props(ctx) {
+		return {};
+	}
+
+	if (switch_value) {
+		switch_instance = new switch_value(switch_props(ctx));
+	}
 
 	return {
 		c() {
-			create_component(splash.$$.fragment);
+			if (switch_instance) create_component(switch_instance.$$.fragment);
+			switch_instance_anchor = empty();
 		},
 		m(target, anchor) {
-			mount_component(splash, target, anchor);
+			if (switch_instance) {
+				mount_component(switch_instance, target, anchor);
+			}
+
+			insert(target, switch_instance_anchor, anchor);
 			current = true;
+		},
+		p(ctx, dirty) {
+			if (switch_value !== (switch_value = /*Splash*/ ctx[1])) {
+				if (switch_instance) {
+					group_outros();
+					const old_component = switch_instance;
+
+					transition_out(old_component.$$.fragment, 1, 0, () => {
+						destroy_component(old_component, 1);
+					});
+
+					check_outros();
+				}
+
+				if (switch_value) {
+					switch_instance = new switch_value(switch_props(ctx));
+					create_component(switch_instance.$$.fragment);
+					transition_in(switch_instance.$$.fragment, 1);
+					mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+				} else {
+					switch_instance = null;
+				}
+			} else if (switch_value) {
+				0;
+			}
 		},
 		i(local) {
 			if (current) return;
-			transition_in(splash.$$.fragment, local);
+			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
-			transition_out(splash.$$.fragment, local);
+			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(splash, detaching);
+			if (detaching) detach(switch_instance_anchor);
+			if (switch_instance) destroy_component(switch_instance, detaching);
 		}
 	};
 }
@@ -117,9 +204,9 @@ function create_fragment(ctx) {
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
-		if (/*$state$*/ ctx[0].view === "splash") return 0;
-		if (/*$state$*/ ctx[0].view === "loading") return 1;
-		if (/*$state$*/ ctx[0].view === "display") return 2;
+		if (/*$state$*/ ctx[3].view === "splash") return 0;
+		if (/*$state$*/ ctx[3].view === "loading") return 1;
+		if (/*$state$*/ ctx[3].view === "display") return 2;
 		return -1;
 	}
 
@@ -144,7 +231,11 @@ function create_fragment(ctx) {
 			let previous_block_index = current_block_type_index;
 			current_block_type_index = select_block_type(ctx, dirty);
 
-			if (current_block_type_index !== previous_block_index) {
+			if (current_block_type_index === previous_block_index) {
+				if (~current_block_type_index) {
+					if_blocks[current_block_type_index].p(ctx, dirty);
+				}
+			} else {
 				if (if_block) {
 					group_outros();
 
@@ -190,15 +281,39 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let $state$;
-	component_subscribe($$self, state$, $$value => $$invalidate(0, $state$ = $$value));
-	return [$state$];
+	let $state$,
+		$$unsubscribe_state$ = noop,
+		$$subscribe_state$ = () => ($$unsubscribe_state$(), $$unsubscribe_state$ = subscribe(state$, $$value => $$invalidate(3, $state$ = $$value)), state$);
+
+	$$self.$$.on_destroy.push(() => $$unsubscribe_state$());
+	let { state$ } = $$props;
+	$$subscribe_state$();
+
+	// This component must be SSR compatible, but there are no such restrictions
+	// on its children. Therefore we must load them asynchronously after the client has booted
+	// in onMount. This will not run in SSR mode (i.e. for the CLI)
+	let Splash;
+
+	let Loading;
+
+	onMount(async () => {
+		const splash = await import("./components/views/Splash.js");
+		const loading = await import("./components/views/Loading.js");
+		$$invalidate(1, Splash = splash.default);
+		$$invalidate(2, Loading = loading.default);
+	});
+
+	$$self.$set = $$props => {
+		if ("state$" in $$props) $$subscribe_state$($$invalidate(0, state$ = $$props.state$));
+	};
+
+	return [state$, Splash, Loading, $state$];
 }
 
 class App extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, {});
+		init(this, options, instance, create_fragment, safe_not_equal, { state$: 0 });
 	}
 }
 
