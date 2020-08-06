@@ -4,7 +4,10 @@ snowpack:
 jekyll-ignore:
 	touch ./build/.nojekyll
 
-build-no-commit: snowpack jekyll-ignore
+cname:
+	cp ./cname ./build/cname
+
+build-no-commit: snowpack jekyll-ignore cname
 
 build: build-no-commit commit-artifacts
 
