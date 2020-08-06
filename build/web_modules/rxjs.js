@@ -55,6 +55,22 @@ function fromArray(input, scheduler) {
     }
 }
 
+/** PURE_IMPORTS_START _util_isScheduler,_fromArray,_scheduled_scheduleArray PURE_IMPORTS_END */
+function of() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var scheduler = args[args.length - 1];
+    if (isScheduler(scheduler)) {
+        args.pop();
+        return scheduleArray(args, scheduler);
+    }
+    else {
+        return fromArray(args);
+    }
+}
+
 /** PURE_IMPORTS_START _mergeMap,_util_identity PURE_IMPORTS_END */
 function mergeAll(concurrent) {
     if (concurrent === void 0) {
@@ -87,4 +103,4 @@ function merge() {
     return mergeAll(concurrent)(fromArray(observables, scheduler));
 }
 
-export { BehaviorSubject, merge };
+export { BehaviorSubject, merge, of };
