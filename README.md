@@ -26,7 +26,16 @@ Simply upload your project's built Tailwind CSS file in the upload dialog on the
 Windsock is both a web app and an installable Node app. If your organization would like to integrate Windsock into your CI pipeline to have a statically hosted and always up-to-date reference for the developers in your organization, don't even sweat it. Windsock has it covered.
 
 ```sh
-# Instructions coming soon
+npm install -g windsock-cli
+
+# Windsock can read from a file, or from stdin
+# Windsock can write its output to a file, or to stdout
+
+# e.g.
+cat ./my-tailwind.css | windsock > ./styleguide.html
+
+# or
+windsock -i ./my-tailwind.css -o ./styleguide-html
 ```
 
 Windsock is under active development. Only a small fraction of Tailwind's massive surface area has been covered in the style guide builder. There are definitely bugs and edge cases to be uncovered. Contributions are always welcome.
