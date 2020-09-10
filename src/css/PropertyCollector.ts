@@ -3,6 +3,13 @@ import cssTree from "css-tree";
 import { RuleCollector, Collection } from "./types";
 import { extractVariant } from "./ast";
 
+const SUPPORTED_DECLARATION_TYPES = [
+	"Dimension",
+	"Number",
+	"Identifier",
+	"Percentage",
+];
+
 export class PropertyCollector implements RuleCollector {
 	private variants: Set<string>;
 	private classes: Collection["classes"];
@@ -20,11 +27,32 @@ export class PropertyCollector implements RuleCollector {
 		return new RegExp(`^${this.matcher}`);
 	}
 
+	/**
+	 * @param n a string like '33.3333333'
+	 * returns '33.3'
+	 */
+	private humanReadablePercentage(n: string) {
+		return Number(n).toFixed(1)
+	}
+
 	public walk(className: string, declarations: cssTree.Declaration[]) {
 		if (className.match(this.classRegex())) {
 			const measurement = cssTree.find(
-				declarations.filter((n) => n.property === this.cssProperty)[0],
-				(d) => d.type === "Dimension" || d.type === "Number" || d.type === "Identifier"
+				declarations.filter((n) => {
+					return n.property === this.cssProperty;
+				})[0],
+				(d) => {
+					const hasDeclarationSupport = SUPPORTED_DECLARATION_TYPES.includes(
+						d.type
+					);
+
+					if (!hasDeclarationSupport)
+						console.warn(
+							`Unidentified declaration type: ${d.type})`
+						);
+
+					return hasDeclarationSupport;
+				}
 			);
 
 			this.classes.push({
@@ -34,21 +62,30 @@ export class PropertyCollector implements RuleCollector {
 						case "Dimension":
 							return {
 								value: measurement.value,
-								unit: measurement.unit
+								unit: measurement.unit,
 							};
 						case "Identifier":
 							return {
 								value: "auto",
-								unit: undefined
+								unit: undefined,
+							};
+						case "Percentage":
+							return {
+								value: this.humanReadablePercentage(measurement.value), // convert 33.33333 to '33.3'
+								unit: "%",
 							};
 						case "Number":
 							return {
 								value: 0,
-								unit: undefined
+								unit: undefined,
 							};
-						default: throw new Error("Unidentified CSS Property Label for class: " + className);
+						default:
+							throw new Error(
+								"Unidentified CSS Property Label for class: " +
+									className
+							);
 					}
-				})()
+				})(),
 			});
 
 			return true;

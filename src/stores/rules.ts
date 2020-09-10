@@ -7,11 +7,13 @@ import { LineHeightCollector } from '../sections/lineHeight/Collector';
 import { FontSizeCollector } from '../sections/fontSize/Collector';
 import { PaddingCollector } from '../sections/padding/Collector';
 import { MarginCollector } from '../sections/margin/Collector';
+import { WidthCollector } from '../sections/width/Collector';
 
 export const ruleWalker = new RuleWalker([
 	new BackgroundColorCollector(),
 	new PaddingCollector(),
 	new MarginCollector(),
+	new WidthCollector(),
 	new TextColorCollector(),
 	new BoxShadowCollector(),
 	new BorderRadiusCollector(),
