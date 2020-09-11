@@ -49,13 +49,13 @@
 	</p>
 	<SpacingTable {classes} let:measurement={m}>
 		<div class="swatch">
-			<div class="swatch-outer">
-				{#if m.unit === 'vw'}
-					<center>skipping display of `100vw`, it disrupts the visual layout</center>
-				{:else}
-					<div class="swatch-inner" style={`width: ${m.value + (m.unit ?? "")}`}></div>
-				{/if}
-			</div>
+			<!-- NOTE: overflow:hidden preserves the layout when using `vw` units-->
+			<div
+				class="swatch-outer"
+				style={m.unit === 'vw' ? 'overflow:hidden;' : ''}
+				title={m.unit === 'vw' ? 'this example has been purposely trimmed so it fits to screen ' : ''}
+			>
+				<div class="swatch-inner" style={`width: ${m.value + (m.unit ?? "")}`}></div>
 		</div>
 	</SpacingTable>
 </StyleguideSection>
