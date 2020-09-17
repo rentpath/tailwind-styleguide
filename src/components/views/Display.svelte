@@ -5,6 +5,7 @@
 	import FontSize from "./../../sections/fontSize/Renderer.svelte";
 	import LineHeight from "./../../sections/lineHeight/Renderer.svelte";
 	import Margin from "./../../sections/margin/Renderer.svelte";
+	import Width from "./../../sections/width/Renderer.svelte";
 	import Padding from "./../../sections/padding/Renderer.svelte";
 	import TextColor from "./../../sections/textColor/Renderer.svelte";
 
@@ -30,6 +31,9 @@
 <Margin
 	classes={parsed.collection['margin'].classes}
 	variants={parsed.collection['margin'].variants} />
+<Width
+	classes={parsed.collection['width'].classes}
+	variants={parsed.collection['width'].variants} />
 <FontSize
 	classes={parsed.collection['fontSize'].classes}
 	variants={parsed.collection['fontSize'].variants} />
