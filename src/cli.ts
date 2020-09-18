@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "fs"
+const { readFileSync } = require("fs");
 
 import { program } from "commander";
 
@@ -20,52 +20,37 @@ program.parse(process.argv);
 
 console.log("Running");
 
-function readFile() {
-	if (program.inFile) {
-
-	} else {
-		const data = readFileSync(0, "utf-8");
-		console.log(data);
-	}
-}
-
-function writeFile() {
-
-}
-
-readFile();
-
 // @ts-ignore
 import App from "./App.svelte";
 
-// const parsed$ = ruleWalker.parseAndCollect(tailwind).pipe(
-// 	filter((p): p is CompletePayload => p.type === "complete"),
-// 	map(c => ({
-// 		view: "display",
-// 		parsed: c.parsed
-// 	}))
-// );
+const parsed$ = ruleWalker.parseAndCollect(tailwind).pipe(
+	filter((p): p is CompletePayload => p.type === "complete"),
+	map(c => ({
+		view: "display",
+		parsed: c.parsed
+	}))
+);
 
-// parsed$.subscribe(function (completed) {
-// 	const { head, html, css } = App.render({
-// 		state$: of(completed)
-// 	});
+parsed$.subscribe(function (completed) {
+	const { head, html, css } = App.render({
+		state$: of(completed)
+	});
 
-// 	const app = `<!DOCTYPE html>
-// <html>
-// 	<head>
-// 		<meta charset="utf-8" />
-// 		<link rel="icon" href="/favicon.ico" />
-// 		<link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.4.6/dist/base.css">
-// 		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap" rel="stylesheet">
-// 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-// 		<meta name="description" content="Tailwind Styleguide SAAS" />
-// 		<title>Windsock</title>
-// 		${head}
-// 		<style>${css.code}</style>
-// 	</head>
-// 	<body>${html}</body>
-// </html>`;
+	const app = `<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.4.6/dist/base.css">
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Tailwind Styleguide SAAS" />
+		<title>Windsock</title>
+		${head}
+		<style>${css.code}</style>
+	</head>
+	<body>${html}</body>
+</html>`;
 
-// 	console.log(app);
-// })
+	console.log(app);
+})
