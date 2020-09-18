@@ -1,5 +1,6 @@
 import cssTree from "/web_modules/css-tree.js";
 import {extractVariant} from "./ast.js";
+const SUPPORTED_DECLARATION_TYPES = ["Dimension", "Number", "Identifier", "Percentage"];
 export class PropertyCollector {
   constructor(name, matcher, cssProperty) {
     this.name = name;
@@ -11,9 +12,19 @@ export class PropertyCollector {
   classRegex() {
     return new RegExp(`^${this.matcher}`);
   }
+  humanReadablePercentage(n) {
+    return Number(n).toFixed(1);
+  }
   walk(className, declarations) {
     if (className.match(this.classRegex())) {
-      const measurement = cssTree.find(declarations.filter((n) => n.property === this.cssProperty)[0], (d) => d.type === "Dimension" || d.type === "Number" || d.type === "Identifier");
+      const measurement = cssTree.find(declarations.filter((n) => {
+        return n.property === this.cssProperty;
+      })[0], (d) => {
+        const hasDeclarationSupport = SUPPORTED_DECLARATION_TYPES.includes(d.type);
+        if (!hasDeclarationSupport)
+          console.warn(`Unidentified declaration type: ${d.type})`);
+        return hasDeclarationSupport;
+      });
       this.classes.push({
         name: className,
         measurement: (() => {
@@ -27,6 +38,11 @@ export class PropertyCollector {
               return {
                 value: "auto",
                 unit: void 0
+              };
+            case "Percentage":
+              return {
+                value: this.humanReadablePercentage(measurement.value),
+                unit: "%"
               };
             case "Number":
               return {
