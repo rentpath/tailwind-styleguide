@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+import { readFileSync } from "fs"
+
 import { program } from "commander";
 
 import { of } from "rxjs";
@@ -9,10 +13,27 @@ import { CompletePayload } from "./css/RuleWalker";
 
 program.version('0.0.1');
 program
-	.option("-i, --in-file", "Path to your custom Tailwind CSS file.")
-	.option("-o, --out-file", "Where to put the static styleguide output.");
+	.option("-i, --in-file <path>", "Path to your custom Tailwind CSS file.")
+	.option("-o, --out-file <path>", "Where to put the static styleguide output.");
 
 program.parse(process.argv);
+
+console.log("Running");
+
+function readFile() {
+	if (program.inFile) {
+
+	} else {
+		const data = readFileSync(0, "utf-8");
+		console.log(data);
+	}
+}
+
+function writeFile() {
+
+}
+
+readFile();
 
 // @ts-ignore
 import App from "./App.svelte";

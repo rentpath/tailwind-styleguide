@@ -16,17 +16,15 @@ export default {
 		format: "cjs",
 	},
 	plugins: [
-		shebang({
-			shebang: "#!/usr/bin/env node"
-		}),
 		builtins(),
+		shebang(),
 		svelte({
 			generate: "ssr",
 			hydratable: false,
 		}),
 		typescript(),
 		nodeResolve(),
-		commonjs(),
 		json(),
+		commonjs(),
 	]
 };
