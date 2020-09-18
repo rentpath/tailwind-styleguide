@@ -22,6 +22,7 @@ import BoxShadow from "./../../sections/boxShadow/Renderer.js";
 import FontSize from "./../../sections/fontSize/Renderer.js";
 import LineHeight from "./../../sections/lineHeight/Renderer.js";
 import Margin from "./../../sections/margin/Renderer.js";
+import Width from "./../../sections/width/Renderer.js";
 import Padding from "./../../sections/padding/Renderer.js";
 import TextColor from "./../../sections/textColor/Renderer.js";
 
@@ -40,10 +41,12 @@ function create_fragment(ctx) {
 	let t4;
 	let margin;
 	let t5;
-	let fontsize;
+	let width;
 	let t6;
-	let lineheight;
+	let fontsize;
 	let t7;
+	let lineheight;
+	let t8;
 	let textcolor;
 	let current;
 
@@ -82,6 +85,13 @@ function create_fragment(ctx) {
 			}
 		});
 
+	width = new Width({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["width"].classes,
+				variants: /*parsed*/ ctx[0].collection["width"].variants
+			}
+		});
+
 	fontsize = new FontSize({
 			props: {
 				classes: /*parsed*/ ctx[0].collection["fontSize"].classes,
@@ -117,10 +127,12 @@ function create_fragment(ctx) {
 			t4 = space();
 			create_component(margin.$$.fragment);
 			t5 = space();
-			create_component(fontsize.$$.fragment);
+			create_component(width.$$.fragment);
 			t6 = space();
-			create_component(lineheight.$$.fragment);
+			create_component(fontsize.$$.fragment);
 			t7 = space();
+			create_component(lineheight.$$.fragment);
+			t8 = space();
 			create_component(textcolor.$$.fragment);
 			html_tag = new HtmlTag(html_anchor);
 		},
@@ -138,10 +150,12 @@ function create_fragment(ctx) {
 			insert(target, t4, anchor);
 			mount_component(margin, target, anchor);
 			insert(target, t5, anchor);
-			mount_component(fontsize, target, anchor);
+			mount_component(width, target, anchor);
 			insert(target, t6, anchor);
-			mount_component(lineheight, target, anchor);
+			mount_component(fontsize, target, anchor);
 			insert(target, t7, anchor);
+			mount_component(lineheight, target, anchor);
+			insert(target, t8, anchor);
 			mount_component(textcolor, target, anchor);
 			current = true;
 		},
@@ -167,6 +181,10 @@ function create_fragment(ctx) {
 			if (dirty & /*parsed*/ 1) margin_changes.classes = /*parsed*/ ctx[0].collection["margin"].classes;
 			if (dirty & /*parsed*/ 1) margin_changes.variants = /*parsed*/ ctx[0].collection["margin"].variants;
 			margin.$set(margin_changes);
+			const width_changes = {};
+			if (dirty & /*parsed*/ 1) width_changes.classes = /*parsed*/ ctx[0].collection["width"].classes;
+			if (dirty & /*parsed*/ 1) width_changes.variants = /*parsed*/ ctx[0].collection["width"].variants;
+			width.$set(width_changes);
 			const fontsize_changes = {};
 			if (dirty & /*parsed*/ 1) fontsize_changes.classes = /*parsed*/ ctx[0].collection["fontSize"].classes;
 			if (dirty & /*parsed*/ 1) fontsize_changes.variants = /*parsed*/ ctx[0].collection["fontSize"].variants;
@@ -187,6 +205,7 @@ function create_fragment(ctx) {
 			transition_in(boxshadow.$$.fragment, local);
 			transition_in(padding.$$.fragment, local);
 			transition_in(margin.$$.fragment, local);
+			transition_in(width.$$.fragment, local);
 			transition_in(fontsize.$$.fragment, local);
 			transition_in(lineheight.$$.fragment, local);
 			transition_in(textcolor.$$.fragment, local);
@@ -198,6 +217,7 @@ function create_fragment(ctx) {
 			transition_out(boxshadow.$$.fragment, local);
 			transition_out(padding.$$.fragment, local);
 			transition_out(margin.$$.fragment, local);
+			transition_out(width.$$.fragment, local);
 			transition_out(fontsize.$$.fragment, local);
 			transition_out(lineheight.$$.fragment, local);
 			transition_out(textcolor.$$.fragment, local);
@@ -217,10 +237,12 @@ function create_fragment(ctx) {
 			if (detaching) detach(t4);
 			destroy_component(margin, detaching);
 			if (detaching) detach(t5);
-			destroy_component(fontsize, detaching);
+			destroy_component(width, detaching);
 			if (detaching) detach(t6);
-			destroy_component(lineheight, detaching);
+			destroy_component(fontsize, detaching);
 			if (detaching) detach(t7);
+			destroy_component(lineheight, detaching);
+			if (detaching) detach(t8);
 			destroy_component(textcolor, detaching);
 		}
 	};
