@@ -1,3 +1,6 @@
 {
-  "extends": "@snowpack/app-scripts-svelte"
+	"extends": "@snowpack/app-scripts-svelte",
+	"exclude": [
+		"./src/cli.ts"
+	]
 }
