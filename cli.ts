@@ -7,9 +7,9 @@ import { program } from "commander";
 import { of } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
-import { ruleWalker } from "./stores/rules";
-import { tailwind } from "./temp";
-import { CompletePayload } from "./css/RuleWalker";
+import { ruleWalker } from "./src/stores/rules";
+import { tailwind } from "./src/temp";
+import { CompletePayload } from "./src/css/RuleWalker";
 
 program.version('0.0.1');
 program
@@ -21,7 +21,7 @@ program.parse(process.argv);
 console.log("Running");
 
 // @ts-ignore
-import App from "./App.svelte";
+import App from "./src/App.svelte";
 
 const parsed$ = ruleWalker.parseAndCollect(tailwind).pipe(
 	filter((p): p is CompletePayload => p.type === "complete"),

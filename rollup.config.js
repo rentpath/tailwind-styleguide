@@ -9,7 +9,7 @@ import shebang from 'rollup-plugin-preserve-shebang';
 export default {
 	preserveEntrySignatures: false,
 	preserveModules: false,
-	input: "src/cli.ts",
+	input: "./cli.ts",
 	output: {
 		sourcemap: false,
 		dir: "dist",

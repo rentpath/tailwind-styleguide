@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"rootDir": "src",
+		"rootDir": ".",
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
 		"outDir": "./dist/",
@@ -13,5 +13,5 @@
 		"target": "es5",
 		"allowJs": true
 	},
-	"include": ["./src/**/*"]
+	"include": ["./src/**/*", "cli.ts"]
 }
