@@ -5,28 +5,49 @@
 </script>
 
 <style>
-	table {
-		width: 100%;
+	em {
+		font-style: normal;;
 	}
 
-	tbody tr {
-		border-bottom: 1px solid var(--subtle-color)
+	.table {
+		display: grid;
+		grid-template-columns: 1fr 1fr 6fr;
+		align-items: stretch;
 	}
 
-	thead td {
-		font-weight: 600;
-	}
-
-	td {
+	.cell {
+		display: flex;
+		align-items: center;
 		padding: 4px 8px;
+		border-bottom: 1px solid var(--subtle-color);
 	}
 
-	td:first-child {
+	.cell:nth-child(3n - 2) {
 		padding-left: 0;
+	}
+
+	.cell:nth-child(3n) {
+		padding-right: 0;
+	}
+
+	.heading {
+		font-weight: 600;
 	}
 
 	.measurement {
 		text-align: right;
+	}
+
+	.cell.heading {
+		border: none;
+	}
+
+	.cell.measurement {
+		justify-content: flex-end;
+	}
+
+	.cell.slot {
+		overflow: hidden;
 	}
 
 	.unit {
@@ -37,25 +58,20 @@
 	}
 </style>
 
-<table>
-	<thead>
-		<tr>
-			<td>Class</td>
-			<td class="measurement">Measurement</td>
-			<td>Sample</td>
-		</tr>
-	</thead>
-	<tbody>
-		{#each classes as c}
-			<tr>
-				<td>
-					<ClassName>.{c.name}</ClassName>
-				</td>
-				<td class="measurement">{c.measurement.value}<span class="unit">{c.measurement.unit ?? ""}</span></td>
-				<td>
-					<slot measurement={c.measurement}></slot>
-				</td>
-			</tr>
-		{/each}
-	</tbody>
-</table>
+<section class="table">
+	<em class="cell heading">Class</em>
+	<em class="cell heading measurement">Measurement</em>
+	<em class="cell heading">Sample</em>
+
+	{#each classes as c}
+		<div class="cell">
+			<ClassName>.{c.name}</ClassName>
+		</div>
+		<div class="cell measurement">
+			<span class="measurement">{c.measurement.value}<em class="unit">{c.measurement.unit ?? ""}</em></span>
+		</div>
+		<div class="cell slot">
+			<slot measurement={c.measurement}></slot>
+		</div>
+	{/each}
+</section>
