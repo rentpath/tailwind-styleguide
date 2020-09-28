@@ -19,7 +19,7 @@ export function getNodeOfType<T extends cssTree.CssNode>(
  * @param rule
  */
 export function getClassSelector(rule: cssTree.Rule) {
-	return getNodeOfType("ClassSelector", rule) as cssTree.ClassSelector;
+	return getNodeOfType("ClassSelector", rule) as cssTree.ClassSelector | null;
 }
 
 /**
@@ -49,4 +49,18 @@ export function extractVariant(tailwindPattern: string, className: string) {
 	} else {
 		return null;
 	}
+}
+
+/**
+ * Unescapes the escaped version of a CSS classname. For example, will turn
+ * The w-5\/12 into w-5/12
+ *
+ * @param className
+ */
+export function unescapeClassname(className: string): string {
+	/*
+	* TODO: Are there other things to un-escape? I didn't bother to check.
+	* Probably will just add them as they arise.
+	*/
+	return className.replace('\\/', '/');
 }
