@@ -1,14 +1,13 @@
 {
   "scripts": {
     "start": "snowpack dev",
-	"build": "snowpack build",
-	"build-cli": "rollup -c ./rollup.config.js",
+    "build": "snowpack build",
+    "build-cli": "rollup -c ./rollup.config.js",
     "make": "make build",
     "deploy": "make deploy",
     "plop": "plop"
   },
   "dependencies": {
-    "@xstate/fsm": "^1.4.0",
     "commander": "^6.1.0",
     "css-tree": "^1.0.0-alpha.39",
     "ramda": "^0.27.0",
@@ -26,7 +25,6 @@
     "@types/ramda": "^0.27.11",
     "plop": "^2.7.2",
     "rollup": "^2.23.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "rollup-plugin-svelte": "^5.2.3",
     "snowpack": "^2.6.4",
