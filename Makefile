@@ -13,6 +13,12 @@ build-no-commit: snowpack jekyll-ignore cname
 
 build: build-no-commit commit-artifacts
 
+clean-cli-dist:
+	rm -rf ./dist
+
+build-cli: clean-cli-dist
+	npm run build-cli
+
 commit-artifacts:
 	git add ./build
 	git commit -m "Build Artifacts"

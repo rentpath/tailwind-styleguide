@@ -16,3 +16,6 @@ export function extractVariant(tailwindPattern, className) {
     return null;
   }
 }
+export function unescapeClassname(className) {
+  return className.replace("\\/", "/");
+}

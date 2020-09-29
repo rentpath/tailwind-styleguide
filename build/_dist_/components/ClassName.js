@@ -24,7 +24,7 @@ function create_fragment(ctx) {
 		c() {
 			em = element("em");
 			if (default_slot) default_slot.c();
-			attr(em, "class", "svelte-1mo47sy");
+			attr(em, "class", "svelte-1ttfbrf");
 		},
 		m(target, anchor) {
 			insert(target, em, anchor);

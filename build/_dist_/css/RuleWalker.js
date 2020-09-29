@@ -1,11 +1,11 @@
 import cssTree from "/web_modules/css-tree.js";
 import {Observable} from "/web_modules/rxjs.js";
-import {getClassSelector, getDeclarations} from "./ast.js";
+import {getClassSelector, getDeclarations, unescapeClassname} from "./ast.js";
 const BLOCKING_FACTOR = 250;
 export class RuleWalker {
   constructor(collectors) {
-    this.collectors = collectors;
     this.rules = [];
+    this.collectors = collectors;
   }
   parseAndCollect(css) {
     const parsed = cssTree.parse(css);
@@ -24,8 +24,9 @@ export class RuleWalker {
             continue;
           }
           const declarations = getDeclarations(rules[index]);
+          const classSelectorName = unescapeClassname(classSelector.name);
           this.collectors.forEach((collector) => {
-            const shouldIncludeRule = collector.walk(classSelector.name, declarations);
+            const shouldIncludeRule = collector.walk(classSelectorName, declarations);
             if (shouldIncludeRule) {
               this.rules.push(rules[index]);
             }
