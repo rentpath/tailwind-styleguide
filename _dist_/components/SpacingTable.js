@@ -34,7 +34,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (52:5) <ClassName>
+// (68:3) <ClassName>
 function create_default_slot(ctx) {
 	let t0;
 	let t1_value = /*c*/ ctx[3].name + "";
@@ -59,20 +59,20 @@ function create_default_slot(ctx) {
 	};
 }
 
-// (49:2) {#each classes as c}
+// (66:1) {#each classes as c}
 function create_each_block(ctx) {
-	let tr;
-	let td0;
+	let div0;
 	let classname;
 	let t0;
-	let td1;
+	let div1;
+	let span;
 	let t1_value = /*c*/ ctx[3].measurement.value + "";
 	let t1;
-	let span;
+	let em;
 	let t2_value = (/*c*/ ctx[3].measurement.unit ?? "") + "";
 	let t2;
 	let t3;
-	let td2;
+	let div2;
 	let t4;
 	let current;
 
@@ -88,41 +88,41 @@ function create_each_block(ctx) {
 
 	return {
 		c() {
-			tr = element("tr");
-			td0 = element("td");
+			div0 = element("div");
 			create_component(classname.$$.fragment);
 			t0 = space();
-			td1 = element("td");
-			t1 = text(t1_value);
+			div1 = element("div");
 			span = element("span");
+			t1 = text(t1_value);
+			em = element("em");
 			t2 = text(t2_value);
 			t3 = space();
-			td2 = element("td");
+			div2 = element("div");
 			if (default_slot) default_slot.c();
 			t4 = space();
-			attr(td0, "class", "svelte-1i1mlvh");
-			attr(span, "class", "unit svelte-1i1mlvh");
-			attr(td1, "class", "measurement svelte-1i1mlvh");
-			attr(td2, "class", "svelte-1i1mlvh");
-			attr(tr, "class", "svelte-1i1mlvh");
+			attr(div0, "class", "cell svelte-1avbn07");
+			attr(em, "class", "unit svelte-1avbn07");
+			attr(span, "class", "measurement svelte-1avbn07");
+			attr(div1, "class", "cell measurement svelte-1avbn07");
+			attr(div2, "class", "cell slot svelte-1avbn07");
 		},
 		m(target, anchor) {
-			insert(target, tr, anchor);
-			append(tr, td0);
-			mount_component(classname, td0, null);
-			append(tr, t0);
-			append(tr, td1);
-			append(td1, t1);
-			append(td1, span);
-			append(span, t2);
-			append(tr, t3);
-			append(tr, td2);
+			insert(target, div0, anchor);
+			mount_component(classname, div0, null);
+			insert(target, t0, anchor);
+			insert(target, div1, anchor);
+			append(div1, span);
+			append(span, t1);
+			append(span, em);
+			append(em, t2);
+			insert(target, t3, anchor);
+			insert(target, div2, anchor);
 
 			if (default_slot) {
-				default_slot.m(td2, null);
+				default_slot.m(div2, null);
 			}
 
-			append(tr, t4);
+			append(div2, t4);
 			current = true;
 		},
 		p(ctx, dirty) {
@@ -154,18 +154,25 @@ function create_each_block(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(tr);
+			if (detaching) detach(div0);
 			destroy_component(classname);
+			if (detaching) detach(t0);
+			if (detaching) detach(div1);
+			if (detaching) detach(t3);
+			if (detaching) detach(div2);
 			if (default_slot) default_slot.d(detaching);
 		}
 	};
 }
 
 function create_fragment(ctx) {
-	let table;
-	let thead;
+	let section;
+	let em0;
+	let t1;
+	let em1;
+	let t3;
+	let em2;
 	let t5;
-	let tbody;
 	let current;
 	let each_value = /*classes*/ ctx[0];
 	let each_blocks = [];
@@ -180,32 +187,37 @@ function create_fragment(ctx) {
 
 	return {
 		c() {
-			table = element("table");
-			thead = element("thead");
-
-			thead.innerHTML = `<tr><td class="svelte-1i1mlvh">Class</td> 
-			<td class="measurement svelte-1i1mlvh">Measurement</td> 
-			<td class="svelte-1i1mlvh">Sample</td></tr>`;
-
+			section = element("section");
+			em0 = element("em");
+			em0.textContent = "Class";
+			t1 = space();
+			em1 = element("em");
+			em1.textContent = "Measurement";
+			t3 = space();
+			em2 = element("em");
+			em2.textContent = "Sample";
 			t5 = space();
-			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(thead, "class", "svelte-1i1mlvh");
-			attr(tbody, "class", "svelte-1i1mlvh");
-			attr(table, "class", "svelte-1i1mlvh");
+			attr(em0, "class", "cell heading svelte-1avbn07");
+			attr(em1, "class", "cell heading measurement svelte-1avbn07");
+			attr(em2, "class", "cell heading svelte-1avbn07");
+			attr(section, "class", "table svelte-1avbn07");
 		},
 		m(target, anchor) {
-			insert(target, table, anchor);
-			append(table, thead);
-			append(table, t5);
-			append(table, tbody);
+			insert(target, section, anchor);
+			append(section, em0);
+			append(section, t1);
+			append(section, em1);
+			append(section, t3);
+			append(section, em2);
+			append(section, t5);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(tbody, null);
+				each_blocks[i].m(section, null);
 			}
 
 			current = true;
@@ -225,7 +237,7 @@ function create_fragment(ctx) {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(tbody, null);
+						each_blocks[i].m(section, null);
 					}
 				}
 
@@ -257,7 +269,7 @@ function create_fragment(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(table);
+			if (detaching) detach(section);
 			destroy_each(each_blocks, detaching);
 		}
 	};
