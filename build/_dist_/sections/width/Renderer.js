@@ -13,6 +13,7 @@ import {
 	mount_component,
 	safe_not_equal,
 	space,
+	text,
 	transition_in,
 	transition_out
 } from "/web_modules/svelte/internal.js";
@@ -21,62 +22,63 @@ import StyleguideSection from "../../components/StyleguideSection.js";
 import SpacingTable from "../../components/SpacingTable.js";
 import ClassName from "../../components/ClassName.js";
 
-function create_default_slot_1(ctx) {
-	let div2;
-	let div1;
-	let div0;
-	let div0_style_value;
-	let div1_style_value;
-	let div1_title_value;
+function create_default_slot_2(ctx) {
+	let t;
 
 	return {
 		c() {
-			div2 = element("div");
-			div1 = element("div");
-			div0 = element("div");
-			attr(div0, "class", "swatch-inner svelte-2oluyg");
-			attr(div0, "style", div0_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`);
-			attr(div1, "class", "swatch-outer svelte-2oluyg");
-			attr(div1, "style", div1_style_value = /*m*/ ctx[2].unit === "vw" ? "overflow:hidden;" : "");
-
-			attr(div1, "title", div1_title_value = /*m*/ ctx[2].unit === "vw"
-			? "this example has been purposely trimmed so it fits to screen "
-			: "");
-
-			attr(div2, "class", "swatch svelte-2oluyg");
+			t = text("vw");
 		},
 		m(target, anchor) {
-			insert(target, div2, anchor);
-			append(div2, div1);
-			append(div1, div0);
-		},
-		p(ctx, dirty) {
-			if (dirty & /*m*/ 4 && div0_style_value !== (div0_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`)) {
-				attr(div0, "style", div0_style_value);
-			}
-
-			if (dirty & /*m*/ 4 && div1_style_value !== (div1_style_value = /*m*/ ctx[2].unit === "vw" ? "overflow:hidden;" : "")) {
-				attr(div1, "style", div1_style_value);
-			}
-
-			if (dirty & /*m*/ 4 && div1_title_value !== (div1_title_value = /*m*/ ctx[2].unit === "vw"
-			? "this example has been purposely trimmed so it fits to screen "
-			: "")) {
-				attr(div1, "title", div1_title_value);
-			}
+			insert(target, t, anchor);
 		},
 		d(detaching) {
-			if (detaching) detach(div2);
+			if (detaching) detach(t);
 		}
 	};
 }
 
-// (46:0) <StyleguideSection name="Width" description="Width great power comes great responsibiity" variants={variants}>
+// (30:1) <SpacingTable {classes} let:measurement={m}>
+function create_default_slot_1(ctx) {
+	let div;
+	let div_style_value;
+
+	return {
+		c() {
+			div = element("div");
+			attr(div, "class", "swatch svelte-wv8a8j");
+			attr(div, "style", div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`);
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*m*/ 4 && div_style_value !== (div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`)) {
+				attr(div, "style", div_style_value);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(div);
+		}
+	};
+}
+
+// (26:0) <StyleguideSection name="Width" description="Width great power comes great responsibiity" variants={variants}>
 function create_default_slot(ctx) {
 	let p;
+	let t0;
+	let classname;
 	let t1;
+	let t2;
 	let spacingtable;
 	let current;
+
+	classname = new ClassName({
+			props: {
+				$$slots: { default: [create_default_slot_2] },
+				$$scope: { ctx }
+			}
+		});
 
 	spacingtable = new SpacingTable({
 			props: {
@@ -95,18 +97,30 @@ function create_default_slot(ctx) {
 	return {
 		c() {
 			p = element("p");
-			p.textContent = "All width options";
-			t1 = space();
+			t0 = text("Exceedingly large widths — like those that use ");
+			create_component(classname.$$.fragment);
+			t1 = text(" units — may be larger than they appear in this table.");
+			t2 = space();
 			create_component(spacingtable.$$.fragment);
-			attr(p, "class", "description svelte-2oluyg");
+			attr(p, "class", "description svelte-wv8a8j");
 		},
 		m(target, anchor) {
 			insert(target, p, anchor);
-			insert(target, t1, anchor);
+			append(p, t0);
+			mount_component(classname, p, null);
+			append(p, t1);
+			insert(target, t2, anchor);
 			mount_component(spacingtable, target, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
+			const classname_changes = {};
+
+			if (dirty & /*$$scope*/ 8) {
+				classname_changes.$$scope = { dirty, ctx };
+			}
+
+			classname.$set(classname_changes);
 			const spacingtable_changes = {};
 			if (dirty & /*classes*/ 1) spacingtable_changes.classes = /*classes*/ ctx[0];
 
@@ -118,16 +132,19 @@ function create_default_slot(ctx) {
 		},
 		i(local) {
 			if (current) return;
+			transition_in(classname.$$.fragment, local);
 			transition_in(spacingtable.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
+			transition_out(classname.$$.fragment, local);
 			transition_out(spacingtable.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(p);
-			if (detaching) detach(t1);
+			destroy_component(classname);
+			if (detaching) detach(t2);
 			destroy_component(spacingtable, detaching);
 		}
 	};
