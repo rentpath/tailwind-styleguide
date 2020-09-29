@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { readFileSync } = require("fs");
+import { readFileSync } from "fs";
 
 import { program } from "commander";
 
@@ -8,35 +8,37 @@ import { of } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
 import { ruleWalker } from "./src/stores/rules";
-import { tailwind } from "./src/temp";
 import { CompletePayload } from "./src/css/RuleWalker";
-
-program.version('0.0.1');
-program
-	.option("-i, --in-file <path>", "Path to your custom Tailwind CSS file.")
-	.option("-o, --out-file <path>", "Where to put the static styleguide output.");
-
-program.parse(process.argv);
-
-console.log("Running");
 
 // @ts-ignore
 import App from "./src/App.svelte";
 
-const parsed$ = ruleWalker.parseAndCollect(tailwind).pipe(
-	filter((p): p is CompletePayload => p.type === "complete"),
-	map(c => ({
-		view: "display",
-		parsed: c.parsed
-	}))
-);
+program
+	.version('1.0.0')
+	.command('build <source> [destination]')
+	.action(build);
 
-parsed$.subscribe(function (completed) {
-	const { head, html, css } = App.render({
-		state$: of(completed)
-	});
+program.parse(process.argv);
 
-	const app = `<!DOCTYPE html>
+function build(source: string, destination?: string) {
+	try {
+		const raw = readFileSync(source, { encoding: "utf-8" });
+
+		const parsed$ = ruleWalker.parseAndCollect(raw).pipe(
+			filter((p): p is CompletePayload => p.type === "complete"),
+			map(c => ({
+				view: "display",
+				parsed: c.parsed
+			}))
+		);
+
+		parsed$.subscribe(function (completed) {
+			const { head, html, css } = App.render({
+				state$: of(completed)
+			});
+
+			const app = `
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -50,7 +52,12 @@ parsed$.subscribe(function (completed) {
 		<style>${css.code}</style>
 	</head>
 	<body>${html}</body>
-</html>`;
+</html>
+			`;
 
-	console.log(app);
-})
+			console.log(app);
+		});
+	} catch (e) {
+		console.log(e);
+	}
+}

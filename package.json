@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
+	"build": "snowpack build",
+	"build-cli": "rollup -c ./rollup.config.js",
     "make": "make build",
     "deploy": "make deploy",
     "plop": "plop"
