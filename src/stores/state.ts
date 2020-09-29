@@ -86,3 +86,7 @@ export function parseWithTailwind() {
 export function parseWithString(raw: string) {
 	parser$.next(raw);
 }
+
+if (import.meta.env.MODE === "development") {
+	parseWithTailwind();
+}

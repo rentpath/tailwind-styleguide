@@ -10,14 +10,11 @@
 		margin-bottom: var(--section-margin);
 	}
 
-	.styleguide-section:last-of-type {
-		margin-bottom: 0;
-	}
-
 	.left {
 		width: var(--left-column-width);
 		margin-right: var(--common-gutter);
 		position: relative;
+		flex-shrink: 0;
 	}
 
 	.sticky {
