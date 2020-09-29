@@ -1,4 +1,9 @@
 {
+	"name": "windsock-cli",
+	"version": "0.0.1",
+	"bin": {
+		"windsock-cli": "./dist/cli.js"
+	},
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",

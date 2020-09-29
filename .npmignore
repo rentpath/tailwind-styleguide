@@ -1,0 +1,18 @@
+# Directories
+.vscode/
+build/
+node_modules/
+plop-templates/
+public/
+src/
+web_modules/
+
+# Files
+.editorconfig
+CNAME
+Makefile
+plopfile.js
+rollup.config.js
+snowpack.config.json
+tsconfig.json
+cli.ts

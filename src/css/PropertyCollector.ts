@@ -46,10 +46,9 @@ export class PropertyCollector implements RuleCollector {
 						d.type
 					);
 
-					if (!hasDeclarationSupport)
-						console.warn(
-							`Unidentified declaration type: ${d.type})`
-						);
+					if (!hasDeclarationSupport) {
+						console.warn(`Unidentified declaration type: ${d.type}`);
+					}
 
 					return hasDeclarationSupport;
 				}
