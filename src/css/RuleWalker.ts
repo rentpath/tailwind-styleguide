@@ -86,6 +86,7 @@ export class RuleWalker {
 					const classSelectorName = unescapeClassname(classSelector.name);
 
 					this.collectors.forEach(collector => {
+						// TODO: Does this result in duplicates? Probably.
 						const shouldIncludeRule = collector.walk(classSelectorName, declarations);
 
 						if (shouldIncludeRule) {

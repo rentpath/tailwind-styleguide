@@ -16,6 +16,9 @@ import { tailwind } from "../temp";
 import { ruleWalker } from "./rules";
 import { CollectPayload, Parsed } from "../css/RuleWalker";
 
+// TODO: This could be cleaned up and organized quite a bit
+// There's already three logical "sections"
+
 interface SplashState {
 	view: "splash";
 }
