@@ -68,7 +68,7 @@
 			<ClassName>.{c.name}</ClassName>
 		</div>
 		<div class="cell measurement">
-			<span class="measurement">{c.measurement.value}<em class="unit">{c.measurement.unit ?? ""}</em></span>
+			<span class="measurement">{c.measurement.value}<em class="unit">{c.measurement.unit || ""}</em></span>
 		</div>
 		<div class="cell slot">
 			<slot measurement={c.measurement}></slot>

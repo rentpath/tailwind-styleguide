@@ -50,7 +50,7 @@
 		variants as well to control left &amp; right, top &amp; bottom, top, right, bottom, and left paddings respectively.
 	</p>
 	<SpacingTable {classes} let:measurement={m}>
-		<div class="swatch" style={`padding-right: ${m.value + (m.unit ?? "")}`}>
+		<div class="swatch" style={`padding-right: ${m.value + (m.unit || "")}`}>
 			<div class="swatch-fill"></div>
 		</div>
 	</SpacingTable>

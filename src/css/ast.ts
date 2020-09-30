@@ -30,7 +30,7 @@ export function getClassSelector(rule: cssTree.Rule) {
  */
 export function getDeclarations(rule: cssTree.Rule) {
 	return (
-		cssTree.findAll(rule, (node) => node.type === "Declaration") ?? []
+		cssTree.findAll(rule, (node) => node.type === "Declaration") || []
 	) as cssTree.Declaration[];
 }
 

@@ -28,6 +28,6 @@
 		Exceedingly large widths &mdash; like those that use <ClassName>vw</ClassName> units &mdash; may be larger than they appear in this table.
 	</p>
 	<SpacingTable {classes} let:measurement={m}>
-		<div class="swatch" style={`width: ${m.value + (m.unit ?? "")}`}></div>
+		<div class="swatch" style={`width: ${m.value + (m.unit || "")}`}></div>
 	</SpacingTable>
 </StyleguideSection>

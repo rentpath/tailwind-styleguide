@@ -68,7 +68,7 @@
 			-- Because of how browsers render newlines around containers with display: inline-block,
 			-- these elements have to be on the same line
 			-->
-			<div class="swatch-left" style={`margin-right: ${m.value + (m.unit ?? "")}`}></div><div class="swatch-right"></div>
+			<div class="swatch-left" style={`margin-right: ${m.value + (m.unit || "")}`}></div><div class="swatch-right"></div>
 		</div>
 	</SpacingTable>
 </StyleguideSection>
