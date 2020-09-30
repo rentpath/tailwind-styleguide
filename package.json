@@ -34,7 +34,6 @@
     "rollup-plugin-svelte": "^5.2.3",
     "snowpack": "^2.6.4",
     "svelte": "^3.24.0",
-    "svelte-preprocess": "^4.3.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.7"
   }
