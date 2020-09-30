@@ -1,6 +1,6 @@
 {
   "name": "windsock-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "windsock-cli": "./dist/cli.js"
   },
