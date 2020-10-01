@@ -27,15 +27,7 @@ Windsock is both a web app and an installable Node app. If your organization wou
 
 ```sh
 npm install -g windsock-cli
-
-# Windsock can read from a file, or from stdin
-# Windsock can write its output to a file, or to stdout
-
-# e.g.
-cat ./my-tailwind.css | windsock > ./styleguide.html
-
-# or
-windsock -i ./my-tailwind.css -o ./styleguide-html
+windsock build ./my-tailwind.css > ./styleguide.html
 ```
 
 Windsock is under active development. Only a small fraction of Tailwind's massive surface area has been covered in the style guide builder. There are definitely bugs and edge cases to be uncovered. Contributions are always welcome.
