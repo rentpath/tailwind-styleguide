@@ -1,6 +1,6 @@
 <script>
 	import ClassName from "../ClassName.svelte";
-	
+
 	export let swatch;
 
 	export let squircle = false;
@@ -15,6 +15,7 @@
 		display: flex;
 		flex-direction: column;
 		place-items: center;
+		text-align: center;
 	}
 
 	.swatch {
@@ -40,7 +41,7 @@
 	}
 
 	.stroked {
-		border: 1px solid var(--less-subtle-color);
+		border-width: 1px;
 	}
 </style>
 
