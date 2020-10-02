@@ -1,6 +1,7 @@
 <script>
 	import BackgroundColor from "./../../sections/backgroundColor/Renderer.svelte";
 	import BorderRadius from "./../../sections/borderRadius/Renderer.svelte";
+	import BorderColor from "./../../sections/borderColor/Renderer.svelte";
 	import BoxShadow from "./../../sections/boxShadow/Renderer.svelte";
 	import FontSize from "./../../sections/fontSize/Renderer.svelte";
 	import LineHeight from "./../../sections/lineHeight/Renderer.svelte";
@@ -22,6 +23,9 @@
 <BorderRadius
 	classes={parsed.collection['borderRadius'].classes}
 	variants={parsed.collection['borderRadius'].variants} />
+<BorderColor
+	classes={parsed.collection['borderColor'].classes}
+	variants={parsed.collection['borderColor'].variants} />
 <BoxShadow
 	classes={parsed.collection['boxShadow'].classes}
 	variants={parsed.collection['boxShadow'].variants} />
