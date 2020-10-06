@@ -15,6 +15,12 @@
 		align-items: stretch;
 	}
 
+	@media (max-width: 768px) {
+		.table {
+			grid-template-columns: 2fr 3fr 6fr;
+		}
+	}
+
 	.cell {
 		display: flex;
 		align-items: center;

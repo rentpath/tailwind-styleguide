@@ -13,6 +13,12 @@
 		gap: 24px 24px;
 	}
 
+	@media (max-width: 768px) {
+		.colors {
+			grid-template-columns: 1fr;
+		}
+	}
+
 	p {
 		font-size: 1.2rem;
 	}
