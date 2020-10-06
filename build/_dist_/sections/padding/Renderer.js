@@ -254,14 +254,14 @@ function create_default_slot_1(ctx) {
 			div0 = element("div");
 			attr(div0, "class", "swatch-fill svelte-rgfx3y");
 			attr(div1, "class", "swatch svelte-rgfx3y");
-			attr(div1, "style", div1_style_value = `padding-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`);
+			attr(div1, "style", div1_style_value = `padding-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`);
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
 			append(div1, div0);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*m*/ 4 && div1_style_value !== (div1_style_value = `padding-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`)) {
+			if (dirty & /*m*/ 4 && div1_style_value !== (div1_style_value = `padding-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`)) {
 				attr(div1, "style", div1_style_value);
 			}
 		},

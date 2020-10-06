@@ -3,9 +3,10 @@ import {BackgroundColorCollector} from "../sections/backgroundColor/Collector.js
 import {TextColorCollector} from "../sections/textColor/Collector.js";
 import {BoxShadowCollector} from "../sections/boxShadow/Collector.js";
 import {BorderRadiusCollector} from "../sections/borderRadius/Collector.js";
+import {BorderColorCollector} from "../sections/borderColor/Collector.js";
 import {LineHeightCollector} from "../sections/lineHeight/Collector.js";
 import {FontSizeCollector} from "../sections/fontSize/Collector.js";
 import {PaddingCollector} from "../sections/padding/Collector.js";
 import {MarginCollector} from "../sections/margin/Collector.js";
 import {WidthCollector} from "../sections/width/Collector.js";
-export const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new PaddingCollector(), new MarginCollector(), new WidthCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector()]);
+export const ruleWalker = new RuleWalker2([new BackgroundColorCollector(), new PaddingCollector(), new MarginCollector(), new WidthCollector(), new TextColorCollector(), new BoxShadowCollector(), new BorderRadiusCollector(), new LineHeightCollector(), new FontSizeCollector(), new BorderColorCollector()]);

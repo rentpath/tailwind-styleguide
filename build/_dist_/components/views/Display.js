@@ -18,6 +18,7 @@ import {
 
 import BackgroundColor from "./../../sections/backgroundColor/Renderer.js";
 import BorderRadius from "./../../sections/borderRadius/Renderer.js";
+import BorderColor from "./../../sections/borderColor/Renderer.js";
 import BoxShadow from "./../../sections/boxShadow/Renderer.js";
 import FontSize from "./../../sections/fontSize/Renderer.js";
 import LineHeight from "./../../sections/lineHeight/Renderer.js";
@@ -35,18 +36,20 @@ function create_fragment(ctx) {
 	let t1;
 	let borderradius;
 	let t2;
-	let boxshadow;
+	let bordercolor;
 	let t3;
-	let padding;
+	let boxshadow;
 	let t4;
-	let margin;
+	let padding;
 	let t5;
-	let width;
+	let margin;
 	let t6;
-	let fontsize;
+	let width;
 	let t7;
-	let lineheight;
+	let fontsize;
 	let t8;
+	let lineheight;
+	let t9;
 	let textcolor;
 	let current;
 
@@ -61,6 +64,13 @@ function create_fragment(ctx) {
 			props: {
 				classes: /*parsed*/ ctx[0].collection["borderRadius"].classes,
 				variants: /*parsed*/ ctx[0].collection["borderRadius"].variants
+			}
+		});
+
+	bordercolor = new BorderColor({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["borderColor"].classes,
+				variants: /*parsed*/ ctx[0].collection["borderColor"].variants
 			}
 		});
 
@@ -121,18 +131,20 @@ function create_fragment(ctx) {
 			t1 = space();
 			create_component(borderradius.$$.fragment);
 			t2 = space();
-			create_component(boxshadow.$$.fragment);
+			create_component(bordercolor.$$.fragment);
 			t3 = space();
-			create_component(padding.$$.fragment);
+			create_component(boxshadow.$$.fragment);
 			t4 = space();
-			create_component(margin.$$.fragment);
+			create_component(padding.$$.fragment);
 			t5 = space();
-			create_component(width.$$.fragment);
+			create_component(margin.$$.fragment);
 			t6 = space();
-			create_component(fontsize.$$.fragment);
+			create_component(width.$$.fragment);
 			t7 = space();
-			create_component(lineheight.$$.fragment);
+			create_component(fontsize.$$.fragment);
 			t8 = space();
+			create_component(lineheight.$$.fragment);
+			t9 = space();
 			create_component(textcolor.$$.fragment);
 			html_tag = new HtmlTag(html_anchor);
 		},
@@ -144,18 +156,20 @@ function create_fragment(ctx) {
 			insert(target, t1, anchor);
 			mount_component(borderradius, target, anchor);
 			insert(target, t2, anchor);
-			mount_component(boxshadow, target, anchor);
+			mount_component(bordercolor, target, anchor);
 			insert(target, t3, anchor);
-			mount_component(padding, target, anchor);
+			mount_component(boxshadow, target, anchor);
 			insert(target, t4, anchor);
-			mount_component(margin, target, anchor);
+			mount_component(padding, target, anchor);
 			insert(target, t5, anchor);
-			mount_component(width, target, anchor);
+			mount_component(margin, target, anchor);
 			insert(target, t6, anchor);
-			mount_component(fontsize, target, anchor);
+			mount_component(width, target, anchor);
 			insert(target, t7, anchor);
-			mount_component(lineheight, target, anchor);
+			mount_component(fontsize, target, anchor);
 			insert(target, t8, anchor);
+			mount_component(lineheight, target, anchor);
+			insert(target, t9, anchor);
 			mount_component(textcolor, target, anchor);
 			current = true;
 		},
@@ -169,6 +183,10 @@ function create_fragment(ctx) {
 			if (dirty & /*parsed*/ 1) borderradius_changes.classes = /*parsed*/ ctx[0].collection["borderRadius"].classes;
 			if (dirty & /*parsed*/ 1) borderradius_changes.variants = /*parsed*/ ctx[0].collection["borderRadius"].variants;
 			borderradius.$set(borderradius_changes);
+			const bordercolor_changes = {};
+			if (dirty & /*parsed*/ 1) bordercolor_changes.classes = /*parsed*/ ctx[0].collection["borderColor"].classes;
+			if (dirty & /*parsed*/ 1) bordercolor_changes.variants = /*parsed*/ ctx[0].collection["borderColor"].variants;
+			bordercolor.$set(bordercolor_changes);
 			const boxshadow_changes = {};
 			if (dirty & /*parsed*/ 1) boxshadow_changes.classes = /*parsed*/ ctx[0].collection["boxShadow"].classes;
 			if (dirty & /*parsed*/ 1) boxshadow_changes.variants = /*parsed*/ ctx[0].collection["boxShadow"].variants;
@@ -202,6 +220,7 @@ function create_fragment(ctx) {
 			if (current) return;
 			transition_in(backgroundcolor.$$.fragment, local);
 			transition_in(borderradius.$$.fragment, local);
+			transition_in(bordercolor.$$.fragment, local);
 			transition_in(boxshadow.$$.fragment, local);
 			transition_in(padding.$$.fragment, local);
 			transition_in(margin.$$.fragment, local);
@@ -214,6 +233,7 @@ function create_fragment(ctx) {
 		o(local) {
 			transition_out(backgroundcolor.$$.fragment, local);
 			transition_out(borderradius.$$.fragment, local);
+			transition_out(bordercolor.$$.fragment, local);
 			transition_out(boxshadow.$$.fragment, local);
 			transition_out(padding.$$.fragment, local);
 			transition_out(margin.$$.fragment, local);
@@ -231,18 +251,20 @@ function create_fragment(ctx) {
 			if (detaching) detach(t1);
 			destroy_component(borderradius, detaching);
 			if (detaching) detach(t2);
-			destroy_component(boxshadow, detaching);
+			destroy_component(bordercolor, detaching);
 			if (detaching) detach(t3);
-			destroy_component(padding, detaching);
+			destroy_component(boxshadow, detaching);
 			if (detaching) detach(t4);
-			destroy_component(margin, detaching);
+			destroy_component(padding, detaching);
 			if (detaching) detach(t5);
-			destroy_component(width, detaching);
+			destroy_component(margin, detaching);
 			if (detaching) detach(t6);
-			destroy_component(fontsize, detaching);
+			destroy_component(width, detaching);
 			if (detaching) detach(t7);
-			destroy_component(lineheight, detaching);
+			destroy_component(fontsize, detaching);
 			if (detaching) detach(t8);
+			destroy_component(lineheight, detaching);
+			if (detaching) detach(t9);
 			destroy_component(textcolor, detaching);
 		}
 	};

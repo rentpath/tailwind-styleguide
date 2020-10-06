@@ -25,7 +25,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (79:3) {#if variants.length}
+// (76:3) {#if variants.length}
 function create_if_block(ctx) {
 	let ul;
 	let each_value = /*variants*/ ctx[2];
@@ -43,7 +43,7 @@ function create_if_block(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "variants svelte-1f566k2");
+			attr(ul, "class", "variants svelte-u7mhiz");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -83,7 +83,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (81:5) {#each variants as variant}
+// (78:5) {#each variants as variant}
 function create_each_block(ctx) {
 	let li;
 	let t0_value = /*variant*/ ctx[5] + "";
@@ -95,7 +95,7 @@ function create_each_block(ctx) {
 			li = element("li");
 			t0 = text(t0_value);
 			t1 = text(":");
-			attr(li, "class", "svelte-1f566k2");
+			attr(li, "class", "svelte-u7mhiz");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -143,12 +143,12 @@ function create_fragment(ctx) {
 			t4 = space();
 			div2 = element("div");
 			if (default_slot) default_slot.c();
-			attr(h2, "class", "svelte-1f566k2");
-			attr(em, "class", "svelte-1f566k2");
-			attr(div0, "class", "sticky svelte-1f566k2");
-			attr(div1, "class", "left svelte-1f566k2");
-			attr(div2, "class", "right svelte-1f566k2");
-			attr(section, "class", "styleguide-section svelte-1f566k2");
+			attr(h2, "class", "svelte-u7mhiz");
+			attr(em, "class", "svelte-u7mhiz");
+			attr(div0, "class", "sticky svelte-u7mhiz");
+			attr(div1, "class", "left svelte-u7mhiz");
+			attr(div2, "class", "right svelte-u7mhiz");
+			attr(section, "class", "styleguide-section svelte-u7mhiz");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);
