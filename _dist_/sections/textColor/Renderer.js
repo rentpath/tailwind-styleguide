@@ -32,7 +32,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (36:4) <ClassName>
+// (42:4) <ClassName>
 function create_default_slot_1(ctx) {
 	let t0;
 	let t1_value = /*c*/ ctx[2].name + "";
@@ -57,7 +57,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (33:2) {#each classes as c}
+// (39:2) {#each classes as c}
 function create_each_block(ctx) {
 	let div;
 	let p;
@@ -81,7 +81,7 @@ function create_each_block(ctx) {
 			t0 = space();
 			create_component(classname.$$.fragment);
 			t1 = space();
-			attr(p, "class", p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-6248pu"));
+			attr(p, "class", p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-grpwa5"));
 			attr(div, "class", "color-wrapper");
 		},
 		m(target, anchor) {
@@ -93,7 +93,7 @@ function create_each_block(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (!current || dirty & /*classes*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-6248pu"))) {
+			if (!current || dirty & /*classes*/ 1 && p_class_value !== (p_class_value = "" + (null_to_empty(/*c*/ ctx[2].name) + " svelte-grpwa5"))) {
 				attr(p, "class", p_class_value);
 			}
 
@@ -121,7 +121,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (31:0) <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={variants}>
+// (37:0) <StyleguideSection name="Text Colors" description="Only you can prevent text-yellow-200 on a bg-white background." variants={variants}>
 function create_default_slot(ctx) {
 	let div;
 	let current;
@@ -144,7 +144,7 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "colors svelte-6248pu");
+			attr(div, "class", "colors svelte-grpwa5");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);

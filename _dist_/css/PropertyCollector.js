@@ -21,8 +21,9 @@ export class PropertyCollector {
         return n.property === this.cssProperty;
       })[0], (d) => {
         const hasDeclarationSupport = SUPPORTED_DECLARATION_TYPES.includes(d.type);
-        if (!hasDeclarationSupport)
-          console.warn(`Unidentified declaration type: ${d.type})`);
+        if (!hasDeclarationSupport) {
+          console.warn(`Unidentified declaration type: ${d.type}`);
+        }
         return hasDeclarationSupport;
       });
       this.classes.push({

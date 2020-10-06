@@ -255,7 +255,7 @@ function create_default_slot_1(ctx) {
 			div0 = element("div");
 			div1 = element("div");
 			attr(div0, "class", "swatch-left svelte-1anpaqd");
-			attr(div0, "style", div0_style_value = `margin-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`);
+			attr(div0, "style", div0_style_value = `margin-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`);
 			attr(div1, "class", "swatch-right svelte-1anpaqd");
 			attr(div2, "class", "swatch svelte-1anpaqd");
 		},
@@ -265,7 +265,7 @@ function create_default_slot_1(ctx) {
 			append(div2, div1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*m*/ 4 && div0_style_value !== (div0_style_value = `margin-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`)) {
+			if (dirty & /*m*/ 4 && div0_style_value !== (div0_style_value = `margin-right: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`)) {
 				attr(div0, "style", div0_style_value);
 			}
 		},

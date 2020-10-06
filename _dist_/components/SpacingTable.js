@@ -34,7 +34,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (68:3) <ClassName>
+// (74:3) <ClassName>
 function create_default_slot(ctx) {
 	let t0;
 	let t1_value = /*c*/ ctx[3].name + "";
@@ -59,7 +59,7 @@ function create_default_slot(ctx) {
 	};
 }
 
-// (66:1) {#each classes as c}
+// (72:1) {#each classes as c}
 function create_each_block(ctx) {
 	let div0;
 	let classname;
@@ -69,7 +69,7 @@ function create_each_block(ctx) {
 	let t1_value = /*c*/ ctx[3].measurement.value + "";
 	let t1;
 	let em;
-	let t2_value = (/*c*/ ctx[3].measurement.unit ?? "") + "";
+	let t2_value = (/*c*/ ctx[3].measurement.unit || "") + "";
 	let t2;
 	let t3;
 	let div2;
@@ -100,11 +100,11 @@ function create_each_block(ctx) {
 			div2 = element("div");
 			if (default_slot) default_slot.c();
 			t4 = space();
-			attr(div0, "class", "cell svelte-1avbn07");
-			attr(em, "class", "unit svelte-1avbn07");
-			attr(span, "class", "measurement svelte-1avbn07");
-			attr(div1, "class", "cell measurement svelte-1avbn07");
-			attr(div2, "class", "cell slot svelte-1avbn07");
+			attr(div0, "class", "cell svelte-1r8sx4m");
+			attr(em, "class", "unit svelte-1r8sx4m");
+			attr(span, "class", "measurement svelte-1r8sx4m");
+			attr(div1, "class", "cell measurement svelte-1r8sx4m");
+			attr(div2, "class", "cell slot svelte-1r8sx4m");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
@@ -134,7 +134,7 @@ function create_each_block(ctx) {
 
 			classname.$set(classname_changes);
 			if ((!current || dirty & /*classes*/ 1) && t1_value !== (t1_value = /*c*/ ctx[3].measurement.value + "")) set_data(t1, t1_value);
-			if ((!current || dirty & /*classes*/ 1) && t2_value !== (t2_value = (/*c*/ ctx[3].measurement.unit ?? "") + "")) set_data(t2, t2_value);
+			if ((!current || dirty & /*classes*/ 1) && t2_value !== (t2_value = (/*c*/ ctx[3].measurement.unit || "") + "")) set_data(t2, t2_value);
 
 			if (default_slot) {
 				if (default_slot.p && dirty & /*$$scope, classes*/ 5) {
@@ -202,10 +202,10 @@ function create_fragment(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(em0, "class", "cell heading svelte-1avbn07");
-			attr(em1, "class", "cell heading measurement svelte-1avbn07");
-			attr(em2, "class", "cell heading svelte-1avbn07");
-			attr(section, "class", "table svelte-1avbn07");
+			attr(em0, "class", "cell heading svelte-1r8sx4m");
+			attr(em1, "class", "cell heading measurement svelte-1r8sx4m");
+			attr(em2, "class", "cell heading svelte-1r8sx4m");
+			attr(section, "class", "table svelte-1r8sx4m");
 		},
 		m(target, anchor) {
 			insert(target, section, anchor);

@@ -47,13 +47,13 @@ function create_default_slot_1(ctx) {
 		c() {
 			div = element("div");
 			attr(div, "class", "swatch svelte-wv8a8j");
-			attr(div, "style", div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`);
+			attr(div, "style", div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*m*/ 4 && div_style_value !== (div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit ?? "")}`)) {
+			if (dirty & /*m*/ 4 && div_style_value !== (div_style_value = `width: ${/*m*/ ctx[2].value + (/*m*/ ctx[2].unit || "")}`)) {
 				attr(div, "style", div_style_value);
 			}
 		},

@@ -6,7 +6,7 @@ export function getClassSelector(rule) {
   return getNodeOfType("ClassSelector", rule);
 }
 export function getDeclarations(rule) {
-  return cssTree.findAll(rule, (node) => node.type === "Declaration") ?? [];
+  return cssTree.findAll(rule, (node) => node.type === "Declaration") || [];
 }
 export function extractVariant(tailwindPattern, className) {
   const variant = className.match(RegExp(`^([^:]+):.*${tailwindPattern}`));
