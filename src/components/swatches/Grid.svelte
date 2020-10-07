@@ -1,13 +1,5 @@
 <script>
-	import Swatch from "./Swatch.svelte";
-
-	export let swatches = [];
-
-	export let squircle;
-	export let circle;
-	export let filled;
-	export let fancy;
-	export let stroked;
+	export let classes;
 </script>
 
 <style>
@@ -19,7 +11,7 @@
 </style>
 
 <div class="swatches">
-	{#each swatches as swatch}
-		<Swatch {swatch} {squircle} {circle} {filled} {fancy} {stroked}></Swatch>
+	{#each classes as c}
+		<slot className={c}></slot>
 	{/each}
 </div>

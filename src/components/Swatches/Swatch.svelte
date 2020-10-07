@@ -46,6 +46,8 @@
 </style>
 
 <div class="swatch-wrapper">
-	<div class={`swatch ${swatch}`} class:squircle class:circle class:filled class:fancy class:stroked></div>
+	<div class={`swatch ${swatch}`} class:squircle class:circle class:filled class:fancy class:stroked>
+		<slot></slot>
+	</div>
 	<ClassName>.{swatch}</ClassName>
 </div>
