@@ -26,6 +26,7 @@ import Margin from "./../../sections/margin/Renderer.js";
 import Width from "./../../sections/width/Renderer.js";
 import Padding from "./../../sections/padding/Renderer.js";
 import TextColor from "./../../sections/textColor/Renderer.js";
+import FontWeight from "./../../sections/fontWeight/Renderer.js";
 
 function create_fragment(ctx) {
 	let html_tag;
@@ -48,8 +49,10 @@ function create_fragment(ctx) {
 	let t7;
 	let fontsize;
 	let t8;
-	let lineheight;
+	let fontweight;
 	let t9;
+	let lineheight;
+	let t10;
 	let textcolor;
 	let current;
 
@@ -109,6 +112,13 @@ function create_fragment(ctx) {
 			}
 		});
 
+	fontweight = new FontWeight({
+			props: {
+				classes: /*parsed*/ ctx[0].collection["fontWeight"].classes,
+				variants: /*parsed*/ ctx[0].collection["fontWeight"].variants
+			}
+		});
+
 	lineheight = new LineHeight({
 			props: {
 				classes: /*parsed*/ ctx[0].collection["lineHeight"].classes,
@@ -143,8 +153,10 @@ function create_fragment(ctx) {
 			t7 = space();
 			create_component(fontsize.$$.fragment);
 			t8 = space();
-			create_component(lineheight.$$.fragment);
+			create_component(fontweight.$$.fragment);
 			t9 = space();
+			create_component(lineheight.$$.fragment);
+			t10 = space();
 			create_component(textcolor.$$.fragment);
 			html_tag = new HtmlTag(html_anchor);
 		},
@@ -168,8 +180,10 @@ function create_fragment(ctx) {
 			insert(target, t7, anchor);
 			mount_component(fontsize, target, anchor);
 			insert(target, t8, anchor);
-			mount_component(lineheight, target, anchor);
+			mount_component(fontweight, target, anchor);
 			insert(target, t9, anchor);
+			mount_component(lineheight, target, anchor);
+			insert(target, t10, anchor);
 			mount_component(textcolor, target, anchor);
 			current = true;
 		},
@@ -207,6 +221,10 @@ function create_fragment(ctx) {
 			if (dirty & /*parsed*/ 1) fontsize_changes.classes = /*parsed*/ ctx[0].collection["fontSize"].classes;
 			if (dirty & /*parsed*/ 1) fontsize_changes.variants = /*parsed*/ ctx[0].collection["fontSize"].variants;
 			fontsize.$set(fontsize_changes);
+			const fontweight_changes = {};
+			if (dirty & /*parsed*/ 1) fontweight_changes.classes = /*parsed*/ ctx[0].collection["fontWeight"].classes;
+			if (dirty & /*parsed*/ 1) fontweight_changes.variants = /*parsed*/ ctx[0].collection["fontWeight"].variants;
+			fontweight.$set(fontweight_changes);
 			const lineheight_changes = {};
 			if (dirty & /*parsed*/ 1) lineheight_changes.classes = /*parsed*/ ctx[0].collection["lineHeight"].classes;
 			if (dirty & /*parsed*/ 1) lineheight_changes.variants = /*parsed*/ ctx[0].collection["lineHeight"].variants;
@@ -226,6 +244,7 @@ function create_fragment(ctx) {
 			transition_in(margin.$$.fragment, local);
 			transition_in(width.$$.fragment, local);
 			transition_in(fontsize.$$.fragment, local);
+			transition_in(fontweight.$$.fragment, local);
 			transition_in(lineheight.$$.fragment, local);
 			transition_in(textcolor.$$.fragment, local);
 			current = true;
@@ -239,6 +258,7 @@ function create_fragment(ctx) {
 			transition_out(margin.$$.fragment, local);
 			transition_out(width.$$.fragment, local);
 			transition_out(fontsize.$$.fragment, local);
+			transition_out(fontweight.$$.fragment, local);
 			transition_out(lineheight.$$.fragment, local);
 			transition_out(textcolor.$$.fragment, local);
 			current = false;
@@ -263,8 +283,10 @@ function create_fragment(ctx) {
 			if (detaching) detach(t7);
 			destroy_component(fontsize, detaching);
 			if (detaching) detach(t8);
-			destroy_component(lineheight, detaching);
+			destroy_component(fontweight, detaching);
 			if (detaching) detach(t9);
+			destroy_component(lineheight, detaching);
+			if (detaching) detach(t10);
 			destroy_component(textcolor, detaching);
 		}
 	};
