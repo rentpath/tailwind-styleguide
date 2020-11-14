@@ -9,6 +9,7 @@
 	import Width from "./../../sections/width/Renderer.svelte";
 	import Padding from "./../../sections/padding/Renderer.svelte";
 	import TextColor from "./../../sections/textColor/Renderer.svelte";
+	import FontWeight from "./../../sections/fontWeight/Renderer.svelte";
 
 	export let parsed;
 </script>
@@ -41,6 +42,9 @@
 <FontSize
 	classes={parsed.collection['fontSize'].classes}
 	variants={parsed.collection['fontSize'].variants} />
+<FontWeight
+	classes={parsed.collection['fontWeight'].classes}
+	variants={parsed.collection['fontWeight'].variants} />
 <LineHeight
 	classes={parsed.collection['lineHeight'].classes}
 	variants={parsed.collection['lineHeight'].variants} />
