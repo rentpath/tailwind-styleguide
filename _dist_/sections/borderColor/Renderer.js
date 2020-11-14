@@ -12,16 +12,64 @@ import {
 
 import StyleguideSection from "../../components/StyleguideSection.js";
 import Grid from "../../components/swatches/Grid.js";
+import Swatch from "../../components/swatches/Swatch.js";
 
+function create_default_slot_1(ctx) {
+	let swatch;
+	let current;
+
+	swatch = new Swatch({
+			props: {
+				swatch: /*cn*/ ctx[2].name,
+				squircle: true,
+				stroked: true
+			}
+		});
+
+	return {
+		c() {
+			create_component(swatch.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(swatch, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const swatch_changes = {};
+			if (dirty & /*cn*/ 4) swatch_changes.swatch = /*cn*/ ctx[2].name;
+			swatch.$set(swatch_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(swatch.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(swatch.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(swatch, detaching);
+		}
+	};
+}
+
+// (10:0) <StyleguideSection name="Border Color" description="Make your walls a little more colorful." variants={variants}>
 function create_default_slot(ctx) {
 	let grid;
 	let current;
 
 	grid = new Grid({
 			props: {
-				swatches: /*classes*/ ctx[0].map(func),
-				squircle: true,
-				stroked: true
+				classes: /*classes*/ ctx[0],
+				$$slots: {
+					default: [
+						create_default_slot_1,
+						({ className: cn }) => ({ 2: cn }),
+						({ className: cn }) => cn ? 4 : 0
+					]
+				},
+				$$scope: { ctx }
 			}
 		});
 
@@ -35,7 +83,12 @@ function create_default_slot(ctx) {
 		},
 		p(ctx, dirty) {
 			const grid_changes = {};
-			if (dirty & /*classes*/ 1) grid_changes.swatches = /*classes*/ ctx[0].map(func);
+			if (dirty & /*classes*/ 1) grid_changes.classes = /*classes*/ ctx[0];
+
+			if (dirty & /*$$scope, cn*/ 12) {
+				grid_changes.$$scope = { dirty, ctx };
+			}
+
 			grid.$set(grid_changes);
 		},
 		i(local) {
@@ -79,7 +132,7 @@ function create_fragment(ctx) {
 			const styleguidesection_changes = {};
 			if (dirty & /*variants*/ 2) styleguidesection_changes.variants = /*variants*/ ctx[1];
 
-			if (dirty & /*$$scope, classes*/ 5) {
+			if (dirty & /*$$scope, classes*/ 9) {
 				styleguidesection_changes.$$scope = { dirty, ctx };
 			}
 
@@ -99,8 +152,6 @@ function create_fragment(ctx) {
 		}
 	};
 }
-
-const func = c => c.name;
 
 function instance($$self, $$props, $$invalidate) {
 	let { classes } = $$props;
