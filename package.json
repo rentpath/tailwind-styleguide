@@ -33,7 +33,7 @@
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "rollup-plugin-svelte": "^5.2.3",
     "snowpack": "^2.6.4",
-    "svelte": "^3.24.0",
+    "svelte": "^3.49.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.7"
   }
